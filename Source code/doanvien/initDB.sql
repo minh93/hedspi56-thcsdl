@@ -1,4 +1,4 @@
-CREATE DATABASE qldv
+﻿CREATE DATABASE qldv
   WITH OWNER = postgres
        ENCODING = 'UTF8'
        TABLESPACE = pg_default      
@@ -88,10 +88,27 @@ CONSTRAINT "evtOrgRef_Stu" FOREIGN KEY ("OrgID")
 CONSTRAINT "evtOrgRef_Dept" FOREIGN KEY ("EventID")
 	REFERENCES "Event" ("EventID") MATCH SIMPLE
 );
-
 ALTER TABLE "Class" ADD FOREIGN KEY ("MoniterID")
 	REFERENCES "Student"("StuID") MATCH SIMPLE;
 
+CREATE TABLE "Account"
+(
+"UserName" CHARACTER(100),
+"Contact" CHARACTER(100),
+"Password" CHARACTER(65),
+"Role" INT,
+CONSTRAINT "Key" PRIMARY KEY ("UserName"),
+);
+
+CREATE TABLE "Log"
+(
+"UserName" CHARACTER(100),
+"LoginTime" CHARACTER(30),
+"LogoutTime" CHARACTER(30),
+"Action" CHARACTER(65),
+CONSTRAINT "Key2" FOREIGN KEY ("UserName")
+	REFERENCES "Account" ("UserName") MATCH SIMPLE,
+);
 --Sample data
 INSERT INTO "Department" VALUES ('CNTT&TT','Vien cong nghe thong tin va truyen thong','is.hust.edu.vn','01255462');
 SELECT * FROM "Department";
