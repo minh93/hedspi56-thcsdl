@@ -64,7 +64,11 @@ CREATE TABLE "Participation"
 "Start" DATE,
 "End" DATE,
 "Description" CHARACTER(256),
-CONSTRAINT "partPry" PRIMARY KEY ("StuID","OrgID")
+CONSTRAINT "partPry" PRIMARY KEY ("StuID","OrgID"),
+CONSTRAINT "partRef_Stu" FOREIGN KEY ("StuID")
+	REFERENCES "Student" ("StuID") MATCH SIMPLE,
+CONSTRAINT "partRef_Org" FOREIGN KEY ("OrgID")
+	REFERENCES "Organization" ("OrgID") MATCH SIMPLE
 );
 
 CREATE TABLE "Event"
