@@ -5,6 +5,10 @@
 package UI;
 
 import DButitilies.connect;
+import static DButitilies.connect.Host;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -104,6 +108,30 @@ public class LoginForm extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel9.setText("Port:");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
+
+        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField3ActionPerformed(evt);
+            }
+        });
+
+        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField4ActionPerformed(evt);
+            }
+        });
 
         btnSaveConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/saveConfig.png"))); // NOI18N
         btnSaveConfig.addActionListener(new java.awt.event.ActionListener() {
@@ -271,12 +299,55 @@ public class LoginForm extends javax.swing.JFrame {
     }
     
     private void btnSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveConfigActionPerformed
-        // TODO add your handling code here:
+         String Host=jTextField4.getText();
+         String DatabaseName=jTextField2.getText();
+         String LoginName=jTextField3.getText();
+         String PassWord=jPasswordField1.getText();        
+         
+          try {
+             String fileName="src\\File\\Config.ini";
+             ////////////Tạo luồng xuất
+             FileOutputStream out=new FileOutputStream(fileName,false);
+             //////////Tạo thiết bị viết
+             PrintWriter output=new PrintWriter(out,true);//auto flush
+             //ghi 1 chuỗi ra file
+             output.println("");
+             output.println("Localhost="+Host);
+             output.println("DatabaseName="+DatabaseName);
+             output.println("LoginName="+LoginName);
+             output.println("PassWord="+PassWord);
+             //sau khi làm việc xong, nhớ đóng luồng
+             out.close();
+             output.close();
+             JOptionPane.showMessageDialog(null,"Cấu hình thành công!");
+         } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null,"Lỗi không ghi được file");
+         } 
     }//GEN-LAST:event_btnSaveConfigActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int tb=JOptionPane.showConfirmDialog(null,"Bạn có chắc chắn muốn thoát không?","Messages",JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
+         if(tb==JOptionPane.OK_OPTION)
+         {
+              this.dispose();
+         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField4ActionPerformed
 
     /**
      * @param args the command line arguments
