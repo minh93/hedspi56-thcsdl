@@ -4,6 +4,10 @@
  */
 package UI;
 
+import DButitilies.connect;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Minh
@@ -11,6 +15,7 @@ package UI;
 public class LoginForm extends javax.swing.JFrame {
 
     private boolean si = true;
+    private connect conn;
 
     public LoginForm() {
         initComponents();
@@ -72,8 +77,18 @@ public class LoginForm extends javax.swing.JFrame {
         });
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/session-logout.png"))); // NOI18N
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/session-switch.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel5.setText("Server Name:");
@@ -91,6 +106,11 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel9.setText("Port:");
 
         btnSaveConfig.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/saveConfig.png"))); // NOI18N
+        btnSaveConfig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveConfigActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMainLayout = new javax.swing.GroupLayout(panelMain);
         panelMain.setLayout(panelMainLayout);
@@ -136,12 +156,10 @@ public class LoginForm extends javax.swing.JFrame {
                                 .addComponent(jPasswordField1)
                                 .addGap(88, 88, 88))
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnSaveConfig, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)))))
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField2)
+                            .addComponent(btnSaveConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jTextField4))))
                 .addContainerGap())
         );
         panelMainLayout.setVerticalGroup(
@@ -169,9 +187,9 @@ public class LoginForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnConfigServer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -225,6 +243,40 @@ public class LoginForm extends javax.swing.JFrame {
             this.setSize(336, 580);
         }
     }//GEN-LAST:event_btnConfigServerMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        conn = new DButitilies.connect();
+        conn.ketnoi();
+        String Username=this.txtUsrName.getText();
+        String Password=this.txtPassword.getText(); 
+        try {    
+        String sql="SELECT \"UserName\", \"Password\",\"Role\" FROM \"Account\" WHERE (\"UserName\"='"+Username+"') and (\"Password\"='"+Password+"')";
+        conn.ThucThiSql(sql);
+        if (conn.rs.next()){
+                Ultilities.Login.setUserName(Username);
+                Ultilities.Login.setPassword(Password);
+                Ultilities.Login.setQuyen(conn.rs.getString(3));
+                UI.vd frm=new vd ();
+                frm.setVisible(true);
+                this.dispose();            
+            }
+            else {
+                JOptionPane.showMessageDialog(null,"Ban nhap sai UserName hoac Password");
+                txtPassword.setText("");
+                txtUsrName.requestFocus();
+            }           
+        }catch (SQLException ex) {
+                System.out.println("Loi dang nhap"+ex.getMessage());     
+    }//GEN-LAST:event_jButton1ActionPerformed
+    }
+    
+    private void btnSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveConfigActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveConfigActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
