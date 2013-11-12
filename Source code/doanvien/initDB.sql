@@ -102,7 +102,7 @@ CREATE TABLE "Account"
 "Contact" CHARACTER(100),
 "Password" CHARACTER(65),
 "Role" INT,
-CONSTRAINT "Key" PRIMARY KEY ("UserName"),
+CONSTRAINT "Key" PRIMARY KEY ("UserName")
 );
 
 CREATE TABLE "Log"
@@ -112,10 +112,10 @@ CREATE TABLE "Log"
 "LogoutTime" CHARACTER(30),
 "Action" CHARACTER(65),
 CONSTRAINT "Key2" FOREIGN KEY ("UserName")
-	REFERENCES "Account" ("UserName") MATCH SIMPLE,
+	REFERENCES "Account" ("UserName") MATCH SIMPLE
 );
 --Sample data
 INSERT INTO "Department" VALUES ('CNTT&TT','Vien cong nghe thong tin va truyen thong','is.hust.edu.vn','01255462');
 SELECT * FROM "Department";
 \c postgres
-DROP DATABASE qldv;
+--DROP DATABASE qldv;
