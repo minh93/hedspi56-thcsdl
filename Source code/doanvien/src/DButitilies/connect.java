@@ -1,6 +1,7 @@
 package DButitilies;
 
 
+import doanvien.Doanvien;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +23,8 @@ public class connect {
               JOptionPane.showMessageDialog(null,"Lỗi tên lớp hỗ trợ SQL");
          }
          try {
-             
-              myCon = DriverManager.getConnection("jdbc:postgresql://localhost:5432/qldv", "postgres","linh2396157");
+             Doanvien.DocFile();
+              myCon = DriverManager.getConnection("jdbc:postgresql://localhost:"+Host.trim()+"/"+DatabaseName.trim()+"",NameLogin.trim(),Pass.trim());
               System.out.println("Kết nối thành công");
          } catch (SQLException ex) {
               JOptionPane.showMessageDialog(null,"Không thể kết nối CSDL");
