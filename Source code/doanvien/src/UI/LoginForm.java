@@ -186,8 +186,8 @@ public class LoginForm extends javax.swing.JFrame {
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextField3)
                             .addComponent(jTextField2)
-                            .addComponent(btnSaveConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jTextField4))))
+                            .addComponent(jTextField4)
+                            .addComponent(btnSaveConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         panelMainLayout.setVerticalGroup(
@@ -284,8 +284,7 @@ public class LoginForm extends javax.swing.JFrame {
                 Ultilities.Login.setUserName(Username);
                 Ultilities.Login.setPassword(Password);
                 Ultilities.Login.setQuyen(conn.rs.getString(3));
-                UI.vd frm=new vd ();
-                frm.setVisible(true);
+               
                 this.dispose();            
             }
             else {
