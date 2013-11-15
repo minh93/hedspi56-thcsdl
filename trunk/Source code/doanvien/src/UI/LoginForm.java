@@ -4,12 +4,13 @@
  */
 package UI;
 
-import DButitilies.connect;
-import static DButitilies.connect.Host;
+import DButitilies.ConnectFactory;
+import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.Properties;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
 public class LoginForm extends javax.swing.JFrame {
 
     private boolean si = true;
-    private connect conn;
+    private ConnectFactory conn;
 
     public LoginForm() {
         initComponents();
@@ -50,12 +51,10 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jTextField4 = new javax.swing.JTextField();
+        txtServerName = new javax.swing.JTextField();
+        txtDBName = new javax.swing.JTextField();
+        txtDBUsrName = new javax.swing.JTextField();
+        txtDBPassword = new javax.swing.JPasswordField();
         btnSaveConfig = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,30 +105,21 @@ public class LoginForm extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel8.setText("Password:");
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("Port:");
-
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txtServerName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txtServerNameActionPerformed(evt);
             }
         });
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtDBName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtDBNameActionPerformed(evt);
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtDBUsrName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
-            }
-        });
-
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                txtDBUsrNameActionPerformed(evt);
             }
         });
 
@@ -176,17 +166,15 @@ public class LoginForm extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
+                            .addComponent(jLabel8))
                         .addGap(18, 18, 18)
                         .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(panelMainLayout.createSequentialGroup()
-                                .addComponent(jPasswordField1)
+                                .addComponent(txtDBPassword)
                                 .addGap(88, 88, 88))
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField4)
+                            .addComponent(txtServerName, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDBUsrName)
+                            .addComponent(txtDBName)
                             .addComponent(btnSaveConfig, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
@@ -216,24 +204,20 @@ public class LoginForm extends javax.swing.JFrame {
                 .addComponent(btnConfigServer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtServerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDBName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDBUsrName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDBPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btnSaveConfig)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -252,8 +236,7 @@ public class LoginForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(panelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -268,85 +251,52 @@ public class LoginForm extends javax.swing.JFrame {
         if (si == true) {
             this.setSize(336, 325);
         } else {
-            this.setSize(336, 580);
+            this.setSize(336, 560);
         }
     }//GEN-LAST:event_btnConfigServerMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        conn = new DButitilies.connect();
-        conn.ketnoi();
-        String Username=this.txtUsrName.getText();
-        String Password=this.txtPassword.getText(); 
-        try {    
-        String sql="SELECT \"UserName\", \"Password\",\"Role\" FROM \"Account\" WHERE (\"UserName\"='"+Username+"') and (\"Password\"='"+Password+"')";
-        conn.ThucThiSql(sql);
-        if (conn.rs.next()){
-                Ultilities.Login.setUserName(Username);
-                Ultilities.Login.setPassword(Password);
-                Ultilities.Login.setQuyen(conn.rs.getString(3));
-               
-                this.dispose();            
-            }
-            else {
-                JOptionPane.showMessageDialog(null,"Ban nhap sai UserName hoac Password");
-                txtPassword.setText("");
-                txtUsrName.requestFocus();
-            }           
-        }catch (SQLException ex) {
-                System.out.println("Loi dang nhap"+ex.getMessage());     
     }//GEN-LAST:event_jButton1ActionPerformed
-    }
-    
-    private void btnSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveConfigActionPerformed
-         String Host=jTextField4.getText();
-         String DatabaseName=jTextField2.getText();
-         String LoginName=jTextField3.getText();
-         String PassWord=jPasswordField1.getText();        
-         
-          try {
-             String fileName="src\\File\\Config.ini";
-             ////////////Tạo luồng xuất
-             FileOutputStream out=new FileOutputStream(fileName,false);
-             //////////Tạo thiết bị viết
-             PrintWriter output=new PrintWriter(out,true);//auto flush
-             //ghi 1 chuỗi ra file
-             output.println("");
-             output.println("Localhost="+Host);
-             output.println("DatabaseName="+DatabaseName);
-             output.println("LoginName="+LoginName);
-             output.println("PassWord="+PassWord);
-             //sau khi làm việc xong, nhớ đóng luồng
-             out.close();
-             output.close();
-             JOptionPane.showMessageDialog(null,"Cấu hình thành công!");
-         } catch (IOException ex) {
-                JOptionPane.showMessageDialog(null,"Lỗi không ghi được file");
-         } 
-    }//GEN-LAST:event_btnSaveConfigActionPerformed
 
+    private void btnSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveConfigActionPerformed
+        if (txtServerName.getText().equals("")) {
+            txtServerName.setBackground(Color.red);
+        } else if (txtDBUsrName.getText().equals("")) {
+            txtDBUsrName.setBackground(Color.red);
+        } else if (txtDBPassword.getPassword().length == 0) {
+            txtDBPassword.setBackground(Color.red);
+        } else if (txtDBName.getText().equals("")) {
+            txtDBName.setBackground(Color.red);
+        } else {
+            Properties prop = new Properties();
+
+            try {
+                prop.setProperty("ServerName", txtServerName.getText());
+                prop.setProperty("User", txtDBUsrName.getText());
+                prop.setProperty("Password",new String(txtDBPassword.getPassword()));
+                prop.setProperty("DBName", txtDBName.getText());
+
+                prop.store(new FileOutputStream("config.properties"), null);
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnSaveConfigActionPerformed
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int tb=JOptionPane.showConfirmDialog(null,"Bạn có chắc chắn muốn thoát không?","Messages",JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-         if(tb==JOptionPane.OK_OPTION)
-         {
-              this.dispose();
-         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtDBUsrNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDBUsrNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtDBUsrNameActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txtServerNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtServerNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txtServerNameActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtDBNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDBNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
-
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_txtDBNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -362,16 +312,28 @@ public class LoginForm extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
+
+
+
+
+
+
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(LoginForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -395,14 +357,12 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JPanel panelMain;
+    private javax.swing.JTextField txtDBName;
+    private javax.swing.JPasswordField txtDBPassword;
+    private javax.swing.JTextField txtDBUsrName;
     private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtServerName;
     private javax.swing.JTextField txtUsrName;
     // End of variables declaration//GEN-END:variables
 }
