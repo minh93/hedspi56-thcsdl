@@ -4,13 +4,19 @@
  */
 package Ultilities;
 
+import Jdocs.Anotation;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.annotation.Documented;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.Checksum;
@@ -21,6 +27,7 @@ import java.util.zip.Checksum;
  */
 public class Ultilities {
 
+    @Anotation.MethodInfo(author = "MinhPD", comments = "This method use to create checksum password")
     public static String checksumGen(String filePath, String mode) {
         try {
             MessageDigest md = MessageDigest.getInstance(mode);
@@ -68,5 +75,26 @@ public class Ultilities {
             sb.append(Integer.toHexString(b & 0xff));
         }
         return sb.toString();
+    }
+
+    @Anotation.MethodInfo(author = "MinhPD", comments = "This method use to convert time to time string")
+    public static String timeToString(Date d, String format) {
+        DateFormat df = new SimpleDateFormat(format);
+        return new String(df.format(d));
+    }
+
+    public static Date stringToDate(String s, String format) {
+        SimpleDateFormat formatter = new SimpleDateFormat(format);
+
+        try {
+
+            Date date = formatter.parse(s);
+            System.out.println(date);
+            System.out.println(formatter.format(date));
+            return date;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
