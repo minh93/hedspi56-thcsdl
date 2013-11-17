@@ -1,15 +1,12 @@
 package DButitilies;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,23 +14,34 @@ import javax.swing.JOptionPane;
  */
 public class RetrieveData {
 
-    public static int getRole() {
-        ConnectFactory conn = new ConnectFactory();
-        CallableStatement cs = 
-        return 0;
+    public static int getRole(String userName, String password) {
+        int role = -1;
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            CallableStatement cs = conn.prepareCall("{call getRole(?,?)}");
+            cs.setString(1, userName);
+            cs.setString(2, password);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                role = rs.getInt(1);
+            }
+            return role;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
     }
 
-    public static void ThucThiSql(String sql) throws SQLException {
-        ConnectFactory cf = new ConnectFactory();
-        Properties prop = new Properties();
+    public static ResultSet runSqlStatement(String sql) {
         try {
-            prop.load(new FileInputStream("config.properties"));
-            Connection conn = cf.ConnectionFactory(prop.getProperty("ServerName"),
-                    prop.getProperty("User"),
-                    prop.getProperty("Password"),
-                    prop.getProperty("DBName"));
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall(sql);
+            return ps.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return null;
     }
 }

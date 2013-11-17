@@ -1,28 +1,41 @@
 package DButitilies;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ConnectFactory {
 
-    private String connectionUri;
+    private String dbAddress;
+    private String dbName;    
+    private String dbUsrName;
+    private String dbUsrPass;
+    private Connection conn;
 
-    public Connection ConnectionFactory(String address,
-            String user,
-            String password,
-            String databaseName) {
+    public ConnectFactory() {
         try {
+            Properties p = new Properties();
+            p.load(new FileInputStream("config.properties"));
+            dbAddress = p.getProperty("ServerName");
+            dbName = p.getProperty("DBName");
+            dbUsrName = p.getProperty("User");
+            dbUsrPass = p.getProperty("Password");
+            
             Class.forName("org.postgresql.Driver");
-
-            connectionUri = "jdbc:postgresql://" + address + '/'+databaseName+','+ user + ',' + password;
-            //System.out.println("Connect uri " + connectionUri);
-            return DriverManager.getConnection("jdbc:postgresql://localhost:5432/qldv", "postgres", "1234");            
-        } catch (ClassNotFoundException ex) {
+            conn = DriverManager.getConnection("jdbc:postgresql://" + dbAddress + '/' + dbName, dbUsrName, dbUsrPass);
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ConnectFactory.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
+            conn = null;
+        } catch (IOException ex) {
             Logger.getLogger(ConnectFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;
     }
+
+    public Connection getConn() {
+        return conn;
+    }
+    
 }

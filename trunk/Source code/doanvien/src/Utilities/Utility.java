@@ -2,7 +2,7 @@
  * Class chứa các phương thức dùng chung 
  * 
  */
-package Ultilities;
+package Utilities;
 
 import Jdocs.Anotation;
 import java.io.BufferedInputStream;
@@ -24,7 +24,7 @@ import java.util.zip.Checksum;
  *
  * @author PhamDucMinh
  */
-public class Ultilities {
+public class Utility {
 
     @Anotation.MethodInfo(author = "MinhPD", comments = "This method use to create checksum password")
     public static String checksumGen(String filePath, String mode) {
@@ -42,11 +42,11 @@ public class Ultilities {
             bis.close();
             return bytArrayToHex(mdByteResult);
         } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(Ultilities.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(Ultilities.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(Ultilities.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

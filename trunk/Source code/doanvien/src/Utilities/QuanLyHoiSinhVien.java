@@ -1,7 +1,7 @@
 
-package Ultilities;
+package Utilities;
 
-import DButitilies.connect;
+import DButitilies.ConnectFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -12,7 +12,7 @@ import java.util.Properties;
  */
 public class QuanLyHoiSinhVien {
     public static void DocFile(){
-        connect cnn = new connect();
+        ConnectFactory cnn = new ConnectFactory();
         Properties pr = new Properties();       
         try {
             pr.load(new FileInputStream("src\\File\\Config.ini"));
