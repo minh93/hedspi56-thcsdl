@@ -1,10 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import DButitilies.ConnectFactory;
+import DButitilies.RetrieveData;
+import Utilities.Utility;
 import java.awt.Color;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -38,15 +36,15 @@ public class LoginForm extends javax.swing.JFrame {
     private void initComponents() {
 
         panelMain = new javax.swing.JPanel();
-        txtUsrName = new javax.swing.JTextField();
+        txtName = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnConfigServer = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
+        btnGuest = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -79,17 +77,17 @@ public class LoginForm extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/session-logout.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/session-logout.png"))); // NOI18N
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnLoginActionPerformed(evt);
             }
         });
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/session-switch.png"))); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnGuest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/session-switch.png"))); // NOI18N
+        btnGuest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnGuestActionPerformed(evt);
             }
         });
 
@@ -145,13 +143,13 @@ public class LoginForm extends javax.swing.JFrame {
                                 .addComponent(txtPassword))
                             .addGroup(panelMainLayout.createSequentialGroup()
                                 .addGap(82, 82, 82)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelMainLayout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtUsrName))))
+                                .addComponent(txtName))))
                     .addGroup(panelMainLayout.createSequentialGroup()
                         .addGap(38, 38, 38)
                         .addComponent(btnConfigServer))
@@ -190,7 +188,7 @@ public class LoginForm extends javax.swing.JFrame {
                         .addComponent(jLabel3)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtUsrName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -198,8 +196,8 @@ public class LoginForm extends javax.swing.JFrame {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
+                    .addComponent(btnGuest)
+                    .addComponent(btnLogin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnConfigServer)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -255,36 +253,73 @@ public class LoginForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnConfigServerMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        int role;
+        if (txtName.getText().compareTo("") == 0
+                || txtPassword.getPassword().length == 0) {
+            JOptionPane.showMessageDialog(rootPane, "Don't blank username and password !", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            String username = txtName.getText();
+            String password = Utility.checksumGen(new String(txtPassword.getPassword()), "md5", true);
+            role = RetrieveData.getRole(username, password);
+            if (role == 1 || role == 2 || role == 3) {
+                MainForm mf = new MainForm(role, username);
+                mf.setVisible(true);
+                this.dispose();
+            } else if (role == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Invalid username or password !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnSaveConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveConfigActionPerformed
-        if (txtServerName.getText().equals("")) {
-            txtServerName.setBackground(Color.red);
-        } else if (txtDBUsrName.getText().equals("")) {
-            txtDBUsrName.setBackground(Color.red);
-        } else if (txtDBPassword.getPassword().length == 0) {
-            txtDBPassword.setBackground(Color.red);
-        } else if (txtDBName.getText().equals("")) {
-            txtDBName.setBackground(Color.red);
+        boolean check = true;
+        if (txtServerName.getText().compareTo("") == 0) {
+            txtServerName.setBackground(Color.GRAY);
+            check = false;
         } else {
+            txtServerName.setBackground(Color.WHITE);
+            check = true;
+        }
+        if (txtDBUsrName.getText().compareTo("") == 0) {
+            txtDBUsrName.setBackground(Color.GRAY);
+            check = false;
+        } else {
+            txtDBUsrName.setBackground(Color.WHITE);
+            check = true;
+        }
+        if (txtDBPassword.getPassword().length == 0) {
+            txtDBPassword.setBackground(Color.GRAY);
+            check = false;
+        } else {
+            txtDBPassword.setBackground(Color.WHITE);
+            check = true;
+        }
+        if (txtDBName.getText().compareTo("") == 0) {
+            txtDBName.setBackground(Color.GRAY);
+            check = false;
+        } else {
+            txtDBName.setBackground(Color.WHITE);
+            check = true;
+        }
+        if (check) {
             Properties prop = new Properties();
 
             try {
                 prop.setProperty("ServerName", txtServerName.getText());
                 prop.setProperty("User", txtDBUsrName.getText());
-                prop.setProperty("Password",new String(txtDBPassword.getPassword()));
+                prop.setProperty("Password", new String(txtDBPassword.getPassword()));
                 prop.setProperty("DBName", txtDBName.getText());
 
                 prop.store(new FileOutputStream("config.properties"), null);
-
+                JOptionPane.showMessageDialog(rootPane, "Config saved !", "Information", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
     }//GEN-LAST:event_btnSaveConfigActionPerformed
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuestActionPerformed
+    }//GEN-LAST:event_btnGuestActionPerformed
 
     private void txtDBUsrNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDBUsrNameActionPerformed
         // TODO add your handling code here:
@@ -346,9 +381,9 @@ public class LoginForm extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnConfigServer;
+    private javax.swing.JButton btnGuest;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnSaveConfig;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -361,8 +396,8 @@ public class LoginForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtDBName;
     private javax.swing.JPasswordField txtDBPassword;
     private javax.swing.JTextField txtDBUsrName;
+    private javax.swing.JTextField txtName;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtServerName;
-    private javax.swing.JTextField txtUsrName;
     // End of variables declaration//GEN-END:variables
 }
