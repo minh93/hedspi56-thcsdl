@@ -126,40 +126,41 @@ WHERE "UserName" = $1 AND "Password" = $2 $$
 LANGUAGE SQL;
 
 --Sample data
-INSERT INTO Department VALUES ('CK','Viện Cơ Khí','0255155','ck@gmail.com');
-INSERT INTO Department VALUES ('CNTT','Viện Công Nghệ Thông Tin','0123456789','cntt@gmail.com');
-INSERT INTO Department VALUES ('DTVT','Viện Điện Tử Viễn Thông','01522566','dtvt@gmail.com');
-INSERT INTO Department VALUES ('NN','Viện Ngoại Ngữ','024185655','nn@gmail.com');
+INSERT INTO "Department" VALUES ('CK','Viện Cơ Khí','0255155','ck@gmail.com');
+INSERT INTO "Department" VALUES ('DTVT','Viện Điện Tử Viễn Thông','01522566','dtvt@gmail.com');
+INSERT INTO "Department" VALUES ('CNTT','Viện Công Nghệ Thông Tin','0123456789','cntt@gmail.com');
+INSERT INTO "Department" VALUES ('NN','Viện Ngoại Ngữ','024185655','nn@gmail.com');
 
-INSERT INTO Class VALUES ('CK10','Cơ khí 10',2009,NULL,'CK');
-INSERT INTO Class VALUES ('DT2','Điện tử 2',2011,NULL,'DTVT');
-INSERT INTO Class VALUES ('NB04','Nhật Bản 4',2010,NULL,'NN');
-INSERT INTO Class VALUES ('VN6A','Việt Nhật 6A',2011,NULL,'CNTT');
-INSERT INTO Class VALUES ('VN6B','Việt Nhật 6B',2011,NULL,'CNTT');
+INSERT INTO "Class" VALUES ('CK10','Cơ khí 10',2009,NULL,'CK');
+INSERT INTO "Class" VALUES ('DT2','Điện tử 2',2011,NULL,'DTVT');
+INSERT INTO "Class" VALUES ('NB04','Nhật Bản 4',2010,NULL,'NN');
+INSERT INTO "Class" VALUES ('VN6A','Việt Nhật 6A',2011,NULL,'CNTT');
+INSERT INTO "Class" VALUES ('VN6B','Việt Nhật 6B',2011,NULL,'CNTT');
 
-INSERT INTO Student VALUES ('20042152','Lê Anh','Ngọc','1','1989-10-21','0123211089','20042152@gmail.com','Bắc Giang','VN6A','Còn học',1);
-INSERT INTO Student VALUES ('20042366','Nguyễn Hữu','Phước','1','1985-04-25','0123250485','20042366@gmail.com','Thái Bình','VN6B','Còn học',1);
-INSERT INTO Student VALUES ('20042415','Phạm Lê Duy','Quang','1','1986-12-01','0123011286','20042415@gmail.com','Hà Nội','DT2','Còn học',1);
-INSERT INTO Student VALUES ('20042443','Nguyễn Hồng','Quân','1','1986-09-02','0123020986','20042443@gmail.com','Hà Nội','NB04','Còn học',1);
-INSERT INTO Student VALUES ('20042486','Vũ Văn','Quyền','1','1986-06-06','0123060686','20042486@gmail.com','Hải Phòng','CK10','Còn học',1);
-INSERT INTO Student VALUES ('20042619','Vũ Hoàng','Sơn','1','1986-03-19','01231903086','20042619@gmail.com','An Giang','DT2','Còn học',1);
-INSERT INTO Student VALUES ('20042947','Bùi Văn','Thịnh','1','1986-03-07','0123030786','20042947@gmail.com','Thanh Hóa','CK10','Còn học',1);
-INSERT INTO Student VALUES ('20042950','Dương Đức','Thịnh','1','1986-03-05','0123030586','20042950@gmail.com','Thái Nguyên','VN6A','Còn học',1);
-INSERT INTO Student VALUES ('20042966','Bùi Đức','Thọ','1','1986-03-18','0123180386','20042966@gmail.com','Bắc Ninh','NB04','Còn học',1);
-INSERT INTO Student VALUES ('20043050','Lê Văn','Thục','1','1986-03-24','0123240386','20043050@gmail.com','Cao Bằng','VN6B','Còn học',1);
+INSERT INTO "Student" VALUES ('20042152','Lê Anh','Ngọc','1989-10-21','0123211089','20042152@gmail.com','Bắc Giang','VN6A','Còn học',1);
+INSERT INTO "Student" VALUES ('20042366','Nguyễn Hữu','Phước','1985-04-25','0123250485','20042366@gmail.com','Thái Bình','VN6B','Còn học',1);
+INSERT INTO "Student" VALUES ('20042415','Phạm Lê Duy','Quang','1986-12-01','0123011286','20042415@gmail.com','Hà Nội','DT2','Còn học',1);
+INSERT INTO "Student" VALUES ('20042443','Nguyễn Hồng','Quân','1986-09-02','0123020986','20042443@gmail.com','Hà Nội','NB04','Còn học',1);
+INSERT INTO "Student" VALUES ('20042486','Vũ Văn','Quyền','1986-06-06','0123060686','20042486@gmail.com','Hải Phòng','CK10','Còn học',1);
+INSERT INTO "Student" VALUES ('20042619','Vũ Hoàng','Sơn','1986-03-19','01231903086','20042619@gmail.com','An Giang','DT2','Còn học',1);
+INSERT INTO "Student" VALUES ('20042947','Bùi Văn','Thịnh','1986-03-07','0123030786','20042947@gmail.com','Thanh Hóa','CK10','Còn học',1);
+INSERT INTO "Student" VALUES ('20042950','Dương Đức','Thịnh','1986-03-05','0123030586','20042950@gmail.com','Thái Nguyên','VN6A','Còn học',1);
+INSERT INTO "Student" VALUES ('20042966','Bùi Đức','Thọ','1986-03-18','0123180386','20042966@gmail.com','Bắc Ninh','NB04','Còn học',1);
+INSERT INTO "Student" VALUES ('20043050','Lê Văn','Thục','1986-03-24','0123240386','20043050@gmail.com','Cao Bằng','VN6B','Còn học',1);
 
-UPDATE Class SET MoniterID = '20042947' WHERE ClaID = 'CK10';
-UPDATE Class SET MoniterID = '20042619' WHERE ClaID = 'DT2';
-UPDATE Class SET MoniterID = '20042443' WHERE ClaID = 'NB04';
-UPDATE Class SET MoniterID = '20042152' WHERE ClaID = 'VN6A';
-UPDATE Class SET MoniterID = '20043050' WHERE ClaID = 'VN6B';
+UPDATE "Class" SET "MoniterID" = '20042947' WHERE "ClaID" = 'CK10';
+UPDATE "Class" SET "MoniterID" = '20042619' WHERE "ClaID" = 'DT2';
+UPDATE "Class" SET "MoniterID" = '20042443' WHERE "ClaID" = 'NB04';
+UPDATE "Class" SET "MoniterID" = '20042152' WHERE "ClaID" = 'VN6A';
+UPDATE "Class" SET "MoniterID" = '20043050' WHERE "ClaID" = 'VN6B';
 
-INSERT INTO Organization VALUES ('CLBTA','Câu lạc bộ Tiếng Anh',NULL,'Nguyễn Văn B','clbta@gmail.com','23949204032');
-INSERT INTO Organization VALUES ('CLBTN','Câu lạc bộ Tiếng Nhật',NULL,'Nguyễn Văn A','clbtn@gmail.com','1294023851');
-INSERT INTO Organization VALUES ('DTN','Đội tình nguyện',NULL,'Bùi Đức Thọ','dtn@gmail.com','2349829089');
+INSERT INTO "Organization" VALUES ('CLBTA','Câu lạc bộ Tiếng Anh',NULL,'Nguyễn Văn B','clbta@gmail.com','23949204032');
+INSERT INTO "Organization" VALUES ('CLBTN','Câu lạc bộ Tiếng Nhật',NULL,'Nguyễn Văn A','clbtn@gmail.com','1294023851');
+INSERT INTO "Organization" VALUES ('DTN','Đội tình nguyện',NULL,'Bùi Đức Thọ','dtn@gmail.com','2349829089');
 
-INSERT INTO Participation VALUES ('20042152','CLBTN','Thành viên','2011-09-19','2012-09-19','Xuất Sắc');
+INSERT INTO "Participation" VALUES ('20042152','CLBTN','Thành viên','2011-09-19','2012-09-19','Xuất Sắc');
 
 --
 \c postgres
+\encoding utf8
 --DROP DATABASE qldv;
