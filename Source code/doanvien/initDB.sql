@@ -160,6 +160,8 @@ INSERT INTO "Organization" VALUES ('DTN','Đội tình nguyện',NULL,'Bùi Đ�
 
 INSERT INTO "Participation" VALUES ('20042152','CLBTN','Thành viên','2011-09-19','2012-09-19','Xuất Sắc');
 
+INSERT INTO "Account" VALUES ('admin','hanoi','81dc9bdb52d04dc2036dbd8313ed055',1);
+
 --
 \c postgres
 \encoding utf8
