@@ -159,7 +159,7 @@ public class MainForm extends javax.swing.JFrame {
 
         btnAddUser.setText("Add user");
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Reload");
 
         cmbViewControl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "User list", "All log" }));
 
@@ -167,14 +167,14 @@ public class MainForm extends javax.swing.JFrame {
         adminPanel.setLayout(adminPanelLayout);
         adminPanelLayout.setHorizontalGroup(
             adminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, adminPanelLayout.createSequentialGroup()
+            .addGroup(adminPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cmbViewControl, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
                 .addComponent(btnAddUser)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
         adminPanelLayout.setVerticalGroup(
             adminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,13 +216,13 @@ public class MainForm extends javax.swing.JFrame {
             jMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jMainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(mainTabbed, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE))
+                .addComponent(mainTabbed))
         );
         jMainPanelLayout.setVerticalGroup(
             jMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jMainPanelLayout.createSequentialGroup()
                 .addGap(2, 2, 2)
-                .addComponent(mainTabbed, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
+                .addComponent(mainTabbed))
         );
 
         mainTabbed.getAccessibleContext().setAccessibleName("tab1");
