@@ -1,10 +1,12 @@
 package DButitilies;
 
+import Entities.Student;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,5 +45,11 @@ public class RetrieveData {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+    
+    public static ArrayList<Student> getAllStudent(){
+        ArrayList<Student> list = new ArrayList<>();
+        
+        return list;
     }
 }

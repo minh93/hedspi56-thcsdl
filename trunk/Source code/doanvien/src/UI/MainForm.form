@@ -142,7 +142,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jHomePanel" max="32767" attributes="0"/>
+                  <Component id="mainTabbed" pref="865" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -150,20 +150,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                  <Component id="jHomePanel" max="32767" attributes="0"/>
+                  <Component id="mainTabbed" pref="537" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JTabbedPane" name="jHomePanel">
+        <Container class="javax.swing.JTabbedPane" name="mainTabbed">
           <AccessibilityProperties>
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="tab1"/>
           </AccessibilityProperties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jPanel1">
+            <Container class="javax.swing.JPanel" name="homePanel">
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
               </AccessibilityProperties>
@@ -181,17 +181,17 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="830" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="860" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="467" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel2">
+            <Container class="javax.swing.JPanel" name="studentPanel">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="">
@@ -206,17 +206,17 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="830" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="860" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="467" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel3">
+            <Container class="javax.swing.JPanel" name="orgPanel">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="">
@@ -231,21 +231,24 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="830" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="860" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="467" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel4">
+            <Container class="javax.swing.JPanel" name="eventPanel">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-                  <JTabbedPaneConstraints tabName="tab4">
-                    <Property name="tabTitle" type="java.lang.String" value="tab4"/>
+                  <JTabbedPaneConstraints tabName="">
+                    <Property name="tabTitle" type="java.lang.String" value=""/>
+                    <Property name="tabIcon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Icon/event.png"/>
+                    </Property>
                   </JTabbedPaneConstraints>
                 </Constraint>
               </Constraints>
@@ -253,17 +256,17 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="830" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="860" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="467" max="32767" attributes="0"/>
                   </Group>
                 </DimensionLayout>
               </Layout>
             </Container>
-            <Container class="javax.swing.JPanel" name="jPanel5">
+            <Container class="javax.swing.JPanel" name="settingPanel">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
                   <JTabbedPaneConstraints tabName="">
@@ -278,15 +281,112 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="830" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="adminPanel" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <EmptySpace min="0" pref="369" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                              <Component id="adminPanel" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="245" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
+              <SubComponents>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTable" name="jTable1">
+                      <Properties>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
+                          <Table columnCount="4" rowCount="4">
+                            <Column editable="true" title="Title 1" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 2" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 3" type="java.lang.Object"/>
+                            <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                          </Table>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Container class="javax.swing.JPanel" name="adminPanel">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                        <TitledBorder title="Admin tool"/>
+                      </Border>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="" noResource="true"/>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="cmbViewControl" min="-2" pref="102" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="btnAddUser" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="62" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnAddUser" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cmbViewControl" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace pref="154" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="btnAddUser">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Add user"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="jButton1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="jButton1"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JComboBox" name="cmbViewControl">
+                      <Properties>
+                        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                          <StringArray count="2">
+                            <StringItem index="0" value="User list"/>
+                            <StringItem index="1" value="All log"/>
+                          </StringArray>
+                        </Property>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
             </Container>
           </SubComponents>
         </Container>
