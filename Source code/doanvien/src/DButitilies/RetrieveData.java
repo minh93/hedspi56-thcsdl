@@ -3,6 +3,7 @@ package DButitilies;
 import Entities.ClassStu;
 import Entities.Department;
 import Entities.Student;
+import Entities.User;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -80,12 +81,6 @@ public class RetrieveData {
         return list;
     }
 
-    public static ArrayList<Student> getStudent(String studentID) {
-        ArrayList<Student> list = new ArrayList<>();
-
-        return list;
-    }
-
     public static ArrayList<String> getAllClassName() {
         ArrayList<String> list = new ArrayList<>();
 
@@ -141,5 +136,25 @@ public class RetrieveData {
     public boolean deleteClassByID(String classID) {
 
         return true;
+    }
+
+    public boolean createUser(User u) {
+        boolean result = false;
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            CallableStatement cs = conn.prepareCall("{call getRole(?,?)}");
+            cs.setString(1, userName);
+            cs.setString(2, password);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                result = rs.getInt(1);
+            }
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
+        }
+
     }
 }
