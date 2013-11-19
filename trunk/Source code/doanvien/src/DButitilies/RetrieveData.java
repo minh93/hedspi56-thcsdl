@@ -1,5 +1,7 @@
 package DButitilies;
 
+import Entities.ClassStu;
+import Entities.Department;
 import Entities.Student;
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -46,10 +48,67 @@ public class RetrieveData {
         }
         return null;
     }
-    
-    public static ArrayList<Student> getAllStudent(){
+
+    public static ArrayList<Student> getAllStudent() {
         ArrayList<Student> list = new ArrayList<>();
-        
+
         return list;
+    }
+
+    public static ArrayList<String> getAllClassName() {
+        ArrayList<String> list = new ArrayList<>();
+
+        return list;
+    }
+
+    public static ArrayList<String> getAllDeptName() {
+        ArrayList<String> list = new ArrayList<>();
+
+        return list;
+    }
+
+    public boolean insertStudent(Student s) {
+
+        return true;
+    }
+
+    public boolean updateStudent(String studentID, String newTel, String newAddress, String newEmail) {
+
+        return true;
+    }
+
+    public boolean deleteStudentByID(String id) {
+
+        return true;
+    }
+
+    public boolean insertDept(Department d) {
+
+        return true;
+    }
+
+    public boolean updateDept(String deptID, String newTel, String newEmail) {
+
+        return true;
+    }
+
+    public boolean deleteDeptByID(String deptID) {
+
+        return true;
+    }
+
+    public boolean insertClass(ClassStu c) {
+
+        return true;
+    }
+
+    public boolean updateClass(String classID, String newTel, String newEmail, String newMoniterID) {
+
+        return true;
+    }
+
+    public boolean deleteClassByID(String classID) {
+
+        return true;
     }
 }
