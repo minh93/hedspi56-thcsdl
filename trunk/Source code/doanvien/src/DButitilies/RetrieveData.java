@@ -38,11 +38,14 @@ public class RetrieveData {
     }
 
     public static ResultSet runSqlStatement(String sql) {
+        ArrayList<Student> list = new ArrayList<>();
+        ConnectFactory cf = new ConnectFactory();
+        Connection conn = cf.getConn();
         try {
-            ConnectFactory cf = new ConnectFactory();
-            Connection conn = cf.getConn();
             PreparedStatement ps = conn.prepareCall(sql);
-            return ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
+            conn.close();
+            return rs;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,6 +53,34 @@ public class RetrieveData {
     }
 
     public static ArrayList<Student> getAllStudent() {
+        ArrayList<Student> list = new ArrayList<>();
+        ConnectFactory cf = new ConnectFactory();
+        Connection conn = cf.getConn();
+        try {
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Student\" WHERE \"Status\" = 1 ");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Student s = new Student(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDate(4),
+                        rs.getBoolean(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10));
+                list.add(s);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    public static ArrayList<Student> getStudent(String studentID) {
         ArrayList<Student> list = new ArrayList<>();
 
         return list;
