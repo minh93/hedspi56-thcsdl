@@ -24,7 +24,7 @@ public class ConnectFactory {
             dbUsrName = p.getProperty("User");
             dbUsrPass = p.getProperty("Password");
             
-            Class.forName("org.postgresql.Driver");
+             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection("jdbc:postgresql://" + dbAddress + '/' + dbName, dbUsrName, dbUsrPass);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ConnectFactory.class.getName()).log(Level.SEVERE, null, ex);
