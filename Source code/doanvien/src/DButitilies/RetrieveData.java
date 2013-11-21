@@ -55,9 +55,9 @@ public class RetrieveData {
 
     public static ArrayList<Student> getAllStudent() {
         ArrayList<Student> list = new ArrayList<>();
-        ConnectFactory cf = new ConnectFactory();
-        Connection conn = cf.getConn();
         try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
             PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Student\" WHERE \"Status\" = 1 ");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -83,10 +83,18 @@ public class RetrieveData {
 
     public static ArrayList<String> getAllClassName() {
         ArrayList<String> list = new ArrayList<>();
-        ConnectFactory cf = new ConnectFactory();
-        Connection conn = cf.getConn();
-        PreparedStatement 
-        
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareCall("SELECT \"ClaName\" FROM \"Class\" ");
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getString(1));
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return list;
     }
 
@@ -141,22 +149,20 @@ public class RetrieveData {
         return true;
     }
 
-    public boolean createUser(User u) {
-        boolean result = false;
+    public int createUser(User u) {
+        int result = -1;
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
-            CallableStatement cs = conn.prepareCall("{call getRole(?,?)}");
+            CallableStatement cs = conn.prepareCall("{call insertStudent(?,?,?,?)}");
             cs.setString(1, userName);
             cs.setString(2, password);
             ResultSet rs = cs.executeQuery();
-            if (rs.next()) {
-                result = rs.getInt(1);
-            }
+            result = cs.executeUpdate();
             return result;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
+            return result;
         }
 
     }
