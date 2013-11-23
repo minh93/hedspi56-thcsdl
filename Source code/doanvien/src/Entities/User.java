@@ -8,13 +8,17 @@ public class User {
 
     private String userName;
     private String contact;
+    private String password;
     private int role;
 
-    public User(String userName, String contact, int role) {
+    public User(String userName, String contact, String password, int role) {
         this.userName = userName;
         this.contact = contact;
+        this.password = password;
         this.role = role;
     }
+
+   
 
     public User() {
     }
@@ -54,5 +58,9 @@ public class User {
             default:
                 return "Unknow";
         }
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

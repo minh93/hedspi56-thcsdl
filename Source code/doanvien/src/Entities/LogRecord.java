@@ -7,15 +7,14 @@ import java.util.Date;
  * @author Minh
  */
 public class LogRecord {
+
     private String username;
-    private Date logintime;
-    private Date logouttime;
+    private Date time;
     private String acction;
 
-    public LogRecord(String username, Date logintime, Date logouttime, String acction) {
+    public LogRecord(String username, Date time, String acction) {
         this.username = username;
-        this.logintime = logintime;
-        this.logouttime = logouttime;
+        this.time = time;
         this.acction = acction;
     }
 
@@ -26,12 +25,8 @@ public class LogRecord {
         return username;
     }
 
-    public Date getLogintime() {
-        return logintime;
-    }
-
-    public Date getLogouttime() {
-        return logouttime;
+    public Date getTime() {
+        return time;
     }
 
     public String getAcction() {
@@ -42,16 +37,7 @@ public class LogRecord {
         this.username = username;
     }
 
-    public void setLogintime(Date logintime) {
-        this.logintime = logintime;
-    }
-
-    public void setLogouttime(Date logouttime) {
-        this.logouttime = logouttime;
-    }
-
     public void setAcction(String acction) {
         this.acction = acction;
     }
-    
 }

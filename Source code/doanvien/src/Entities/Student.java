@@ -19,7 +19,8 @@ public class Student {
     private String ClassID;
     private String Description;
 
-    public Student(String studentID, String F_Name, String L_Name, Date Birth, Boolean Gender, String Tel, String Mail, String Address, String ClassID, String Description) {
+    public Student(String studentID, String F_Name, String L_Name, Date Birth,
+            Boolean Gender, String Tel, String Mail, String Address, String ClassID, String Description) {
         this.studentID = studentID;
         this.F_Name = F_Name;
         this.L_Name = L_Name;
@@ -114,7 +115,4 @@ public class Student {
     public void setDescription(String Description) {
         this.Description = Description;
     }
-
-    
-    
 }

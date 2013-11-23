@@ -20,6 +20,8 @@ public class MainForm extends javax.swing.JFrame {
 
     private int role;
     private String usrName;
+    private ArrayList<Student> stuList;
+    private StudentModel stm;
 
     /**
      * Creates new form MainForm
@@ -37,8 +39,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public void loadData() {
-        ArrayList<Student> stuList = RetrieveData.getAllStudent();
-        StudentModel stm = new StudentModel(stuList);
+        stuList = RetrieveData.getAllStudent();
+        stm = new StudentModel(stuList);
         tblStudent.setModel(stm);
     }
 
@@ -62,7 +64,7 @@ public class MainForm extends javax.swing.JFrame {
 
         jHeader = new javax.swing.JPanel();
         txtSearchField = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btnSearch = new javax.swing.JButton();
         jMainPanel = new javax.swing.JPanel();
         mainTabbed = new javax.swing.JTabbedPane();
         homePanel = new javax.swing.JPanel();
@@ -84,7 +86,7 @@ public class MainForm extends javax.swing.JFrame {
         tblAdmin = new javax.swing.JTable();
         adminPanel = new javax.swing.JPanel();
         btnAddUser = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnAdminReload = new javax.swing.JButton();
         cmbViewControl = new javax.swing.JComboBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -103,8 +105,13 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
-        jButton2.setText("Search");
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
+        btnSearch.setText("Search");
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jHeaderLayout = new javax.swing.GroupLayout(jHeader);
         jHeader.setLayout(jHeaderLayout);
@@ -114,7 +121,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(txtSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
-                .addComponent(jButton2)
+                .addComponent(btnSearch)
                 .addGap(14, 14, 14))
         );
         jHeaderLayout.setVerticalGroup(
@@ -123,7 +130,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(btnSearch))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
@@ -294,10 +301,10 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Reload");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnAdminReload.setText("Reload");
+        btnAdminReload.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnAdminReloadActionPerformed(evt);
             }
         });
 
@@ -311,7 +318,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(cmbViewControl, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAdminReload, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(btnAddUser)
                 .addContainerGap(70, Short.MAX_VALUE))
@@ -323,7 +330,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(adminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddUser)
                     .addComponent(cmbViewControl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(btnAdminReload))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
 
@@ -441,9 +448,6 @@ public class MainForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblStudentMouseClicked
 
-    private void txtSearchFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchFieldCaretUpdate
-    }//GEN-LAST:event_txtSearchFieldCaretUpdate
-
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
         AddUser au = new AddUser(this, false);
         au.setTitle(usrName);
@@ -462,14 +466,26 @@ public class MainForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tblAdminMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnAdminReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminReloadActionPerformed
         int index = cmbViewControl.getSelectedIndex();
         switch (index) {
             case 1:
 
                 break;
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnAdminReloadActionPerformed
+
+    private void txtSearchFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchFieldCaretUpdate
+        String patterm = txtSearchField.getText();
+        if (patterm.length() == 0) {
+            stm.reloadTable();
+        }
+        stm.filterTable(patterm);
+    }//GEN-LAST:event_txtSearchFieldCaretUpdate
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        stm.reloadTable();
+    }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
      * @param args the command line arguments
@@ -485,16 +501,22 @@ public class MainForm extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
+
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainForm.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -509,13 +531,13 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel adminPanel;
     private javax.swing.JButton btnAddStudent;
     private javax.swing.JButton btnAddUser;
+    private javax.swing.JButton btnAdminReload;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnStuNext;
     private javax.swing.JButton btnUpdateStudent;
     private javax.swing.JComboBox cmbViewControl;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JPanel homePanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
     private javax.swing.JPanel jHeader;
     private javax.swing.JLabel jLabel1;
