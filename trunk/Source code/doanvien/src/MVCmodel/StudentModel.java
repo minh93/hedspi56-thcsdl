@@ -11,18 +11,40 @@ import javax.swing.table.AbstractTableModel;
  */
 public class StudentModel extends AbstractTableModel {
 
-    private ArrayList<Student> list;
+    private ArrayList<Student> listToUse;
+    private ArrayList<Student> listOrgin;
     private int currentPage;
     private int numOfPage;
 
     public StudentModel(ArrayList<Student> list) {
-        this.list = list;
+        listOrgin = list;
+        listToUse = new ArrayList<>();
+        for (Student s : listOrgin) {
+            listToUse.add(s);
+        }
+        this.listToUse = list;
         if (list.size() > 20) {
             numOfPage = (int) list.size() / 20 + 1;
         } else {
             numOfPage = 1;
         }
         currentPage = 1;
+    }
+
+    public void filterTable(String patterm) {
+        listToUse.clear();
+        for (Student s : listOrgin) {
+            String strOrgin = s.getF_Name() + s.getL_Name() + s.getAddress() + s.getClassID() + "";
+            if (strOrgin.indexOf(patterm) > 0) {
+                listToUse.add(s);
+            }
+        }
+        fireTableDataChanged();
+    }
+
+    public void reloadTable() {
+        listToUse = (ArrayList<Student>) listOrgin.clone();
+        fireTableDataChanged();
     }
 
     public int getNumOfPage() {
@@ -44,7 +66,7 @@ public class StudentModel extends AbstractTableModel {
     }
 
     public void addStudent(Student b) {
-        this.list.add(b);
+        this.listToUse.add(b);
         fireTableDataChanged();
     }
 
@@ -70,8 +92,8 @@ public class StudentModel extends AbstractTableModel {
 
     public Student getStudent(int currentIndex, int currentPage) {
         int index = currentIndex + (currentPage - 1) * 20;
-        if (index < list.size()) {
-            return list.get(index);
+        if (index < listToUse.size()) {
+            return listToUse.get(index);
         } else {
             return null;
         }
@@ -79,9 +101,9 @@ public class StudentModel extends AbstractTableModel {
 
     public Student removeStudent(int currentIndex, int currentPage) {
         int index = currentIndex + (currentPage - 1) * 20;
-        if (index < list.size()) {
-            Student b = list.get(index);
-            list.remove(index);
+        if (index < listToUse.size()) {
+            Student b = listToUse.get(index);
+            listToUse.remove(index);
             fireTableDataChanged();
             return b;
         } else {
@@ -91,12 +113,12 @@ public class StudentModel extends AbstractTableModel {
 
     @Override
     public int getRowCount() {
-        if (list.size() > 20 && currentPage < numOfPage) {
+        if (listToUse.size() > 20 && currentPage < numOfPage) {
             return 20;
         } else if (currentPage == numOfPage) {
-            return list.size() - (currentPage - 1) * 20;
+            return listToUse.size() - (currentPage - 1) * 20;
         } else {
-            return list.size();
+            return listToUse.size();
         }
     }
 
@@ -107,12 +129,12 @@ public class StudentModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Student b = list.get(rowIndex + (currentPage - 1) * 20);
+        Student b = listToUse.get(rowIndex + (currentPage - 1) * 20);
         switch (columnIndex) {
             case 0:
                 return b.getStudentID();
             case 1:
-                return b.getF_Name()+' '+b.getL_Name();
+                return b.getF_Name() + ' ' + b.getL_Name();
             case 2:
                 return b.getAddress();
             case 3:
