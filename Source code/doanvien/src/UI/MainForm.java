@@ -4,6 +4,14 @@
  */
 package UI;
 
+import DButitilies.RetrieveData;
+import Entities.Student;
+import Entities.User;
+import MVCmodel.StudentModel;
+import MVCmodel.UserModel;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author PhamDucMinh
@@ -21,11 +29,26 @@ public class MainForm extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Hi! " + usrName);
-        
+        loadData();
+        if (role == 1) {
+            loadDataForAdmin();
+        }
+
     }
 
-    MainForm() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void loadData() {
+        ArrayList<Student> stuList = RetrieveData.getAllStudent();
+        StudentModel stm = new StudentModel(stuList);
+        tblStudent.setModel(stm);
+    }
+
+    public void loadDataForAdmin() {
+        UserModel um = new UserModel(RetrieveData.getAllUser());
+        tblAdmin.setModel(um);
+    }
+
+    public UserModel getUsermodel() {
+        return (UserModel) tblAdmin.getModel();
     }
 
     /**
@@ -38,22 +61,27 @@ public class MainForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jHeader = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtSearchField = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
         jMainPanel = new javax.swing.JPanel();
         mainTabbed = new javax.swing.JTabbedPane();
         homePanel = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
         studentPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        tblStudent = new javax.swing.JTable();
+        btnAddStudent = new javax.swing.JButton();
+        btnUpdateStudent = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        stuTblPrevious = new javax.swing.JButton();
+        btnStuNext = new javax.swing.JButton();
+        txtStuTblPage = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         orgPanel = new javax.swing.JPanel();
         eventPanel = new javax.swing.JPanel();
         settingPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAdmin = new javax.swing.JTable();
         adminPanel = new javax.swing.JPanel();
         btnAddUser = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -69,6 +97,12 @@ public class MainForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        txtSearchField.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtSearchFieldCaretUpdate(evt);
+            }
+        });
+
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         jButton2.setText("Search");
 
@@ -78,7 +112,7 @@ public class MainForm extends javax.swing.JFrame {
             jHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jHeaderLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(jButton2)
                 .addGap(14, 14, 14))
@@ -88,26 +122,43 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jHeaderLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addContainerGap(32, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 468, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 222, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 860, Short.MAX_VALUE)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(382, Short.MAX_VALUE))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 467, Short.MAX_VALUE)
+            .addGroup(homePanelLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(217, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/Home.png")), homePanel); // NOI18N
         homePanel.getAccessibleContext().setAccessibleDescription("");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblStudent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -118,13 +169,29 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        tblStudent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblStudentMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblStudent);
 
-        jButton3.setText("jButton3");
+        btnAddStudent.setText("Add ");
+        btnAddStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddStudentActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("jButton4");
+        btnUpdateStudent.setText("Update");
 
-        jButton5.setText("jButton5");
+        jButton5.setText("Refresh");
+
+        stuTblPrevious.setText("Previous");
+
+        btnStuNext.setText("Next");
+
+        jLabel1.setText("/");
 
         javax.swing.GroupLayout studentPanelLayout = new javax.swing.GroupLayout(studentPanel);
         studentPanel.setLayout(studentPanelLayout);
@@ -134,25 +201,41 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 850, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(studentPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton3)
+                .addGap(24, 24, 24)
+                .addComponent(btnAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(btnUpdateStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
-                .addGap(162, 162, 162))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(stuTblPrevious)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtStuTblPage, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addGap(30, 30, 30)
+                .addComponent(btnStuNext, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70))
         );
         studentPanelLayout.setVerticalGroup(
             studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
+                    .addComponent(stuTblPrevious)
+                    .addComponent(txtStuTblPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnStuNext))
+                .addGap(49, 49, 49)
+                .addGroup(studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddStudent)
+                    .addComponent(btnUpdateStudent)
                     .addComponent(jButton5))
-                .addContainerGap(144, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/student.png")), studentPanel); // NOI18N
@@ -183,7 +266,7 @@ public class MainForm extends javax.swing.JFrame {
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/event.png")), eventPanel); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAdmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -194,14 +277,29 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAdminMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblAdmin);
 
         adminPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Admin tool"));
         adminPanel.setName(""); // NOI18N
 
         btnAddUser.setText("Add user");
+        btnAddUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddUserActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Reload");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         cmbViewControl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "User list", "All log" }));
 
@@ -328,6 +426,51 @@ public class MainForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
+    private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddStudentActionPerformed
+
+    private void tblStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStudentMouseClicked
+        int currentIndex = tblStudent.getSelectedRow();
+        StudentModel sm = (StudentModel) tblStudent.getModel();
+        int currentPage = sm.getCurrentPage();
+        Student s = sm.getStudent(currentIndex, currentPage);
+        if (s != null) {
+            AddStudent as = new AddStudent(this, false, "Update", s);
+            as.setVisible(true);
+        }
+    }//GEN-LAST:event_tblStudentMouseClicked
+
+    private void txtSearchFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchFieldCaretUpdate
+    }//GEN-LAST:event_txtSearchFieldCaretUpdate
+
+    private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
+        AddUser au = new AddUser(this, false);
+        au.setTitle(usrName);
+        au.setVisible(true);
+    }//GEN-LAST:event_btnAddUserActionPerformed
+
+    private void tblAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAdminMouseClicked
+        int index = tblAdmin.getSelectedRow();
+        UserModel um = (UserModel) tblAdmin.getModel();
+        User u = um.getUser(index);
+
+        int result = JOptionPane.showConfirmDialog(this, "Delete user", "Notice !", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.YES_OPTION) {
+            RetrieveData.deleteUser(u.getUserName());
+        }
+
+    }//GEN-LAST:event_tblAdminMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int index = cmbViewControl.getSelectedIndex();
+        switch (index) {
+            case 1:
+
+                break;
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -364,16 +507,18 @@ public class MainForm extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel adminPanel;
+    private javax.swing.JButton btnAddStudent;
     private javax.swing.JButton btnAddUser;
+    private javax.swing.JButton btnStuNext;
+    private javax.swing.JButton btnUpdateStudent;
     private javax.swing.JComboBox cmbViewControl;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JPanel homePanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JPanel jHeader;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jMainPanel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -383,14 +528,17 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTabbedPane mainTabbed;
     private javax.swing.JPanel orgPanel;
     private javax.swing.JPanel settingPanel;
+    private javax.swing.JButton stuTblPrevious;
     private javax.swing.JPanel studentPanel;
+    private javax.swing.JTable tblAdmin;
+    private javax.swing.JTable tblStudent;
+    private javax.swing.JTextField txtSearchField;
+    private javax.swing.JTextField txtStuTblPage;
     // End of variables declaration//GEN-END:variables
 }
