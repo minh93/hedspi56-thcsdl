@@ -34,6 +34,7 @@ CREATE TABLE "Student"
 "F_Name" CHARACTER VARYING(20),
 "L_Name" CHARACTER VARYING(20),
 "Birth" DATE,
+"Gender" BOOLEAN,
 "Tel" CHARACTER VARYING(15),
 "Mail" CHARACTER VARYING(50),
 "Address" CHARACTER VARYING(50),
@@ -110,8 +111,7 @@ CONSTRAINT "Key" PRIMARY KEY ("UserName")
 CREATE TABLE "Log"
 (
 "UserName" CHARACTER VARYING(100) NOT NULL,
-"LoginTime" CHARACTER VARYING(30),
-"LogoutTime" CHARACTER VARYING(30),
+"Time" CHARACTER VARYING(30),
 "Action" CHARACTER VARYING(65),
 CONSTRAINT "Key2" FOREIGN KEY ("UserName")
 	REFERENCES "Account" ("UserName") MATCH SIMPLE
@@ -126,11 +126,19 @@ WHERE "UserName" = $1 AND "Password" = $2 $$
 LANGUAGE SQL;
 
 CREATE FUNCTION insertStudent(stuID CHARACTER(20),f_name CHARACTER(20),l_name CHARACTER(20),
-								birth DATE,tel CHARACTER(15),mail CHARACTER(50),address CHARACTER(50),ClaID CHARACTER(10),des CHARACTER(100))
+								birth DATE,gender BOOLEAN,tel CHARACTER(15),mail CHARACTER(50),address CHARACTER(50),ClaID CHARACTER(10),des CHARACTER(100))
 RETURNS VOID
 AS
 $$INSERT INTO "Student"
-VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,1)
+VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,1)
+$$
+LANGUAGE SQL;
+
+CREATE FUNCTION insertUser(usrName CHARACTER(100), usrContact CHARACTER(100), usrPass CHARACTER(65), usrRole INT)
+RETURNS VOID
+AS
+$$INSERT INTO "Account"
+VALUES($1,$2,$3,$4)
 $$
 LANGUAGE SQL;
 --Sample data
@@ -145,16 +153,16 @@ INSERT INTO "Class" VALUES ('NB04','Nhật Bản 4',2010,NULL,'NN');
 INSERT INTO "Class" VALUES ('VN6A','Việt Nhật 6A',2011,NULL,'CNTT');
 INSERT INTO "Class" VALUES ('VN6B','Việt Nhật 6B',2011,NULL,'CNTT');
 
-INSERT INTO "Student" VALUES ('20042152','Lê Anh','Ngọc','1989-10-21','0123211089','20042152@gmail.com','Bắc Giang','VN6A','Còn học',1);
-INSERT INTO "Student" VALUES ('20042366','Nguyễn Hữu','Phước','1985-04-25','0123250485','20042366@gmail.com','Thái Bình','VN6B','Còn học',1);
-INSERT INTO "Student" VALUES ('20042415','Phạm Lê Duy','Quang','1986-12-01','0123011286','20042415@gmail.com','Hà Nội','DT2','Còn học',1);
-INSERT INTO "Student" VALUES ('20042443','Nguyễn Hồng','Quân','1986-09-02','0123020986','20042443@gmail.com','Hà Nội','NB04','Còn học',1);
-INSERT INTO "Student" VALUES ('20042486','Vũ Văn','Quyền','1986-06-06','0123060686','20042486@gmail.com','Hải Phòng','CK10','Còn học',1);
-INSERT INTO "Student" VALUES ('20042619','Vũ Hoàng','Sơn','1986-03-19','01231903086','20042619@gmail.com','An Giang','DT2','Còn học',1);
-INSERT INTO "Student" VALUES ('20042947','Bùi Văn','Thịnh','1986-03-07','0123030786','20042947@gmail.com','Thanh Hóa','CK10','Còn học',1);
-INSERT INTO "Student" VALUES ('20042950','Dương Đức','Thịnh','1986-03-05','0123030586','20042950@gmail.com','Thái Nguyên','VN6A','Còn học',1);
-INSERT INTO "Student" VALUES ('20042966','Bùi Đức','Thọ','1986-03-18','0123180386','20042966@gmail.com','Bắc Ninh','NB04','Còn học',1);
-INSERT INTO "Student" VALUES ('20043050','Lê Văn','Thục','1986-03-24','0123240386','20043050@gmail.com','Cao Bằng','VN6B','Còn học',1);
+INSERT INTO "Student" VALUES ('20042152','Lê Anh','Ngọc','1989-10-21',true,'0123211089','20042152@gmail.com','Bắc Giang','VN6A','Còn học',1);
+INSERT INTO "Student" VALUES ('20042366','Nguyễn Hữu','Phước','1985-04-25',false,'0123250485','20042366@gmail.com','Thái Bình','VN6B','Còn học',1);
+INSERT INTO "Student" VALUES ('20042415','Phạm Lê Duy','Quang','1986-12-01',true,'0123011286','20042415@gmail.com','Hà Nội','DT2','Còn học',1);
+INSERT INTO "Student" VALUES ('20042443','Nguyễn Hồng','Quân','1986-09-02',true,'0123020986','20042443@gmail.com','Hà Nội','NB04','Còn học',1);
+INSERT INTO "Student" VALUES ('20042486','Vũ Văn','Quyền','1986-06-06',false,'0123060686','20042486@gmail.com','Hải Phòng','CK10','Còn học',1);
+INSERT INTO "Student" VALUES ('20042619','Vũ Hoàng','Sơn','1986-03-19',true,'01231903086','20042619@gmail.com','An Giang','DT2','Còn học',1);
+INSERT INTO "Student" VALUES ('20042947','Bùi Văn','Thịnh','1986-03-07',false,'0123030786','20042947@gmail.com','Thanh Hóa','CK10','Còn học',1);
+INSERT INTO "Student" VALUES ('20042950','Dương Đức','Thịnh','1986-03-05',true,'0123030586','20042950@gmail.com','Thái Nguyên','VN6A','Còn học',1);
+INSERT INTO "Student" VALUES ('20042966','Bùi Đức','Thọ','1986-03-18',true,'0123180386','20042966@gmail.com','Bắc Ninh','NB04','Còn học',1);
+INSERT INTO "Student" VALUES ('20043050','Lê Văn','Thục','1986-03-24',false,'0123240386','20043050@gmail.com','Cao Bằng','VN6B','Còn học',1);
 
 UPDATE "Class" SET "MoniterID" = '20042947' WHERE "ClaID" = 'CK10';
 UPDATE "Class" SET "MoniterID" = '20042619' WHERE "ClaID" = 'DT2';
