@@ -69,11 +69,12 @@ public class RetrieveData {
                         rs.getString(3),
                         rs.getDate(4),
                         rs.getBoolean(5),
-                        rs.getString(6),
+                        rs.getInt(6),
                         rs.getString(7),
                         rs.getString(8),
                         rs.getString(9),
-                        rs.getString(10));
+                        rs.getString(10),
+                        rs.getString(11));
                 list.add(s);
             }
             conn.close();
@@ -118,7 +119,7 @@ public class RetrieveData {
         return list;
     }
 
-    public int insertStudent(Student s) {
+    public static int insertStudent(Student s) {
         int result = -1;
         try {
             ConnectFactory cf = new ConnectFactory();
@@ -128,11 +129,13 @@ public class RetrieveData {
             cs.setString(2, s.getF_Name());
             cs.setString(3, s.getL_Name());
             cs.setDate(4, (Date) s.getBirth());
-            cs.setString(5, s.getTel());
-            cs.setString(6, s.getMail());
-            cs.setString(7, s.getAddress());
-            cs.setString(8, s.getClassID());
-            cs.setString(9, s.getDescription());
+            cs.setBoolean(5, s.getGender());
+            cs.setInt(6, s.getYear());
+            cs.setString(7, s.getTel());
+            cs.setString(8, s.getMail());
+            cs.setString(9, s.getAddress());
+            cs.setString(10, s.getClassID());
+            cs.setString(11, s.getDescription());
             ResultSet rs = cs.executeQuery();
             result = cs.executeUpdate();
             return result;
@@ -143,16 +146,16 @@ public class RetrieveData {
 
     }
 
-    public boolean updateStudent(String studentID, String newTel, String newAddress, String newEmail) {
-         try {
-            ConnectFactory cf= new ConnectFactory();
-            Connection conn =cf.getConn();
-            PreparedStatement cs= conn.prepareStatement("UPDATE \"Student\" SET \"Tel\"=?,\"Address\"=?, \"Mail\"=? WHERE \"StuID\"=?");
-            cs.setString(4,studentID);
-            cs.setString(1,newTel);
-            cs.setString(2,newAddress);
-            cs.setString(3,newEmail);
-            
+    public static boolean updateStudent(String studentID, String newTel, String newAddress, String newEmail) {
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("UPDATE \"Student\" SET \"Tel\"=?,\"Address\"=?, \"Mail\"=? WHERE \"StuID\"=?");
+            cs.setString(4, studentID);
+            cs.setString(1, newTel);
+            cs.setString(2, newAddress);
+            cs.setString(3, newEmail);
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -160,7 +163,7 @@ public class RetrieveData {
         }
     }
 
-    public int deleteStudentByID(String id) {
+    public static int deleteStudentByID(String id) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
@@ -175,86 +178,34 @@ public class RetrieveData {
         }
     }
 
-    public boolean insertDept(Department d) {
+    public static boolean insertDept(Department d) {
         try {
-            ConnectFactory cf= new ConnectFactory();
-            Connection conn =cf.getConn();
-            PreparedStatement cs= conn.prepareStatement("INSERT INTO \"Departmant\" VALUES (?,?,?,?)");
-            cs.setString(1,d.getID());
-            cs.setString(2,d.getName());
-            cs.setString(3,d.getTel());
-            cs.setString(4,d.getMail());
-            
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("INSERT INTO \"Departmant\" VALUES (?,?,?,?)");
+            cs.setString(1, d.getID());
+            cs.setString(2, d.getName());
+            cs.setString(3, d.getTel());
+            cs.setString(4, d.getMail());
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-       
+
     }
 
-    public boolean updateDept(String deptID, String newTel, String newEmail) {
-              try {
-            ConnectFactory cf= new ConnectFactory();
-            Connection conn =cf.getConn();
-            PreparedStatement cs= conn.prepareStatement("UPDATE \"Department\" SET \"Tel\"=?, \"Mail\"=? WHERE \"DeptID\"=?");
-            cs.setString(1,newTel);
-            cs.setString(2,newEmail);
-            cs.setString(3,deptID);
-            
-            
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
-
-    public boolean deleteDeptByID(String deptID) {
-          try {
-            ConnectFactory cf= new ConnectFactory();
-            Connection conn =cf.getConn();
-            PreparedStatement cs= conn.prepareStatement("DELETE FROM \"Department\" WHERE \"DeptID\"=?");
-            cs.setString(1,deptID);
- 
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-       
-    }
-
-    public boolean insertClass(ClassStu c) {
+    public static boolean updateDept(String deptID, String newTel, String newEmail) {
         try {
-            ConnectFactory cf= new ConnectFactory();
-            Connection conn =cf.getConn();
-            PreparedStatement cs= conn.prepareStatement("INSERT INTO \"Class\" VALUES (?,?,?,?,?)");
-            cs.setString(1,c.getClaID());
-            cs.setString(2,c.getClaName());
-            cs.setInt(3,c.getYear());
-            cs.setString(4,c.getMoniterID());
-            cs.setString(5,c.getDeptID());
-            
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-       
-    }
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("UPDATE \"Department\" SET \"Tel\"=?, \"Mail\"=? WHERE \"DeptID\"=?");
+            cs.setString(1, newTel);
+            cs.setString(2, newEmail);
+            cs.setString(3, deptID);
 
-    public boolean updateClass(String classID, String newYear, String newMoniterID,String NewDeptID) {
-         try {
-            ConnectFactory cf= new ConnectFactory();
-            Connection conn =cf.getConn();
-            PreparedStatement cs= conn.prepareStatement("UPDATE \"Class\" SET \"ClaName\"=?, \"Year\"=?,\"MoniterID\"=?,\"DeptID\"=? WHERE \"ClaID\"=?");
-            cs.setString(1,newYear);
-            cs.setString(2,newMoniterID);
-            cs.setString(3,NewDeptID);
-            cs.setString(4,classID);
-            
-            
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,19 +213,75 @@ public class RetrieveData {
         }
     }
 
-    public boolean deleteClassByID(String classID) {
-         try {
-            ConnectFactory cf= new ConnectFactory();
-            Connection conn =cf.getConn();
-            PreparedStatement cs= conn.prepareStatement("DELETE FROM \"Class\" WHERE \"ClaID\"=?");
-            cs.setString(1,classID);
- 
+    public static boolean deleteDeptByID(String deptID) {
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Department\" WHERE \"DeptID\"=?");
+            cs.setString(1, deptID);
+
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
-       
+
+    }
+
+    public static boolean insertClass(ClassStu c) {
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("INSERT INTO \"Class\" VALUES (?,?,?,?,?)");
+            cs.setString(1, c.getClaID());
+            cs.setString(2, c.getClaName());
+            cs.setInt(3, c.getYear());
+            cs.setString(4, c.getMoniterID());
+            cs.setString(5, c.getDeptID());
+            int result = cs.executeUpdate();
+            if (result == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+    }
+
+    public static boolean updateClass(String classID, String newYear, String newMoniterID, String NewDeptID) {
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("UPDATE \"Class\" SET \"ClaName\"=?, \"Year\"=?,\"MoniterID\"=?,\"DeptID\"=? WHERE \"ClaID\"=?");
+            cs.setString(1, newYear);
+            cs.setString(2, newMoniterID);
+            cs.setString(3, NewDeptID);
+            cs.setString(4, classID);
+
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public static boolean deleteClassByID(String classID) {
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Class\" WHERE \"ClaID\"=?");
+            cs.setString(1, classID);
+
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
     }
 
     public static ArrayList<User> getAllUser() {

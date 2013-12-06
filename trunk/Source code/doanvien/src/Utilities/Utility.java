@@ -93,7 +93,7 @@ public class Utility {
             return date;
         } catch (ParseException e) {
             e.printStackTrace();
+            return null;
         }
-        return null;
     }
 }

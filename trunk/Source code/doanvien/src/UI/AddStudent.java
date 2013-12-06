@@ -4,8 +4,13 @@
  */
 package UI;
 
+import DButitilies.RetrieveData;
 import Entities.Student;
 import Utilities.Utility;
+import java.util.ArrayList;
+import java.util.Date;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -23,14 +28,37 @@ public class AddStudent extends javax.swing.JDialog {
         this.setResizable(false);
         initForm(mode, s);
     }
-    
+
     public void initForm(String mode, Student s) {
+        ArrayList<String> className = RetrieveData.getAllClassName();
+        DefaultComboBoxModel cbxClassModel = new DefaultComboBoxModel();
+        for (String tem : className) {
+            cbxClassModel.addElement(tem);
+        }
+        cbxClass.setModel(cbxClassModel);
         if (mode.compareTo("Add") == 0) {
-            btnUpdate.setEnabled(false);
+            if (checkBlankInputfield()) {
+                btnUpdate.setEnabled(false);
+                String F_name = txtStudentF_Name.getText();
+                String L_name = txtStudentL_Name.getText();
+                String ID = txtStudentID.getText();
+                Date birth = Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd");
+                String tel = txtStudentTel.getText();
+                String address = txtStudentAddress.getText();
+                String des = txtStudentDes.getText();
+                boolean gender;
+                if (jrdMale.isSelected()) {
+                    gender = true;
+                } else if (jrdFemale.isSelected()) {
+                    gender = false;
+                }
+                int year = Integer.parseInt(txtYear.getText());
+
+            }
         } else if (mode.compareTo("Update") == 0) {
             txtStudentID.setText(s.getStudentID());
             txtStudentF_Name.setText(s.getF_Name());
-            txtStudentL_Name.setText(s.getL_Name());            
+            txtStudentL_Name.setText(s.getL_Name());
             txtStudentAddress.setText(s.getAddress());
             txtStudentMail.setText(s.getMail());
             txtStudentTel.setText(s.getTel());
@@ -44,10 +72,28 @@ public class AddStudent extends javax.swing.JDialog {
             txtStudentID.setEnabled(false);
             txtStudentF_Name.setEnabled(false);
             txtStudentL_Name.setEnabled(false);
-            
+
             btnCreate.setEnabled(false);
-            
+
         }
+    }
+
+    private boolean checkBlankInputfield() {
+        boolean check = false;
+        if (txtStudentID.getText().compareTo("") == 0 || txtStudentF_Name.getText().compareTo("") == 0
+                || txtStudentL_Name.getText().compareTo("") == 0
+                || txtStudentAddress.getText().compareTo("") == 0
+                || txtStudentTel.getText().compareTo("") == 0 || jrdFemale.isSelected() || jrdMale.isSelected()) {
+            check = false;
+        } else {
+            check = true;
+        }
+        if (Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd") != null) {
+            check = true;
+        } else {
+            check = false;
+        }
+        return check;
     }
 
     /**
@@ -68,7 +114,7 @@ public class AddStudent extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        cbxClass = new javax.swing.JComboBox();
         jLabel9 = new javax.swing.JLabel();
         txtStudentID = new javax.swing.JTextField();
         txtStudentF_Name = new javax.swing.JTextField();
@@ -87,6 +133,8 @@ public class AddStudent extends javax.swing.JDialog {
         jrdMale = new javax.swing.JRadioButton();
         jrdFemale = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        txtYear = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -101,7 +149,7 @@ public class AddStudent extends javax.swing.JDialog {
 
         jLabel8.setText("Class:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/student.png"))); // NOI18N
 
@@ -112,8 +160,18 @@ public class AddStudent extends javax.swing.JDialog {
         jLabel10.setText("Note:");
 
         btnCreate.setText("Create");
+        btnCreate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCreateActionPerformed(evt);
+            }
+        });
 
         btnUpdate.setText("Update");
+        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUpdateActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Birth:");
 
@@ -126,6 +184,8 @@ public class AddStudent extends javax.swing.JDialog {
         jrdFemale.setText("Female");
 
         jLabel2.setText("Gender:");
+
+        jLabel13.setText("Year:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -162,11 +222,17 @@ public class AddStudent extends javax.swing.JDialog {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtStudentAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtStudentID, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtStudentTel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(txtStudentF_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtStudentL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(txtStudentTel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jLabel13)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtYear))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                            .addComponent(txtStudentF_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(txtStudentL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addContainerGap(49, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -175,12 +241,6 @@ public class AddStudent extends javax.swing.JDialog {
                                         .addGap(9, 9, 9)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jScrollPane1)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jLabel11)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(txtStudentBirth))
                                             .addGroup(jPanel1Layout.createSequentialGroup()
                                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -191,7 +251,13 @@ public class AddStudent extends javax.swing.JDialog {
                                                         .addComponent(btnCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(38, 38, 38)
                                                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                                .addComponent(cbxClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(jLabel11)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(txtStudentBirth)))))
                                 .addGap(28, 28, 28))))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -217,7 +283,9 @@ public class AddStudent extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtStudentTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel13)
+                            .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -229,7 +297,7 @@ public class AddStudent extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbxClass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtStudentBirth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addGap(18, 18, 18)
@@ -254,6 +322,23 @@ public class AddStudent extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
+        Boolean check = false;
+        Date dob = Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd");
+        if (dob == null) {
+            JOptionPane.showMessageDialog(rootPane, "Invalid date of birth !", "Information", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            check = true;
+        }
+        if (txtStudentID.getText().compareTo("") == 0 || txtStudentL_Name.getText().compareTo("") == 0) {
+        }
+
+    }//GEN-LAST:event_btnCreateActionPerformed
+
+    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnUpdateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,17 +368,18 @@ public class AddStudent extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
-        
+        (new AddStudent(null, true, "Add", null)).setVisible(true);
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCreate;
     private javax.swing.ButtonGroup btnGender;
     private javax.swing.JButton btnUpdate;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox cbxClass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -314,5 +400,6 @@ public class AddStudent extends javax.swing.JDialog {
     private javax.swing.JTextField txtStudentL_Name;
     private javax.swing.JTextField txtStudentMail;
     private javax.swing.JTextField txtStudentTel;
+    private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables
 }

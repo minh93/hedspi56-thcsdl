@@ -22,7 +22,7 @@ public class GetLastestNewTest {
      */
     @Test
     public void testGetHTML() {
-        GetLastestNew gln = new GetLastestNew("http://ctsv.hust.edu.vn/tabid/506/default.aspx", "(<a href=\"http://ctsv.hust.edu.vn/TabId/562/ArticleId/1065/PreTabId/506/Default.aspx\">([a-zA-Z]++)</a>)");
+        GetLastestNew gln = new GetLastestNew("http://dtdh.hust.edu.vn", "(<a href=\"http://dtdh.hut.edu.vn/content/view/[0-9]++/1/\" class=\"contentpagetitle\">(.+)</a>)");
         gln.getHTML();
         ArrayList<String> list = gln.getNewsContents(2);
         if (list != null) {

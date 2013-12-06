@@ -13,6 +13,7 @@ public class Student {
     private String L_Name;
     private Date Birth;
     private Boolean Gender;
+    private int Year;
     private String Tel;
     private String Mail;
     private String Address;
@@ -20,12 +21,13 @@ public class Student {
     private String Description;
 
     public Student(String studentID, String F_Name, String L_Name, Date Birth,
-            Boolean Gender, String Tel, String Mail, String Address, String ClassID, String Description) {
+            Boolean Gender, int Year, String Tel, String Mail, String Address, String ClassID, String Description) {
         this.studentID = studentID;
         this.F_Name = F_Name;
         this.L_Name = L_Name;
         this.Birth = Birth;
         this.Gender = Gender;
+        this.Year = Year;
         this.Tel = Tel;
         this.Mail = Mail;
         this.Address = Address;
@@ -50,6 +52,10 @@ public class Student {
 
     public Date getBirth() {
         return Birth;
+    }
+
+    public void setYear(int Year) {
+        this.Year = Year;
     }
 
     public Boolean getGender() {
@@ -100,6 +106,10 @@ public class Student {
         this.Tel = Tel;
     }
 
+    public int getYear() {
+        return Year;
+    }
+
     public void setMail(String Mail) {
         this.Mail = Mail;
     }
@@ -115,4 +125,5 @@ public class Student {
     public void setDescription(String Description) {
         this.Description = Description;
     }
+        
 }
