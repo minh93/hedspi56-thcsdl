@@ -484,7 +484,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSearchFieldCaretUpdate
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        stm.reloadTable();
+        stm.reloadTable();                
     }//GEN-LAST:event_btnSearchActionPerformed
 
     /**
