@@ -1,4 +1,4 @@
-﻿CREATE DATABASE qldv
+CREATE DATABASE qldv
   WITH OWNER = postgres
        ENCODING = 'UTF8'
        TABLESPACE = pg_default      
@@ -35,6 +35,7 @@ CREATE TABLE "Student"
 "L_Name" CHARACTER VARYING(20),
 "Birth" DATE,
 "Gender" BOOLEAN,
+"Year" INT,
 "Tel" CHARACTER VARYING(15),
 "Mail" CHARACTER VARYING(50),
 "Address" CHARACTER VARYING(50),
@@ -65,6 +66,7 @@ CREATE TABLE "Participation"
 "Start" DATE,
 "End" DATE,
 "Description" CHARACTER VARYING(256),
+"Status" INT,
 CONSTRAINT "partPry" PRIMARY KEY ("StuID","OrgID"),
 CONSTRAINT "partRef_Stu" FOREIGN KEY ("StuID")
 	REFERENCES "Student" ("StuID") MATCH SIMPLE,
