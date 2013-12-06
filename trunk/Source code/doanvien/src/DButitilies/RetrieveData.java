@@ -2,6 +2,7 @@ package DButitilies;
 
 import Entities.ClassStu;
 import Entities.Department;
+import Entities.Event;
 import Entities.Student;
 import Entities.User;
 import Utilities.Utility;
@@ -327,4 +328,110 @@ public class RetrieveData {
             return result;
         }
     }
+    
+       public boolean insertEvent(Event c) {
+        try {
+            ConnectFactory cf= new ConnectFactory();
+            Connection conn =cf.getConn();
+            PreparedStatement cs= conn.prepareStatement("INSERT INTO \"Event\" VALUES (?,?,?,?,?,?,?)");
+            cs.setString(1,c.getEvtID());
+            cs.setString(2,c.getEvtName());
+            cs.setString(3,c.getLocation());
+            cs.setDate(4, (Date) c.getStart());
+            cs.setDate(5, (Date) c.getEnd());
+            cs.setInt(6,c.getNumOfPeople());
+            cs.setInt(7, c.getRating());
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+       
+    }
+
+    public boolean deleteEvent(String EventID,String EventName) {
+         try {
+            ConnectFactory cf= new ConnectFactory();
+            Connection conn =cf.getConn();
+            PreparedStatement cs= conn.prepareStatement("DELETE FROM \"Event\" WHERE \"EventID\"=? OR \"EventName\"=?");
+            cs.setString(1,EventID);
+            cs.setString(2,EventName);
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
+      public boolean insertOrg(String OrgID, String OrgName,String Par ,String Manager, String Mail, String Tel) {
+        try {
+            ConnectFactory cf= new ConnectFactory();
+            Connection conn =cf.getConn();
+            PreparedStatement cs= conn.prepareStatement("INSERT INTO \"Organization\" VALUES (?,?,?,?,?,?)");
+            cs.setString(1,OrgID);
+            cs.setString(2,OrgName);
+            cs.setString(3,Par);
+            cs.setString(4,Manager);
+            cs.setString(5,Mail);
+            cs.setString(6,Tel);
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+       
+    }
+
+    public boolean deleteOrg(String OrgID,String OrgName) {
+         try {
+            ConnectFactory cf= new ConnectFactory();
+            Connection conn =cf.getConn();
+            PreparedStatement cs= conn.prepareStatement("DELETE FROM \"Organization\" WHERE \"OrgtID\"=? OR \"OrgName\"=?");
+            cs.setString(1,OrgID);
+            cs.setString(2,OrgName);
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+      public boolean insertPar(String StuID, String OrgID,String Role ,Date Start, Date End, String Description) {
+        try {
+            ConnectFactory cf= new ConnectFactory();
+            Connection conn =cf.getConn();
+            PreparedStatement cs= conn.prepareStatement("INSERT INTO \"Participation\" VALUES (?,?,?,?,?,?)");
+            cs.setString(1,StuID);
+            cs.setString(2,OrgID);
+            cs.setString(3,Role);
+            cs.setDate(4,Start);
+            cs.setDate(5,End);
+            cs.setString(6,Description);
+            
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+       
+    }
+
+    public boolean deleteOrg(String StuID) {
+         try {
+            ConnectFactory cf= new ConnectFactory();
+            Connection conn =cf.getConn();
+            PreparedStatement cs= conn.prepareStatement("DELETE FROM \"Participation\" WHERE \"StuID\"=?");
+            cs.setString(1,StuID);
+         
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+    
 }
