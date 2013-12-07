@@ -59,10 +59,11 @@ public class RetrieveDataTest {
     public void testInsertStudent() {
         System.out.println("Test insert student");
         RetrieveData.deleteStudentByID("20112440");
-        Student s = new Student("20112440", "Tran", "Cong", Utility.stringToDate("1993-02-03", "yyyy-MM-dd"), Boolean.TRUE, 2011, "0211521", "mail@gmail.com", "Ha Noi", "DT2", "Con hoc");
+        Student s = new Student("20112440", "Tran", "Cong", Utility.stringToDate("1993-02-03", "yyyy-MM-dd"), 
+                Boolean.TRUE, 2011, "0211521", "mail@gmail.com", "Ha Noi", "DT2", "Con hoc");
         int result = RetrieveData.insertStudent(s);
-        int expResult = 1;
-        RetrieveData.deleteStudentByID("20112440");
+        int expResult = 0;
+        
         assertEquals(expResult, result);
     }
 }
