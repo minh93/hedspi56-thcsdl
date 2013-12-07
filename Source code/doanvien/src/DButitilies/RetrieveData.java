@@ -135,15 +135,12 @@ public class RetrieveData {
             cs.setString(8, s.getMail());
             cs.setString(9, s.getAddress());
             cs.setString(10, s.getClassID());
-            cs.setString(11, s.getDescription());
-            ResultSet rs = cs.executeQuery();
+            cs.setString(11, s.getDescription());            
             result = cs.executeUpdate();
-            return result;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
-            return result;
         }
-
+        return result;
     }
 
     public static boolean updateStudent(String studentID, String newTel, String newAddress, String newEmail) {

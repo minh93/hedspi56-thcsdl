@@ -37,24 +37,7 @@ public class AddStudent extends javax.swing.JDialog {
         }
         cbxClass.setModel(cbxClassModel);
         if (mode.compareTo("Add") == 0) {
-            if (checkBlankInputfield()) {
-                btnUpdate.setEnabled(false);
-                String F_name = txtStudentF_Name.getText();
-                String L_name = txtStudentL_Name.getText();
-                String ID = txtStudentID.getText();
-                Date birth = Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd");
-                String tel = txtStudentTel.getText();
-                String address = txtStudentAddress.getText();
-                String des = txtStudentDes.getText();
-                boolean gender;
-                if (jrdMale.isSelected()) {
-                    gender = true;
-                } else if (jrdFemale.isSelected()) {
-                    gender = false;
-                }
-                int year = Integer.parseInt(txtYear.getText());
-
-            }
+            btnUpdate.setEnabled(false);
         } else if (mode.compareTo("Update") == 0) {
             txtStudentID.setText(s.getStudentID());
             txtStudentF_Name.setText(s.getF_Name());
@@ -63,16 +46,20 @@ public class AddStudent extends javax.swing.JDialog {
             txtStudentMail.setText(s.getMail());
             txtStudentTel.setText(s.getTel());
             txtStudentBirth.setText(Utility.timeToString(s.getBirth(), "dd/mm/yyyy"));
+            txtStudentYear.setText(s.getYear() + "");
             txtStudentDes.setText(s.getDescription());
             if (s.getGender()) {
                 jrdMale.setSelected(true);
             } else {
                 jrdFemale.setSelected(true);
             }
+            String stuClaName = RetrieveData.getClassNameByID(s.getClassID());
+            int cbxIndex = cbxClassModel.getIndexOf(stuClaName);
+            cbxClass.setSelectedIndex(cbxIndex);
+
             txtStudentID.setEnabled(false);
             txtStudentF_Name.setEnabled(false);
             txtStudentL_Name.setEnabled(false);
-
             btnCreate.setEnabled(false);
 
         }
@@ -88,12 +75,34 @@ public class AddStudent extends javax.swing.JDialog {
         } else {
             check = true;
         }
-        if (Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd") != null) {
-            check = true;
+        Date dob = Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd");
+        if (dob == null) {
+            JOptionPane.showMessageDialog(rootPane, "Invalid date of birth !", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            check = false;
+            check = true;
         }
         return check;
+    }
+
+    private Student getDataInput() throws NumberFormatException {
+        String ID = txtStudentID.getText();
+        String F_name = txtStudentF_Name.getText();
+        String L_name = txtStudentL_Name.getText();
+        String tel = txtStudentTel.getText();
+        int year = Integer.parseInt(txtStudentYear.getText());
+        String email = txtStudentMail.getText();
+        String address = txtStudentAddress.getText();
+        String classID = RetrieveData.getClassIDByName((String) cbxClass.getSelectedItem());
+        Date birth = Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd");
+        String des = txtStudentDes.getText();
+        boolean gender = true;
+        if (jrdMale.isSelected()) {
+            gender = true;
+        } else if (jrdFemale.isSelected()) {
+            gender = false;
+        }
+        Student s = new Student(ID, F_name, L_name, birth, gender, year, tel, email, address, classID, des);
+        return s;
     }
 
     /**
@@ -134,7 +143,7 @@ public class AddStudent extends javax.swing.JDialog {
         jrdFemale = new javax.swing.JRadioButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        txtYear = new javax.swing.JTextField();
+        txtStudentYear = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -228,7 +237,7 @@ public class AddStudent extends javax.swing.JDialog {
                                             .addGap(18, 18, 18)
                                             .addComponent(jLabel13)
                                             .addGap(18, 18, 18)
-                                            .addComponent(txtYear))
+                                            .addComponent(txtStudentYear))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                             .addComponent(txtStudentF_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(18, 18, 18)
@@ -285,7 +294,7 @@ public class AddStudent extends javax.swing.JDialog {
                             .addComponent(txtStudentTel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6)
                             .addComponent(jLabel13)
-                            .addComponent(txtYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtStudentYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -324,16 +333,9 @@ public class AddStudent extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-        Boolean check = false;
-        Date dob = Utility.stringToDate(txtStudentBirth.getText(), "yyyy-MM-dd");
-        if (dob == null) {
-            JOptionPane.showMessageDialog(rootPane, "Invalid date of birth !", "Information", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            check = true;
+        if (checkBlankInputfield()) {
+            RetrieveData.insertStudent(getDataInput());
         }
-        if (txtStudentID.getText().compareTo("") == 0 || txtStudentL_Name.getText().compareTo("") == 0) {
-        }
-
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
@@ -400,6 +402,6 @@ public class AddStudent extends javax.swing.JDialog {
     private javax.swing.JTextField txtStudentL_Name;
     private javax.swing.JTextField txtStudentMail;
     private javax.swing.JTextField txtStudentTel;
-    private javax.swing.JTextField txtYear;
+    private javax.swing.JTextField txtStudentYear;
     // End of variables declaration//GEN-END:variables
 }
