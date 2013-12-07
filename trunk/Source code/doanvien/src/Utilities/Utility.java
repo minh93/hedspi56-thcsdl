@@ -87,9 +87,7 @@ public class Utility {
 
         try {
 
-            Date date = formatter.parse(s);
-            System.out.println(date);
-            System.out.println(formatter.format(date));
+            Date date = formatter.parse(s);            
             return date;
         } catch (ParseException e) {
             e.printStackTrace();

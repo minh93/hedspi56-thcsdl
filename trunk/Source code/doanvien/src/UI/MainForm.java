@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
  * @author PhamDucMinh
  */
 public class MainForm extends javax.swing.JFrame {
-
+    
     private int role;
     private String usrName;
     private ArrayList<Student> stuList;
@@ -39,24 +39,22 @@ public class MainForm extends javax.swing.JFrame {
         }
         createEvent();
     }
-
+    
     public void loadData() {
-        stuList = RetrieveData.getAllStudent();
-        stm = new StudentModel(stuList);
-        tblStudent.setModel(stm);
-        txtStuTblPage.setText("" + stm.getCurrentPage());
+        loadDataStudentTBL();
     }
-
+    
     public void loadDataForAdmin() {
         UserModel um = new UserModel(RetrieveData.getAllUser());
         tblAdmin.setModel(um);
     }
-
+    
     private void createEvent() {
         /*
          * Event double click for tblStudent
          */
         tblStudent.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
                     tblStudentMouseDoubleClicked(evt);
@@ -64,9 +62,20 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
     }
-
+    
     public UserModel getUsermodel() {
         return (UserModel) tblAdmin.getModel();
+    }
+    
+    public void addStudentToModel(Student s) {
+        stm.addStudent(s);
+    }
+    
+    public void loadDataStudentTBL() {
+        stuList = RetrieveData.getAllStudent();
+        stm = new StudentModel(stuList);
+        tblStudent.setModel(stm);
+        txtStuTblPage.setText("" + stm.getCurrentPage());
     }
 
     /**
@@ -89,7 +98,7 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblStudent = new javax.swing.JTable();
         btnAddStudent = new javax.swing.JButton();
-        btnUpdateStudent = new javax.swing.JButton();
+        btnDeleteStudent = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         stuTblPrevious = new javax.swing.JButton();
         btnStuNext = new javax.swing.JButton();
@@ -201,7 +210,7 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        btnUpdateStudent.setText("Update");
+        btnDeleteStudent.setText("Delete");
 
         jButton5.setText("Refresh");
 
@@ -232,7 +241,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addComponent(btnAddStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnUpdateStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDeleteStudent, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -261,7 +270,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(49, 49, 49)
                 .addGroup(studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddStudent)
-                    .addComponent(btnUpdateStudent)
+                    .addComponent(btnDeleteStudent)
                     .addComponent(jButton5))
                 .addContainerGap(103, Short.MAX_VALUE))
         );
@@ -453,45 +462,45 @@ public class MainForm extends javax.swing.JFrame {
         lf.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
-
+    
     private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
-        // TODO add your handling code here:
+        AddStudent as = new AddStudent(this, true, "Add", null);
     }//GEN-LAST:event_btnAddStudentActionPerformed
-
+    
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
         AddUser au = new AddUser(this, false);
         au.setTitle(usrName);
         au.setVisible(true);
     }//GEN-LAST:event_btnAddUserActionPerformed
-
+    
     private void tblAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAdminMouseClicked
         int index = tblAdmin.getSelectedRow();
         UserModel um = (UserModel) tblAdmin.getModel();
         User u = um.getUser(index);
-
+        
         int result = JOptionPane.showConfirmDialog(this, "Delete user", "Notice !", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             RetrieveData.deleteUser(u.getUserName());
         }
-
+        
     }//GEN-LAST:event_tblAdminMouseClicked
-
+    
     private void tblStudentMouseDoubleClicked(MouseEvent evt) {
         int index = tblStudent.getSelectedRow();
         Student s = stm.getStudent(index, Integer.parseInt(txtStuTblPage.getText()));
         AddStudent as = new AddStudent(this, rootPaneCheckingEnabled, "Update", s);
         as.setVisible(true);
     }
-
+    
     private void btnAdminReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminReloadActionPerformed
         int index = cmbViewControl.getSelectedIndex();
         switch (index) {
             case 1:
-
+                
                 break;
         }
     }//GEN-LAST:event_btnAdminReloadActionPerformed
-
+    
     private void txtSearchFieldCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtSearchFieldCaretUpdate
         String patterm = txtSearchField.getText();
         if (patterm.length() == 0) {
@@ -499,15 +508,15 @@ public class MainForm extends javax.swing.JFrame {
         }
         stm.filterTable(patterm);
     }//GEN-LAST:event_txtSearchFieldCaretUpdate
-
+    
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         stm.reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed
-
+    
     private void stuTblPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stuTblPreviousActionPerformed
         stm.previousPage();
     }//GEN-LAST:event_stuTblPreviousActionPerformed
-
+    
     private void btnStuNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStuNextActionPerformed
         stm.nextPage();
     }//GEN-LAST:event_btnStuNextActionPerformed
@@ -526,8 +535,8 @@ public class MainForm extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
-
+                    
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -557,9 +566,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnAddStudent;
     private javax.swing.JButton btnAddUser;
     private javax.swing.JButton btnAdminReload;
+    private javax.swing.JButton btnDeleteStudent;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnStuNext;
-    private javax.swing.JButton btnUpdateStudent;
     private javax.swing.JComboBox cmbViewControl;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JPanel homePanel;

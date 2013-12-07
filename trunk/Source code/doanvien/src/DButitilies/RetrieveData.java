@@ -143,16 +143,18 @@ public class RetrieveData {
         return result;
     }
 
-    public static boolean updateStudent(String studentID, String newTel, String newAddress, String newEmail) {
+    public static boolean updateStudent(String studentID, String newTel, String newAddress, String newEmail, String newClaID, String newDes) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
-            PreparedStatement cs = conn.prepareStatement("UPDATE \"Student\" SET \"Tel\"=?,\"Address\"=?, \"Mail\"=? WHERE \"StuID\"=?");
-            cs.setString(4, studentID);
+            PreparedStatement cs = conn.prepareStatement("UPDATE \"Student\" SET \"Tel\"=?,\"Address\"=?,\"Mail\"=?,\"ClaID\" = ?,\"Des\" = ? WHERE \"StuID\"=?");
+            cs.setString(6, studentID);
             cs.setString(1, newTel);
             cs.setString(2, newAddress);
             cs.setString(3, newEmail);
-
+            cs.setString(4, newClaID);
+            cs.setString(5, newDes);
+            cs.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
