@@ -75,7 +75,7 @@
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
                                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="txtYear" max="32767" attributes="0"/>
+                                              <Component id="txtStudentYear" max="32767" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="txtStudentF_Name" min="-2" pref="112" max="-2" attributes="0"/>
@@ -154,7 +154,7 @@
                               <Component id="txtStudentTel" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtYear" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtStudentYear" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
@@ -334,7 +334,7 @@
             <Property name="text" type="java.lang.String" value="Year:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtYear">
+        <Component class="javax.swing.JTextField" name="txtStudentYear">
         </Component>
       </SubComponents>
     </Container>

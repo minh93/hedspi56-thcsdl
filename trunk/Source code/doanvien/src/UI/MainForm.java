@@ -9,6 +9,8 @@ import Entities.Student;
 import Entities.User;
 import MVCmodel.StudentModel;
 import MVCmodel.UserModel;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -35,18 +37,32 @@ public class MainForm extends javax.swing.JFrame {
         if (role == 1) {
             loadDataForAdmin();
         }
-
+        createEvent();
     }
 
     public void loadData() {
         stuList = RetrieveData.getAllStudent();
         stm = new StudentModel(stuList);
         tblStudent.setModel(stm);
+        txtStuTblPage.setText("" + stm.getCurrentPage());
     }
 
     public void loadDataForAdmin() {
         UserModel um = new UserModel(RetrieveData.getAllUser());
         tblAdmin.setModel(um);
+    }
+
+    private void createEvent() {
+        /*
+         * Event double click for tblStudent
+         */
+        tblStudent.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    tblStudentMouseDoubleClicked(evt);
+                }
+            }
+        });
     }
 
     public UserModel getUsermodel() {
@@ -176,11 +192,6 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblStudent.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblStudentMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(tblStudent);
 
         btnAddStudent.setText("Add ");
@@ -195,8 +206,18 @@ public class MainForm extends javax.swing.JFrame {
         jButton5.setText("Refresh");
 
         stuTblPrevious.setText("Previous");
+        stuTblPrevious.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stuTblPreviousActionPerformed(evt);
+            }
+        });
 
         btnStuNext.setText("Next");
+        btnStuNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStuNextActionPerformed(evt);
+            }
+        });
 
         jLabel1.setText("/");
 
@@ -437,17 +458,6 @@ public class MainForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAddStudentActionPerformed
 
-    private void tblStudentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblStudentMouseClicked
-        int currentIndex = tblStudent.getSelectedRow();
-        StudentModel sm = (StudentModel) tblStudent.getModel();
-        int currentPage = sm.getCurrentPage();
-        Student s = sm.getStudent(currentIndex, currentPage);
-        if (s != null) {
-            AddStudent as = new AddStudent(this, false, "Update", s);
-            as.setVisible(true);
-        }
-    }//GEN-LAST:event_tblStudentMouseClicked
-
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
         AddUser au = new AddUser(this, false);
         au.setTitle(usrName);
@@ -465,6 +475,13 @@ public class MainForm extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_tblAdminMouseClicked
+
+    private void tblStudentMouseDoubleClicked(MouseEvent evt) {
+        int index = tblStudent.getSelectedRow();
+        Student s = stm.getStudent(index, Integer.parseInt(txtStuTblPage.getText()));
+        AddStudent as = new AddStudent(this, rootPaneCheckingEnabled, "Update", s);
+        as.setVisible(true);
+    }
 
     private void btnAdminReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminReloadActionPerformed
         int index = cmbViewControl.getSelectedIndex();
@@ -484,8 +501,16 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSearchFieldCaretUpdate
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        stm.reloadTable();                
+        stm.reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void stuTblPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stuTblPreviousActionPerformed
+        stm.previousPage();
+    }//GEN-LAST:event_stuTblPreviousActionPerformed
+
+    private void btnStuNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStuNextActionPerformed
+        stm.nextPage();
+    }//GEN-LAST:event_btnStuNextActionPerformed
 
     /**
      * @param args the command line arguments

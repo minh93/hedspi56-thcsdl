@@ -37,7 +37,7 @@ public class GetLastestNew {
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
             StringBuilder sb = new StringBuilder();
             String line; 
-            while ((line = br.readLine()) != null) {                
+            while ((line = br.readLine()) != null) {                    
                 sb.append(line);                
             }
             content = sb.toString();            
