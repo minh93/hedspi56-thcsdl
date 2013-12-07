@@ -127,12 +127,12 @@ $$SELECT "Role" FROM "Account"
 WHERE "UserName" = $1 AND "Password" = $2 $$
 LANGUAGE SQL;
 
-CREATE FUNCTION insertStudent(stuID CHARACTER(20),f_name CHARACTER(20),l_name CHARACTER(20),
+CREATE FUNCTION insertStudent(stuID CHARACTER VARYING(20),f_name CHARACTER(20),l_name CHARACTER(20),
 								birth DATE,gender BOOLEAN, yea int,tel CHARACTER(15),mail CHARACTER(50),address CHARACTER(50),ClaID CHARACTER(10),des CHARACTER(100))
 RETURNS VOID
 AS
 $$INSERT INTO "Student"
-VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,1)
+VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,1);
 $$
 LANGUAGE SQL;
 
