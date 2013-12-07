@@ -245,7 +245,7 @@
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="btnAddStudent" min="-2" pref="73" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnUpdateStudent" min="-2" pref="73" max="-2" attributes="0"/>
+                          <Component id="btnDeleteStudent" min="-2" pref="73" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jButton5" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -278,7 +278,7 @@
                           <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="btnAddStudent" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnUpdateStudent" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnDeleteStudent" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="103" max="32767" attributes="0"/>
@@ -316,9 +316,9 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAddStudentActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnUpdateStudent">
+                <Component class="javax.swing.JButton" name="btnDeleteStudent">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="Update"/>
+                    <Property name="text" type="java.lang.String" value="Delete"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="jButton5">

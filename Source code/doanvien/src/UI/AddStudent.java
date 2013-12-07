@@ -334,12 +334,36 @@ public class AddStudent extends javax.swing.JDialog {
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         if (checkBlankInputfield()) {
-            RetrieveData.insertStudent(getDataInput());
+            Student s = getDataInput();
+            int result = RetrieveData.insertStudent(s);
+            if (result == 0) {
+                JOptionPane.showMessageDialog(rootPane, "Creaate new " + txtStudentF_Name.getText()
+                        + " " + txtStudentL_Name.getText() + " success !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+            MainForm mf = (MainForm) this.getParent();
+            mf.addStudentToModel(s);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Error has occured, please check again!", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
+
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
+        String ID = txtStudentID.getText();
+        String newTel = txtStudentTel.getText();
+        String newAddress = txtStudentAddress.getText();
+        String newMail = txtStudentMail.getText();
+        String newClaID = RetrieveData.getClassIDByName((String) cbxClass.getSelectedItem());
+        String newDes = txtStudentDes.getText();
+        boolean result = RetrieveData.updateStudent(ID, newTel, newAddress, newMail, newClaID, newDes);
+        if (result) {
+            JOptionPane.showMessageDialog(rootPane, "Update info for " + txtStudentF_Name.getText()
+                    + " " + txtStudentL_Name.getText() + " success !", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+        this.dispose();
+        MainForm mf = (MainForm) this.getParent();
+        mf.loadDataStudentTBL();
     }//GEN-LAST:event_btnUpdateActionPerformed
 
     /**
