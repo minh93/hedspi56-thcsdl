@@ -3,6 +3,7 @@ package DButitilies;
 import Entities.ClassStu;
 import Entities.Department;
 import Entities.Event;
+import Entities.LogRecord;
 import Entities.Student;
 import Entities.User;
 import Utilities.Utility;
@@ -107,7 +108,7 @@ public class RetrieveData {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
-            PreparedStatement cs = conn.prepareCall("SELECT \"DeptName\" FROM \"Class\" ");
+            PreparedStatement cs = conn.prepareCall("SELECT \"DeptName\" FROM \"Department\" ");
             ResultSet rs = cs.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString(1));
@@ -474,5 +475,17 @@ public class RetrieveData {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+    
+    public ArrayList<LogRecord> getLogRecords(java.util.Date start, java.util.Date end){
+        ArrayList<LogRecord> list = new ArrayList<>();
+        
+        return list;
+    }
+    
+    public ArrayList<LogRecord> getLogRecords(String userName){
+        ArrayList<LogRecord> list = new ArrayList<>();
+        
+        return list;
     }
 }
