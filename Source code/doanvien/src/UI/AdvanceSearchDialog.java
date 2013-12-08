@@ -4,11 +4,32 @@
  */
 package UI;
 
+import DButitilies.ConnectFactory;
+import DButitilies.RetrieveData;
+import Entities.Student;
+import File.FileIO;
+import MVCmodel.StudentModel;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author PhamDucMinh
  */
 public class AdvanceSearchDialog extends javax.swing.JDialog {
+    
+    private ArrayList<Student> list = new ArrayList<>();
 
     /**
      * Creates new form AdvanceSearchDialog
@@ -16,6 +37,21 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
     public AdvanceSearchDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        ArrayList<String> deptNames = RetrieveData.getAllDeptName();
+        ArrayList<String> claNames = RetrieveData.getAllClassName();
+        DefaultComboBoxModel cbmDept = new DefaultComboBoxModel();
+        DefaultComboBoxModel cbmClass = new DefaultComboBoxModel();
+        for (String s : deptNames) {
+            cbmDept.addElement(s);
+        }
+        cbmDept.addElement("All");
+        cbxDept.setModel(cbmDept);
+        for (String s : claNames) {
+            cbmClass.addElement(s);
+        }
+        cbmClass.addElement("All");
+        cbxClassName.setModel(cbmClass);
     }
 
     /**
@@ -29,25 +65,33 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnStudentAdv = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         txtID = new javax.swing.JTextField();
-        txtName = new javax.swing.JTextField();
+        txtF_Name = new javax.swing.JTextField();
         txtAddress = new javax.swing.JTextField();
         cbxDept = new javax.swing.JComboBox();
-        cbxYear = new javax.swing.JComboBox();
         jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jPanel2 = new javax.swing.JPanel();
+        tblStudentResultSearch = new javax.swing.JTable();
+        txtL_Name = new javax.swing.JTextField();
+        txtSchoolYear = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        cbxClassName = new javax.swing.JComboBox();
+        btnExport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jButton1.setText("Search");
+        btnStudentAdv.setText("Search");
+        btnStudentAdv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStudentAdvActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel1.setText("StudentID: ");
@@ -60,9 +104,12 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
 
         cbxDept.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CNTT & TT", "Hóa Học", "Điện", "All..." }));
 
-        cbxYear.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "K56", "K55", "K54", "K53" }));
-
         jButton2.setText("Clear");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel4.setText("Dept:");
@@ -70,7 +117,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel5.setText("School Year:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblStudentResultSearch.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -81,7 +128,16 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblStudentResultSearch);
+
+        jLabel6.setText("Class:");
+
+        btnExport.setText("Export");
+        btnExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExportActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,23 +153,32 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                             .addComponent(jLabel2)
                             .addComponent(jLabel3))
                         .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtID)
-                            .addComponent(txtName)
-                            .addComponent(txtAddress)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxDept, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtID)
+                                    .addComponent(txtAddress)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtF_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(txtL_Name)))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(cbxDept, 0, 121, Short.MAX_VALUE)
+                                    .addComponent(txtSchoolYear, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cbxClassName, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnStudentAdv)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnExport)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -129,44 +194,30 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(cbxDept, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(cbxYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtF_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(cbxClassName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtSchoolYear, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnStudentAdv)
+                    .addComponent(jButton2)
+                    .addComponent(btnExport))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
 
         jTabbedPane1.addTab("Search", jPanel1);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 543, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Edit", jPanel2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -188,6 +239,100 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnStudentAdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentAdvActionPerformed
+        search();
+    }//GEN-LAST:event_btnStudentAdvActionPerformed
+    
+    private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
+        int result;
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File("."));
+        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        result = jfc.showSaveDialog(this);        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            String fileName = jfc.getSelectedFile().getAbsolutePath();
+            FileIO.saveToFile(list, fileName);
+            JOptionPane.showMessageDialog(rootPane, "Export success !", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExportActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        txtAddress.setText("");
+        txtF_Name.setText("");
+        txtL_Name.setText("");
+        txtSchoolYear.setText("");
+        cbxClassName.setSelectedIndex(cbxClassName.getItemCount() - 1);
+        cbxDept.setSelectedIndex(cbxDept.getItemCount() -1);
+    }//GEN-LAST:event_jButton2ActionPerformed
+    
+    private void search() {
+        String strsql = new String();
+        String MSSV = txtID.getText();
+        String F_Name = txtF_Name.getText();
+        String L_Name = txtL_Name.getText();
+        String Address = txtAddress.getText();
+        String Dept = (String) cbxDept.getSelectedItem();
+        String Schoolyear = txtSchoolYear.getText();
+        String ClassName = (String) cbxClassName.getSelectedItem();
+        
+        strsql = "SELECT DISTINCT \"Student\".\"StuID\",\"Student\".\"F_Name\","
+                + "\"Student\".\"L_Name\",\"Birth\",\"Gender\",\"Student\".\"Year\","
+                + "\"Student\".\"Tel\",\"Student\".\"Mail\",\"Address\",\"ClaName\",\"Des\""
+                + "FROM \"Student\",\"Department\",\"Class\""
+                + "WHERE (1=1) and \"Student\".\"ClaID\" =\"Class\".\"ClaID\""
+                + "and \"Class\".\"DeptID\"= \"Department\".\"DeptID\"";
+        
+        if (!MSSV.equals("")) {
+            strsql += " and \"StuID\"like '%" + MSSV + "%'";
+        }
+        if (!F_Name.equals("")) {
+            strsql += " and  \"F_Name\"like '%" + F_Name + "%'";
+        }
+        if (!L_Name.equals("")) {
+            strsql += " and  \"L_Name\"like '%" + L_Name + "%'";
+        }
+        if (!Address.equals("")) {
+            strsql += " and \"Address\"like '%" + Address + "%'";
+        }
+        if (!Dept.equals("All")) {
+            strsql += " and \"DeptName\"like '%" + Dept + "%'";
+        }
+        if (!Schoolyear.equals("")) {
+            strsql += " and \"Student\".\"Year\" = " + Schoolyear;
+        }
+        if (!ClassName.equals("All")) {
+            strsql += " and(\"Class\".\"ClaID\" like '" + ClassName + "' or \"Class\".\"ClaName\"like '" + ClassName + "')";
+        }
+        this.list.clear();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall(strsql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Student s = new Student(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDate(4),
+                        rs.getBoolean(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11));
+                list.add(s);
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        StudentModel sm = new StudentModel(list);
+        tblStudentResultSearch.setModel(sm);
+        
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -202,16 +347,22 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+                    
+                    
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdvanceSearchDialog.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -230,22 +381,25 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExport;
+    private javax.swing.JButton btnStudentAdv;
+    private javax.swing.JComboBox cbxClassName;
     private javax.swing.JComboBox cbxDept;
-    private javax.swing.JComboBox cbxYear;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblStudentResultSearch;
     private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtF_Name;
     private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtL_Name;
+    private javax.swing.JTextField txtSchoolYear;
     // End of variables declaration//GEN-END:variables
 }

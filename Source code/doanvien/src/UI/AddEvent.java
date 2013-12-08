@@ -5,7 +5,6 @@
  */
 package UI;
 
-import static DButitilies.RetrieveData.insertEvent;
 import Entities.Event;
 import static Utilities.Utility.stringToDate;
 import java.util.Date;
@@ -253,7 +252,7 @@ public class AddEvent extends javax.swing.JFrame {
             Date d2 = stringToDate(jtf5.getText(), "yyyy/MM/dd");
             Event ev = new Event(jtf1.getText(), jtf2.getText(), jtf3.getText(), d1, d2, n1, n2);
 
-            insertEvent(ev);
+            //insertEvent(ev);
             return true;
         } else {
             JOptionPane.showMessageDialog(null,
