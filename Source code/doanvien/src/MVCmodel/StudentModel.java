@@ -140,7 +140,7 @@ public class StudentModel extends AbstractTableModel {
             case 3:
                 return b.getTel();
             case 4:
-                return Utility.timeToString(b.getBirth(), "dd/mm/yyyy");
+                return Utility.timeToString(b.getBirth(), "yyyy-MM-dd");
             case 5:
                 return b.getMail();
             default:

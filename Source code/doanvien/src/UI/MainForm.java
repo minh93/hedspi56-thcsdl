@@ -12,6 +12,7 @@ import MVCmodel.UserModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 /**
@@ -233,6 +234,11 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         btnDeleteStudent.setText("Delete");
+        btnDeleteStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteStudentActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Refresh");
 
@@ -584,6 +590,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnAddStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddStudentActionPerformed
         AddStudent as = new AddStudent(this, true, "Add", null);
+        as.setVisible(true);
     }//GEN-LAST:event_btnAddStudentActionPerformed
 
     private void btnAddUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddUserActionPerformed
@@ -645,6 +652,22 @@ public class MainForm extends javax.swing.JFrame {
         asd.setTitle("Advance search");
         asd.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void btnDeleteStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteStudentActionPerformed
+        StudentModel sm = (StudentModel) tblStudent.getModel();
+        int index = tblStudent.getSelectedRow();
+        int currentPage = Integer.parseInt(txtStuTblPage.getText());
+        Student s = sm.getStudent(index, currentPage);
+        int result = JOptionPane.showConfirmDialog(this, "Delete student " + s.getF_Name() + " " + s.getL_Name(), "Information", JOptionPane.YES_NO_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            if (RetrieveData.deleteStudentByID(s.getStudentID()) == 1) {
+                stm.removeStudent(index, currentPage);
+                JOptionPane.showMessageDialog(this, "Deleted !");
+            } else {
+                JOptionPane.showMessageDialog(this, "An error has occured !");
+            }
+        }
+    }//GEN-LAST:event_btnDeleteStudentActionPerformed
 
     /**
      * @param args the command line arguments

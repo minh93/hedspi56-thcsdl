@@ -45,7 +45,7 @@ public class AddStudent extends javax.swing.JDialog {
             txtStudentAddress.setText(s.getAddress());
             txtStudentMail.setText(s.getMail());
             txtStudentTel.setText(s.getTel());
-            txtStudentBirth.setText(Utility.timeToString(s.getBirth(), "dd/mm/yyyy"));
+            txtStudentBirth.setText(Utility.timeToString(s.getBirth(), "yyyy-MM-dd"));
             txtStudentYear.setText(s.getYear() + "");
             txtStudentDes.setText(s.getDescription());
             if (s.getGender()) {
