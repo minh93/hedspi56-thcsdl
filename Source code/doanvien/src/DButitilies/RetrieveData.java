@@ -136,7 +136,7 @@ public class RetrieveData {
             cs.setString(8, s.getMail());
             cs.setString(9, s.getAddress());
             cs.setString(10, s.getClassID());
-            cs.setString(11, s.getDescription());            
+            cs.setString(11, s.getDescription());
             result = cs.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -372,7 +372,7 @@ public class RetrieveData {
         }
     }
 
-    public boolean insertEvent(Event c) {
+    public static boolean insertEvent(Event c) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
@@ -380,11 +380,11 @@ public class RetrieveData {
             cs.setString(1, c.getEvtID());
             cs.setString(2, c.getEvtName());
             cs.setString(3, c.getLocation());
-            cs.setDate(4, (Date) c.getStart());
-            cs.setDate(5, (Date) c.getEnd());
+            cs.setDate(4, new java.sql.Date(c.getStart().getTime()));
+            cs.setDate(5, new java.sql.Date(c.getEnd().getTime()));
             cs.setInt(6, c.getNumOfPeople());
             cs.setInt(7, c.getRating());
-
+            cs.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -476,16 +476,16 @@ public class RetrieveData {
             return false;
         }
     }
-    
-    public ArrayList<LogRecord> getLogRecords(java.util.Date start, java.util.Date end){
+
+    public ArrayList<LogRecord> getLogRecords(java.util.Date start, java.util.Date end) {
         ArrayList<LogRecord> list = new ArrayList<>();
-        
+
         return list;
     }
-    
-    public ArrayList<LogRecord> getLogRecords(String userName){
+
+    public ArrayList<LogRecord> getLogRecords(String userName) {
         ArrayList<LogRecord> list = new ArrayList<>();
-        
+
         return list;
     }
 }
