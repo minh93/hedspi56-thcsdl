@@ -216,8 +216,12 @@ public class AddEvent extends javax.swing.JFrame {
             Date d1 = stringToDate(jtf4.getText(), "yyyy-MM-dd");
             Date d2 = stringToDate(jtf5.getText(), "yyyy-MM-dd");
             Event ev = new Event(jtf1.getText(), jtf2.getText(), jtf3.getText(), d1, d2, n1, n2);
-            
-            //insertEvent(ev);
+
+            if (RetrieveData.insertEvent(ev)) {
+                JOptionPane.showMessageDialog(this, "Create new event success !");
+            } else {
+                JOptionPane.showMessageDialog(this, "An error has occured !");
+            }
             return true;
         } else {
             JOptionPane.showMessageDialog(null,
