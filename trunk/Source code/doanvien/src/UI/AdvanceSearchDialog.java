@@ -9,7 +9,9 @@ import DButitilies.RetrieveData;
 import Entities.Student;
 import File.FileIO;
 import MVCmodel.StudentModel;
+import Utilities.writexls;
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +24,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import jxl.write.WriteException;
 
 /**
  *
@@ -251,8 +254,16 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         result = jfc.showSaveDialog(this);        
         if (result == JFileChooser.APPROVE_OPTION) {
             String fileName = jfc.getSelectedFile().getAbsolutePath();
-            FileIO.saveToFile(list, fileName);
+            fileName+=".xls";
+            try {
+                writexls.writexlss(tblStudentResultSearch, fileName);
+            } catch (WriteException ex) {
+                Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+            }
             JOptionPane.showMessageDialog(rootPane, "Export success !", "Information", JOptionPane.INFORMATION_MESSAGE);
+           
         }
     }//GEN-LAST:event_btnExportActionPerformed
 
