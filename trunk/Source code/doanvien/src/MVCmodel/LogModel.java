@@ -1,6 +1,7 @@
 package MVCmodel;
 
-import Entities.User;
+import Entities.LogRecord;
+import Utilities.Utility;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -8,26 +9,12 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Minh
  */
-public class UserModel extends AbstractTableModel {
+public class LogModel extends AbstractTableModel {
 
-    private ArrayList<User> list;
+    private ArrayList<LogRecord> list = new ArrayList<>();
 
-    public UserModel(ArrayList<User> list) {
+    public LogModel(ArrayList<LogRecord> list) {
         this.list = list;
-    }
-
-    public void addUser(User u) {
-        this.list.add(u);
-        fireTableDataChanged();
-    }
-
-    public User getUser(int index) {
-        return this.list.get(index);
-    }
-
-    public void removeUser(int index) {
-        list.remove(index);
-        fireTableDataChanged();
     }
 
     @Override
@@ -42,14 +29,14 @@ public class UserModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        User u = list.get(rowIndex);
+        LogRecord lr = list.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return u.getUserName();
+                return lr.getUsername();
             case 1:
-                return u.getContact();
+                return lr.getAcction();
             case 2:
-                return u.getTypeAccount();
+                return Utility.timeToString(lr.getTime(), "mm-hh-dd-MM-yyyy");
             default:
                 return null;
         }
@@ -59,11 +46,11 @@ public class UserModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "User ";
+                return "User";
             case 1:
-                return "Contact";
+                return "Action";
             case 2:
-                return "Role";           
+                return "Time";
             default:
                 return null;
         }

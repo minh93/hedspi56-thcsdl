@@ -163,11 +163,17 @@ public class RetrieveData {
         }
     }
 
-    public static int deleteStudentByID(String id) {
+    public static int deleteStudentByID(String id, boolean mode) {
+
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
-            PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Student\" WHERE \"StuID\" = ?");
+            CallableStatement cs;
+            if (mode) {
+                cs = conn.prepareCall("{call permanentlyDeleteStudent(?)}");
+            } else {
+                cs = conn.prepareCall("{call deleteStudent(?)}");
+            }
             cs.setString(1, id);
             int result = cs.executeUpdate();
             return result;
@@ -347,7 +353,7 @@ public class RetrieveData {
             CallableStatement cs = conn.prepareCall("{call insertUser(?,?,?,?)}");
             cs.setString(1, u.getUserName());
             cs.setString(2, u.getContact());
-            cs.setString(3, Utility.checksumGen(u.getPassword(), "md5", true));
+            cs.setString(3, u.getPassword());
             cs.setInt(4, u.getRole());
             result = cs.executeUpdate();
             return result;
@@ -393,14 +399,14 @@ public class RetrieveData {
 
     }
 
-    public boolean deleteEvent(String EventID, String EventName) {
+    public static boolean deleteEvent(String EventID, String EventName) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
             PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Event\" WHERE \"EventID\"=? OR \"EventName\"=?");
             cs.setString(1, EventID);
             cs.setString(2, EventName);
-
+            cs.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -408,7 +414,7 @@ public class RetrieveData {
         }
     }
 
-    public boolean insertOrg(String OrgID, String OrgName, String Par, String Manager, String Mail, String Tel) {
+    public static boolean insertOrg(String OrgID, String OrgName, String Par, String Manager, String Mail, String Tel) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
@@ -419,7 +425,7 @@ public class RetrieveData {
             cs.setString(4, Manager);
             cs.setString(5, Mail);
             cs.setString(6, Tel);
-
+            cs.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -428,14 +434,14 @@ public class RetrieveData {
 
     }
 
-    public boolean deleteOrg(String OrgID, String OrgName) {
+    public static boolean deleteOrg(String OrgID, String OrgName) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
             PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Organization\" WHERE \"OrgtID\"=? OR \"OrgName\"=?");
             cs.setString(1, OrgID);
             cs.setString(2, OrgName);
-
+            cs.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -443,7 +449,7 @@ public class RetrieveData {
         }
     }
 
-    public boolean insertPar(String StuID, String OrgID, String Role, Date Start, Date End, String Description) {
+    public static boolean insertPar(String StuID, String OrgID, String Role, Date Start, Date End, String Description) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
@@ -454,7 +460,7 @@ public class RetrieveData {
             cs.setDate(4, Start);
             cs.setDate(5, End);
             cs.setString(6, Description);
-
+            cs.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -463,13 +469,13 @@ public class RetrieveData {
 
     }
 
-    public boolean deleteOrg(String StuID) {
+    public static boolean deleteOrg(String StuID) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
             PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Participation\" WHERE \"StuID\"=?");
             cs.setString(1, StuID);
-
+            cs.executeUpdate();
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
@@ -477,15 +483,50 @@ public class RetrieveData {
         }
     }
 
-    public ArrayList<LogRecord> getLogRecords(java.util.Date start, java.util.Date end) {
+    public static ArrayList<LogRecord> getLogRecords(java.util.Date start, java.util.Date end) {
         ArrayList<LogRecord> list = new ArrayList<>();
 
         return list;
     }
 
-    public ArrayList<LogRecord> getLogRecords(String userName) {
+    public static ArrayList<LogRecord> getLogRecords(String userName) {
         ArrayList<LogRecord> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Log\" WHERE \"UserName\" = ?");
+            ps.setString(1, userName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                LogRecord lr = new LogRecord(rs.getString(1),
+                        Utility.stringToDate(rs.getString(2), "hh-mm-ss"), rs.getString(3));
+                list.add(lr);
+            }
+            conn.close();
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return list;
+        }
+    }
 
-        return list;
+    public static ArrayList<LogRecord> getLogRecords() {
+        ArrayList<LogRecord> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Log\"");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                LogRecord lr = new LogRecord(rs.getString(1),
+                        Utility.stringToDate(rs.getString(2), "hh-mm-ss"), rs.getString(3));
+                list.add(lr);
+            }
+            conn.close();
+            return list;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return list;
+        }
     }
 }
