@@ -257,12 +257,11 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnExportActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        txtAddress.setText("");
-        txtF_Name.setText("");
-        txtL_Name.setText("");
-        txtSchoolYear.setText("");
-        cbxClassName.setSelectedIndex(cbxClassName.getItemCount() - 1);
-        cbxDept.setSelectedIndex(cbxDept.getItemCount() -1);
+        try {
+            Delete();
+        } catch (SQLException ex) {
+            Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
     
     private void search() {
@@ -332,6 +331,40 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         tblStudentResultSearch.setModel(sm);
         
     }
+    
+    
+       private void Delete() throws SQLException
+  {
+         int[] se = tblStudentResultSearch.getSelectedRows();
+         String st ;
+         ConnectFactory cf = new ConnectFactory();
+         Connection conn = cf.getConn();
+         
+        if(se.length!=0)
+        {
+         for(int y=0;y<se.length;y++)
+         {
+             st= (String) tblStudentResultSearch.getValueAt(se[y], 0).toString();
+            // System.out.println(st);
+             try{
+                 String strsql2="UPDATE \"Class\" SET \"MoniterID\"=NULL WHERE \"MoniterID\"='"+st+"'";
+                 String strsql3="DELETE FROM \"Student\" WHERE \"StuID\"='"+st+"'";
+                 
+                 PreparedStatement ps1 = conn.prepareCall(strsql2);
+                 PreparedStatement ps2 = conn.prepareCall(strsql3);
+                 int rs1 = ps1.executeUpdate();
+                 int rs2 = ps2.executeUpdate();
+                 
+                 search();
+             }
+             catch(SQLException ex) {
+            Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+        }
+             
+        }
+         
+        }
+  }
 
     /**
      * @param args the command line arguments
