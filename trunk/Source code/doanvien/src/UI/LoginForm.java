@@ -319,6 +319,8 @@ public class LoginForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSaveConfigActionPerformed
     private void btnGuestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuestActionPerformed
+        txtName.setText("guest");
+        txtPassword.setText("guest");
     }//GEN-LAST:event_btnGuestActionPerformed
 
     private void txtDBUsrNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDBUsrNameActionPerformed
