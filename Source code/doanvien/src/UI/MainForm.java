@@ -7,12 +7,14 @@ package UI;
 import DButitilies.RetrieveData;
 import Entities.Student;
 import Entities.User;
+import MVCmodel.LogModel;
 import MVCmodel.StudentModel;
 import MVCmodel.UserModel;
+import Network.GetLastestNew;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import javax.swing.JDialog;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -25,6 +27,8 @@ public class MainForm extends javax.swing.JFrame {
     private String usrName;
     private ArrayList<Student> stuList;
     private StudentModel stm;
+    private UserModel um;
+    private LogModel lm;
 
     /**
      * Creates new form MainForm
@@ -39,6 +43,7 @@ public class MainForm extends javax.swing.JFrame {
             loadDataForAdmin();
         }
         createEvent();
+        getLastestNews();
     }
 
     public void loadData() {
@@ -46,7 +51,8 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     public void loadDataForAdmin() {
-        UserModel um = new UserModel(RetrieveData.getAllUser());
+        um = new UserModel(RetrieveData.getAllUser());
+        lm = new LogModel(RetrieveData.getLogRecords());
         tblAdmin.setModel(um);
     }
 
@@ -59,6 +65,15 @@ public class MainForm extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
                     tblStudentMouseDoubleClicked(evt);
+                }
+            }
+        });
+
+        tblAdmin.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    tblAdminMouseDoubleClicked(evt);
                 }
             }
         });
@@ -77,6 +92,19 @@ public class MainForm extends javax.swing.JFrame {
         stm = new StudentModel(stuList);
         tblStudent.setModel(stm);
         txtStuTblPage.setText("" + stm.getCurrentPage());
+    }
+
+    public void getLastestNews() {
+        ArrayList<String> listTitle;
+        GetLastestNew net = new GetLastestNew("http://ctsv.hust.edu.vn/tabid/506/default.aspx",
+                "(<a href=\"http://ctsv.hust.edu.vn/TabId/562/ArticleId/[0-9]++/PreTabId/506/Default.aspx\">(.*?)<span>)");
+        net.getHTML();
+        listTitle = net.getNewsContents(1);
+        DefaultListModel lm = new DefaultListModel();
+        for (String s : listTitle) {
+            lm.addElement(s);
+        }
+        jlsLastestNews.setModel(lm);
     }
 
     /**
@@ -121,8 +149,7 @@ public class MainForm extends javax.swing.JFrame {
         cmbViewControl = new javax.swing.JComboBox();
         jButton1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        cmbDataViewMode = new javax.swing.JComboBox();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         txtStatus = new javax.swing.JLabel();
@@ -134,6 +161,9 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -200,7 +230,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(311, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,6 +271,11 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         jButton5.setText("Refresh");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         stuTblPrevious.setText("Previous");
         stuTblPrevious.addActionListener(new java.awt.event.ActionListener() {
@@ -270,7 +305,7 @@ public class MainForm extends javax.swing.JFrame {
         studentPanelLayout.setHorizontalGroup(
             studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 809, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -319,7 +354,7 @@ public class MainForm extends javax.swing.JFrame {
         orgPanel.setLayout(orgPanelLayout);
         orgPanelLayout.setHorizontalGroup(
             orgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 801, Short.MAX_VALUE)
+            .addGap(0, 819, Short.MAX_VALUE)
         );
         orgPanelLayout.setVerticalGroup(
             orgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +383,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(eventPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(136, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         eventPanelLayout.setVerticalGroup(
             eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,11 +406,6 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblAdminMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tblAdmin);
 
         adminPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Admin tools"));
@@ -396,8 +426,18 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         cmbViewControl.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "User list", "All log" }));
+        cmbViewControl.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbViewControlItemStateChanged(evt);
+            }
+        });
 
         jButton1.setText("Reset");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout adminPanelLayout = new javax.swing.GroupLayout(adminPanel);
         adminPanel.setLayout(adminPanelLayout);
@@ -412,7 +452,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(adminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAddUser))
-                .addContainerGap(11, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         adminPanelLayout.setVerticalGroup(
             adminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,29 +469,22 @@ public class MainForm extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Data tools"));
 
-        jButton2.setText("jButton2");
-
-        jButton3.setText("jButton3");
+        cmbDataViewMode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Class", "Department", "Event" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addContainerGap()
+                .addComponent(cmbDataViewMode, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(cmbDataViewMode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -509,13 +542,10 @@ public class MainForm extends javax.swing.JFrame {
         jMainPanelLayout.setHorizontalGroup(
             jMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jMainPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jMainPanelLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(txtStatus)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(mainTabbed)))
+                .addGap(20, 20, 20)
+                .addComponent(txtStatus)
+                .addGap(0, 769, Short.MAX_VALUE))
+            .addComponent(mainTabbed, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jMainPanelLayout.setVerticalGroup(
             jMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -555,6 +585,16 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         jMenu2.setText("Edit");
+
+        jMenuItem5.setText("Add class");
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem6.setText("Add department");
+        jMenu2.add(jMenuItem6);
+
+        jMenuItem7.setText("Add Event");
+        jMenu2.add(jMenuItem7);
+
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -599,7 +639,7 @@ public class MainForm extends javax.swing.JFrame {
         au.setVisible(true);
     }//GEN-LAST:event_btnAddUserActionPerformed
 
-    private void tblAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAdminMouseClicked
+    private void tblAdminMouseDoubleClicked(java.awt.event.MouseEvent evt) {
         int index = tblAdmin.getSelectedRow();
         UserModel um = (UserModel) tblAdmin.getModel();
         User u = um.getUser(index);
@@ -607,9 +647,10 @@ public class MainForm extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(this, "Delete user", "Notice !", JOptionPane.YES_NO_OPTION);
         if (result == JOptionPane.YES_OPTION) {
             RetrieveData.deleteUser(u.getUserName());
+            um.removeUser(index);
         }
 
-    }//GEN-LAST:event_tblAdminMouseClicked
+    }
 
     private void tblStudentMouseDoubleClicked(MouseEvent evt) {
         int index = tblStudent.getSelectedRow();
@@ -658,16 +699,55 @@ public class MainForm extends javax.swing.JFrame {
         int index = tblStudent.getSelectedRow();
         int currentPage = Integer.parseInt(txtStuTblPage.getText());
         Student s = sm.getStudent(index, currentPage);
-        int result = JOptionPane.showConfirmDialog(this, "Delete student " + s.getF_Name() + " " + s.getL_Name(), "Information", JOptionPane.YES_NO_OPTION);
-        if (result == JOptionPane.OK_OPTION) {
-            if (RetrieveData.deleteStudentByID(s.getStudentID()) == 1) {
+        PermanentlyDeleteConfirm pdc = new PermanentlyDeleteConfirm(this, true);
+        pdc.setVisible(true);
+        int result = pdc.permanetlyConfirm();
+        if (result == 1) {
+            if (RetrieveData.deleteStudentByID(s.getStudentID(), false) == -1) {
+                JOptionPane.showMessageDialog(this, "An error has occured !");
+            } else {
                 stm.removeStudent(index, currentPage);
                 JOptionPane.showMessageDialog(this, "Deleted !");
-            } else {
-                JOptionPane.showMessageDialog(this, "An error has occured !");
             }
         }
+        if (result == 2) {
+            if (RetrieveData.deleteStudentByID(s.getStudentID(), true) == -1) {
+                JOptionPane.showMessageDialog(this, "An error has occured !");
+            } else {
+                stm.removeStudent(index, currentPage);
+                JOptionPane.showMessageDialog(this, "Deleted !");
+            }
+        }
+        pdc.dispose();
     }//GEN-LAST:event_btnDeleteStudentActionPerformed
+
+    private void cmbViewControlItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbViewControlItemStateChanged
+        switch (cmbViewControl.getSelectedIndex()) {
+            case 0:
+                tblAdmin.setModel(um);
+                break;
+            case 1:
+                tblAdmin.setModel(lm);
+                break;
+            default:
+        }
+    }//GEN-LAST:event_cmbViewControlItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int mode = cmbViewControl.getSelectedIndex();
+        if (mode == 0) {
+            User u = um.getUser(tblAdmin.getSelectedRow());
+            if (u != null) {
+                ResetPasswordForm rpf = new ResetPasswordForm(this, true, u.getUserName());
+                rpf.setVisible(true);
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        stm = new StudentModel(RetrieveData.getAllStudent());
+        tblStudent.setModel(stm);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -717,12 +797,11 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteStudent;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnStuNext;
+    private javax.swing.JComboBox cmbDataViewMode;
     private javax.swing.JComboBox cmbViewControl;
     private javax.swing.JPanel eventPanel;
     private javax.swing.JPanel homePanel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JPanel jHeader;
@@ -736,6 +815,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;

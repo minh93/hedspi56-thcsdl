@@ -151,7 +151,8 @@ public class AddUser extends javax.swing.JDialog {
             tem = true;
         }
         if (tem == true) {
-            User u = new User(txtUserName.getText(), txtContact.getText(), new String(txtPass.getPassword()), 2); //Default 
+            User u = new User(txtUserName.getText(),
+                    txtContact.getText(), Utilities.Utility.checksumGen(new String(txtPass.getPassword()), "MD5", true), 2); //Default 
             RetrieveData.createUser(u);
             MainForm mf = (MainForm) this.getParent();
             UserModel um = mf.getUsermodel();
