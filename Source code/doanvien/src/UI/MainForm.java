@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import DButitilies.RetrieveData;
@@ -673,7 +669,7 @@ public class MainForm extends javax.swing.JFrame {
         if (patterm.length() == 0) {
             stm.reloadTable();
         }
-        stm.filterTable(patterm);
+        stm.filterTable(patterm);        
     }//GEN-LAST:event_txtSearchFieldCaretUpdate
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
