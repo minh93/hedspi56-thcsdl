@@ -370,6 +370,42 @@ public class RetrieveData {
         return claID;
     }
 
+    public static String getDeptNameByID(String deptID) {
+        String deptName = null;
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            CallableStatement cs = conn.prepareCall("SELECT \"DeptName\" FROM \"Department\" WHERE \"DeptID\" = ?");
+            cs.setString(1, deptID);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                deptName = rs.getString(1);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return deptName;
+    }
+
+    public static String getDeptIDByName(String deptName) {
+        String deptID = null;
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            CallableStatement cs = conn.prepareCall("SELECT \"DeptID\" FROM \"Department\" WHERE \"DeptName\" = ?");
+            cs.setString(1, deptName);
+            ResultSet rs = cs.executeQuery();
+            if (rs.next()) {
+                deptID = rs.getString(1);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return deptID;
+    }
+
     public static ArrayList<User> getAllUser() {
         ArrayList<User> list = new ArrayList<>();
         try {
