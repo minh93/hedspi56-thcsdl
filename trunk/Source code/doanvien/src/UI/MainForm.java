@@ -7,6 +7,8 @@ import Entities.User;
 import MVCmodel.ClassStudentModel;
 import MVCmodel.DepartmentModel;
 import MVCmodel.EventModel;
+import MVCmodel.GEventModel;
+import MVCmodel.GEventTodayModel;
 import MVCmodel.LogModel;
 import MVCmodel.StudentModel;
 import MVCmodel.UserModel;
@@ -29,6 +31,8 @@ public class MainForm extends javax.swing.JFrame {
     private StudentModel stm;
     private UserModel um;
     private LogModel lm;
+    private GEventModel ge;
+    private GEventTodayModel getoday;
 
     /**
      * Creates new form MainForm
@@ -41,6 +45,8 @@ public class MainForm extends javax.swing.JFrame {
         loadData();
         if (role == 1) {
             loadDataForAdmin();
+            loadDataForGEvent();
+            loadDataForGEventToday();
         }
         createEvent();
         new Thread() {
@@ -60,7 +66,7 @@ public class MainForm extends javax.swing.JFrame {
         lm = new LogModel(RetrieveData.getLogRecords());
         tblAdmin.setModel(um);
     }
-
+    
     private void createEvent() {
         /*
          * Event double click for tblStudent
@@ -79,6 +85,15 @@ public class MainForm extends javax.swing.JFrame {
             public void mouseClicked(MouseEvent evt) {
                 if (evt.getClickCount() == 2) {
                     tblAdminMouseDoubleClicked(evt);
+                }
+            }
+        });
+        
+        tblEvent.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2) {
+                    tblEventMouseDoubleClicked(evt);
                 }
             }
         });
@@ -132,6 +147,16 @@ public class MainForm extends javax.swing.JFrame {
         jlsLastestNews.setModel(lm);
     }
 
+     public void loadDataForGEvent() {
+        ge = new GEventModel(RetrieveData.getGEvent());
+        tblEvent.setModel(ge);
+    }
+    
+    
+    public void loadDataForGEventToday() {
+        getoday = new GEventTodayModel(RetrieveData.getGEventToday());
+        jTable1.setModel(getoday);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -162,6 +187,8 @@ public class MainForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         orgPanel = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         eventPanel = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblEvent = new javax.swing.JTable();
@@ -376,15 +403,34 @@ public class MainForm extends javax.swing.JFrame {
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/student.png")), studentPanel); // NOI18N
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(jTable1);
+
         javax.swing.GroupLayout orgPanelLayout = new javax.swing.GroupLayout(orgPanel);
         orgPanel.setLayout(orgPanelLayout);
         orgPanelLayout.setHorizontalGroup(
             orgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 819, Short.MAX_VALUE)
+            .addGroup(orgPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
+                .addContainerGap())
         );
         orgPanelLayout.setVerticalGroup(
             orgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 352, Short.MAX_VALUE)
+            .addGroup(orgPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/organization.png")), orgPanel); // NOI18N
@@ -408,15 +454,15 @@ public class MainForm extends javax.swing.JFrame {
             eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(eventPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 655, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 799, Short.MAX_VALUE)
+                .addContainerGap())
         );
         eventPanelLayout.setVerticalGroup(
             eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(eventPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/event.png")), eventPanel); // NOI18N
@@ -702,6 +748,13 @@ public class MainForm extends javax.swing.JFrame {
         AddStudent as = new AddStudent(this, rootPaneCheckingEnabled, "Update", s);
         as.setVisible(true);
     }
+    
+    private void tblEventMouseDoubleClicked(MouseEvent evt){
+        int index = tblEvent.getSelectedRow();
+        String st= (String) jTable1.getValueAt(index, 0).toString();
+        EveryEvent ev=new EveryEvent(this, rootPaneCheckingEnabled);
+        ev.setVisible(true);
+    }
 
     private void btnAdminReloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdminReloadActionPerformed
         int index = cmbViewControl.getSelectedIndex();
@@ -866,6 +919,8 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JTable jTable1;
     private javax.swing.JList jlsLastestNews;
     private javax.swing.JTabbedPane mainTabbed;
     private javax.swing.JMenuItem miAddClassStudent;
