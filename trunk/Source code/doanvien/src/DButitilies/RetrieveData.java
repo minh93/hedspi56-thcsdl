@@ -3,6 +3,7 @@ package DButitilies;
 import Entities.ClassStu;
 import Entities.Department;
 import Entities.Event;
+import Entities.GEvent;
 import Entities.LogRecord;
 import Entities.Student;
 import Entities.User;
@@ -13,7 +14,11 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -608,5 +613,78 @@ public class RetrieveData {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return list;
         }
+    }
+
+    public static ArrayList<GEvent> getGEvent() {
+        ArrayList<GEvent> list = new ArrayList<>();
+        try {
+            Calendar cal = GregorianCalendar.getInstance();
+            int s1 = cal.get(cal.DAY_OF_WEEK);
+            int s3 = cal.get(cal.MONTH) + 1;
+            cal.add(Calendar.DATE, +7 - s1);
+            String s2 = "" + cal.get(cal.YEAR) + "/" + s3 + "/" + cal.get(cal.DAY_OF_MONTH) + "";
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            java.util.Date date = new java.util.Date();
+            String s = dateFormat.format(date);
+
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT \"Start\",COUNT(\"EventID\") FROM \"Event\" WHERE \"Start\">='" + s + "' AND \"Start\"<='" + s2 + "'  GROUP BY \"Start\"");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                GEvent u = new GEvent(rs.getString(1), rs.getInt(2));
+                list.add(u);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    public static ArrayList<Event> getGEventToday() {
+        ArrayList<Event> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            java.util.Date date = new java.util.Date();
+            String s = dateFormat.format(date);
+
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Event\" WHERE \"Start\"= '" + s + "'");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Event u = new Event(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5), rs.getInt(6), rs.getInt(7));
+                list.add(u);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    public static ArrayList<Event> getGEventEveryday(String s) {
+        ArrayList<Event> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Event\" WHERE \"Start\"= '" + s + "'");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Event u = new Event(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5), rs.getInt(6), rs.getInt(7));
+                list.add(u);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
     }
 }
