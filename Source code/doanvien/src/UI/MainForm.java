@@ -97,24 +97,25 @@ public class MainForm extends javax.swing.JFrame {
         stm = new StudentModel(stuList);
         tblStudent.setModel(stm);
         txtStuTblPage.setText("" + stm.getCurrentPage());
+        tblStudent.setAutoCreateRowSorter(true);
     }
 
     private void loadAdminDataView(int mode) {
         switch (mode) {
-            case 1:
+            case 0:
                 ClassStudentModel csm = new ClassStudentModel(RetrieveData.getAllClass());
                 tblAdminDataView.setModel(csm);
                 break;
-            case 2:
+            case 1:
                 DepartmentModel dm = new DepartmentModel(RetrieveData.getAllDepartMent());
                 tblAdminDataView.setModel(dm);
                 break;
-            case 3:
+            case 2:
                 EventModel em = new EventModel(RetrieveData.getAllEvent());
                 tblAdminDataView.setModel(em);
                 break;
             default:
-                
+
         }
     }
 
@@ -185,9 +186,9 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        miAddClassStudent = new javax.swing.JMenuItem();
+        miAddDept = new javax.swing.JMenuItem();
+        miAddEvent = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -495,6 +496,11 @@ public class MainForm extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Data tools"));
 
         cmbDataViewMode.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Class", "Department", "Event" }));
+        cmbDataViewMode.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbDataViewModeItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -611,14 +617,24 @@ public class MainForm extends javax.swing.JFrame {
 
         jMenu2.setText("Edit");
 
-        jMenuItem5.setText("Add class");
-        jMenu2.add(jMenuItem5);
+        miAddClassStudent.setText("Add class");
+        miAddClassStudent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAddClassStudentActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miAddClassStudent);
 
-        jMenuItem6.setText("Add department");
-        jMenu2.add(jMenuItem6);
+        miAddDept.setText("Add department");
+        jMenu2.add(miAddDept);
 
-        jMenuItem7.setText("Add Event");
-        jMenu2.add(jMenuItem7);
+        miAddEvent.setText("Add Event");
+        miAddEvent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miAddEventActionPerformed(evt);
+            }
+        });
+        jMenu2.add(miAddEvent);
 
         jMenuBar1.add(jMenu2);
 
@@ -777,6 +793,21 @@ public class MainForm extends javax.swing.JFrame {
         tblStudent.setModel(stm);
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void cmbDataViewModeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbDataViewModeItemStateChanged
+        int index = cmbDataViewMode.getSelectedIndex();
+        loadAdminDataView(index);
+    }//GEN-LAST:event_cmbDataViewModeItemStateChanged
+
+    private void miAddClassStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAddClassStudentActionPerformed
+        AddClass addClassForm = new AddClass(this, true, "Add", null);
+        this.setVisible(true);
+    }//GEN-LAST:event_miAddClassStudentActionPerformed
+
+    private void miAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAddEventActionPerformed
+        AddEvent addEventForm = new AddEvent();
+        addEventForm.setVisible(false);
+    }//GEN-LAST:event_miAddEventActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -828,9 +859,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -840,6 +868,9 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JList jlsLastestNews;
     private javax.swing.JTabbedPane mainTabbed;
+    private javax.swing.JMenuItem miAddClassStudent;
+    private javax.swing.JMenuItem miAddDept;
+    private javax.swing.JMenuItem miAddEvent;
     private javax.swing.JPanel orgPanel;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JButton stuTblPrevious;

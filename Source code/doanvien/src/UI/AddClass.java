@@ -1,12 +1,19 @@
 package UI;
 
+import DButitilies.RetrieveData;
 import Entities.ClassStu;
+import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.RetrievalMethodResolver;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author PhamDucMinh
  */
 public class AddClass extends javax.swing.JDialog {
+    
+    private DefaultComboBoxModel cbxm;
 
     /**
      * Creates new form AddClass
@@ -14,13 +21,28 @@ public class AddClass extends javax.swing.JDialog {
     public AddClass(java.awt.Frame parent, boolean modal, String mode, ClassStu cla) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        initData(mode, cla);
     }
-
+    
     private void initData(String mode, ClassStu cla) {
+        ArrayList<String> listDept = RetrieveData.getAllDeptName();
+        cbxm = new DefaultComboBoxModel();
+        for (String s : listDept) {
+            cbxm.addElement(s);
+        }
+        cbxDeptName.setModel(cbxm);
         if (mode.compareTo("Add") == 0) {
-            
+            btnUpdateClass.setVisible(false);
         } else if (mode.compareTo("Update") == 0) {
-            
+            txtClaID.setText(cla.getClaID());
+            txtClaName.setText(cla.getClaName());
+            txtClaMoniter.setText(cla.getMoniterID());
+            txtClaYear.setText(cla.getYear() + "");
+            cbxDeptName.setSelectedIndex(
+                    cbxm.getIndexOf(RetrieveData.getDeptNameByID(cla.getDeptID())));
+            txtClaID.setEnabled(false);
+            txtClaName.setEnabled(false);
         }
     }
 
@@ -44,12 +66,12 @@ public class AddClass extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         txtClaMoniter = new javax.swing.JTextField();
         cbxDeptName = new javax.swing.JComboBox();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnUpdateClass = new javax.swing.JButton();
+        btnCreateClass = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Sample text");
+        jLabel1.setText("Create new class");
 
         jLabel2.setText("Class ID:");
 
@@ -59,16 +81,16 @@ public class AddClass extends javax.swing.JDialog {
 
         jLabel5.setText("Department:");
 
-        jLabel7.setText("Moniter:");
+        jLabel7.setText("MoniterID:");
 
         cbxDeptName.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("Update");
+        btnUpdateClass.setText("Update");
 
-        jButton2.setText("Create");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnCreateClass.setText("Create");
+        btnCreateClass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnCreateClassActionPerformed(evt);
             }
         });
 
@@ -88,9 +110,9 @@ public class AddClass extends javax.swing.JDialog {
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCreateClass, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(31, 31, 31)
-                                .addComponent(jButton1))
+                                .addComponent(btnUpdateClass))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtClaID, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -131,17 +153,32 @@ public class AddClass extends javax.swing.JDialog {
                     .addComponent(cbxDeptName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnUpdateClass)
+                    .addComponent(btnCreateClass))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnCreateClassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateClassActionPerformed
+        boolean check = false;
+        if (txtClaID.getText().compareTo("") != 0) {
+            check = true;
+        } else {
+            check = false;
+        }
+        if (check) {
+            String deptName = (String) cbxDeptName.getModel().getElementAt(cbxDeptName.getSelectedIndex());
+            String deptID = RetrieveData.getDeptIDByName(deptName);
+            ClassStu newClass = new ClassStu(txtClaID.getText(), txtClaName.getText(),
+                    Integer.parseInt(txtClaYear.getText()), txtClaMoniter.getText(), deptID);
+            JOptionPane.showMessageDialog(this, "Create success");
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Don't blank input fields!");
+        }
+    }//GEN-LAST:event_btnCreateClassActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,9 +222,9 @@ public class AddClass extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCreateClass;
+    private javax.swing.JButton btnUpdateClass;
     private javax.swing.JComboBox cbxDeptName;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
