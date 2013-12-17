@@ -751,8 +751,9 @@ public class MainForm extends javax.swing.JFrame {
     
     private void tblEventMouseDoubleClicked(MouseEvent evt){
         int index = tblEvent.getSelectedRow();
-        String st= (String) jTable1.getValueAt(index, 0).toString();
-        EveryEvent ev=new EveryEvent(this, rootPaneCheckingEnabled);
+        String st= (String) tblEvent.getValueAt(index, 0).toString();
+        System.out.println(st);
+        EveryEvent ev=new EveryEvent(this, rootPaneCheckingEnabled,st);
         ev.setVisible(true);
     }
 
