@@ -42,21 +42,6 @@ public class RetrieveData {
         }
     }
 
-    public static ResultSet runSqlStatement(String sql) {
-        ArrayList<Student> list = new ArrayList<>();
-        ConnectFactory cf = new ConnectFactory();
-        Connection conn = cf.getConn();
-        try {
-            PreparedStatement ps = conn.prepareCall(sql);
-            ResultSet rs = ps.executeQuery();
-            conn.close();
-            return rs;
-        } catch (SQLException ex) {
-            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
     public static ArrayList<Student> getAllStudent() {
         ArrayList<Student> list = new ArrayList<>();
         try {
@@ -82,7 +67,66 @@ public class RetrieveData {
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return list;
+    }
 
+    public static ArrayList<ClassStu> getAllClass() {
+        ArrayList<ClassStu> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Class\" ");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ClassStu s = new ClassStu(rs.getString(1),
+                        rs.getString(2),
+                        rs.getInt(3),
+                        rs.getString(4),
+                        rs.getString(5));
+                list.add(s);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public static ArrayList<Event> getAllEvent() {
+        ArrayList<Event> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Event\" ");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Event evt = new Event(rs.getString(1), rs.getString(2), rs.getString(3),
+                        new java.util.Date(rs.getDate(4).getTime()), new java.util.Date(rs.getDate(5).getTime()), rs.getInt(6), rs.getInt(7));
+                list.add(evt);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public static ArrayList<Department> getAllDepartMent() {
+        ArrayList<Department> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Department\" ");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Department dp = new Department(rs.getString(1),
+                        rs.getString(2), rs.getString(3), rs.getString(4));
+                list.add(dp);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return list;
     }
 

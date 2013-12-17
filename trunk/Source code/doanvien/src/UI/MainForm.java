@@ -1,8 +1,12 @@
 package UI;
 
 import DButitilies.RetrieveData;
+import Entities.Department;
 import Entities.Student;
 import Entities.User;
+import MVCmodel.ClassStudentModel;
+import MVCmodel.DepartmentModel;
+import MVCmodel.EventModel;
 import MVCmodel.LogModel;
 import MVCmodel.StudentModel;
 import MVCmodel.UserModel;
@@ -39,7 +43,12 @@ public class MainForm extends javax.swing.JFrame {
             loadDataForAdmin();
         }
         createEvent();
-        getLastestNews();
+        new Thread() {
+            @Override
+            public void run() {
+                getLastestNews();
+            }
+        }.start();
     }
 
     public void loadData() {
@@ -88,6 +97,25 @@ public class MainForm extends javax.swing.JFrame {
         stm = new StudentModel(stuList);
         tblStudent.setModel(stm);
         txtStuTblPage.setText("" + stm.getCurrentPage());
+    }
+
+    private void loadAdminDataView(int mode) {
+        switch (mode) {
+            case 1:
+                ClassStudentModel csm = new ClassStudentModel(RetrieveData.getAllClass());
+                tblAdminDataView.setModel(csm);
+                break;
+            case 2:
+                DepartmentModel dm = new DepartmentModel(RetrieveData.getAllDepartMent());
+                tblAdminDataView.setModel(dm);
+                break;
+            case 3:
+                EventModel em = new EventModel(RetrieveData.getAllEvent());
+                tblAdminDataView.setModel(em);
+                break;
+            default:
+                
+        }
     }
 
     public void getLastestNews() {
@@ -147,7 +175,7 @@ public class MainForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         cmbDataViewMode = new javax.swing.JComboBox();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAdminDataView = new javax.swing.JTable();
         txtStatus = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -160,6 +188,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -483,7 +512,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAdminDataView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -494,7 +523,7 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane4.setViewportView(jTable1);
+        jScrollPane4.setViewportView(tblAdminDataView);
 
         javax.swing.GroupLayout settingPanelLayout = new javax.swing.GroupLayout(settingPanel);
         settingPanel.setLayout(settingPanelLayout);
@@ -540,7 +569,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jMainPanelLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(txtStatus)
-                .addGap(0, 769, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
             .addComponent(mainTabbed, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jMainPanelLayout.setVerticalGroup(
@@ -592,6 +621,9 @@ public class MainForm extends javax.swing.JFrame {
         jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu4.setText("About");
+        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
@@ -669,7 +701,7 @@ public class MainForm extends javax.swing.JFrame {
         if (patterm.length() == 0) {
             stm.reloadTable();
         }
-        stm.filterTable(patterm);        
+        stm.filterTable(patterm);
     }//GEN-LAST:event_txtSearchFieldCaretUpdate
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
@@ -749,30 +781,14 @@ public class MainForm extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-
-
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainForm.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
@@ -806,6 +822,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -821,7 +838,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
     private javax.swing.JList jlsLastestNews;
     private javax.swing.JTabbedPane mainTabbed;
     private javax.swing.JPanel orgPanel;
@@ -829,6 +845,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton stuTblPrevious;
     private javax.swing.JPanel studentPanel;
     private javax.swing.JTable tblAdmin;
+    private javax.swing.JTable tblAdminDataView;
     private javax.swing.JTable tblEvent;
     private javax.swing.JTable tblStudent;
     private javax.swing.JTextField txtSearchField;
