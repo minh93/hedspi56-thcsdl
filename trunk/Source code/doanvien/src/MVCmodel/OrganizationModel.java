@@ -1,6 +1,6 @@
 package MVCmodel;
 
-import Entities.ClassStu;
+import Entities.Organization;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -8,15 +8,14 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Minh
  */
-public class ClassStudentModel extends AbstractTableModel {
+public class OrganizationModel extends AbstractTableModel{
+     private ArrayList<Organization> list = new ArrayList<>();
 
-    private ArrayList<ClassStu> list = new ArrayList<>();
-
-    public ClassStudentModel(ArrayList<ClassStu> list) {
+    public OrganizationModel(ArrayList<Organization> list) {
         this.list = list;
     }
 
-    public ClassStu getClassStu(int index) {
+    public Organization getOrganization(int index) {
         return this.list.get(index);
     }
 
@@ -32,16 +31,16 @@ public class ClassStudentModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ClassStu cs = list.get(rowIndex);
+        Organization org = list.get(rowIndex);
         switch (columnIndex) {
             case 0:
-                return cs.getClaID();
+                return org.getOrgName();
             case 1:
-                return cs.getClaName();
+                return org.getOrgManager();
             case 2:
-                return cs.getYear();
+                return org.getOrgTel();
             case 3:
-                return cs.getDeptID();
+                return org.getOrgEmail();
             default:
                 return null;
         }
@@ -51,13 +50,13 @@ public class ClassStudentModel extends AbstractTableModel {
     public String getColumnName(int column) {
         switch (column) {
             case 0:
-                return "ID";
+                return "Name";
             case 1:
-                return "Class Name";
+                return "Head Manager";
             case 2:
-                return "Year";
+                return "Tel";
             case 3:
-                return "Department";
+                return "Email";
             default:
                 return null;
         }

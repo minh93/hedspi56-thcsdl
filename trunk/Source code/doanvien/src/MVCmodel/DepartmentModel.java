@@ -16,6 +16,10 @@ public class DepartmentModel extends AbstractTableModel {
         this.list = list;
     }
 
+    public Department getDepartment(int index) {
+        return this.list.get(index);
+    }
+
     @Override
     public int getRowCount() {
         return list.size();

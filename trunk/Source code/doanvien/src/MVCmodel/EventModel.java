@@ -9,23 +9,28 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Minh
  */
-public class EventModel extends AbstractTableModel{
+public class EventModel extends AbstractTableModel {
+    
     private ArrayList<Event> list = new ArrayList<>();
-
+    
     public EventModel(ArrayList<Event> list) {
         this.list = list;
     }
-
+    
+    public Event getEvent(int index) {
+        return this.list.get(index);
+    }
+    
     @Override
     public int getRowCount() {
         return list.size();
     }
-
+    
     @Override
     public int getColumnCount() {
         return 5;
     }
-
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Event cs = list.get(rowIndex);
@@ -37,14 +42,14 @@ public class EventModel extends AbstractTableModel{
             case 2:
                 return Utility.timeToString(cs.getStart(), "yyyy-MM-dd");
             case 3:
-                return cs.getNumOfPeople()+"";
+                return cs.getNumOfPeople() + "";
             case 4:
-                return cs.getRating()+"";
+                return cs.getRating() + "";
             default:
                 return null;
         }
     }
-
+    
     @Override
     public String getColumnName(int column) {
         switch (column) {

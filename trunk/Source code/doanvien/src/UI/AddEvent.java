@@ -10,12 +10,13 @@ import javax.swing.JOptionPane;
  *
  * @author ManhLinh
  */
-public class AddEvent extends javax.swing.JFrame {
+public class AddEvent extends javax.swing.JDialog {
 
     /**
      * Creates new form AddEvent
      */
-    public AddEvent() {
+    public AddEvent(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -47,7 +48,7 @@ public class AddEvent extends javax.swing.JFrame {
         jtf6 = new javax.swing.JTextField();
         jtf7 = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jbl2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/user_close_add.png"))); // NOI18N
 
@@ -211,7 +212,7 @@ public class AddEvent extends javax.swing.JFrame {
             Date d1 = stringToDate(jtf4.getText(), "yyyy-MM-dd");
             Date d2 = stringToDate(jtf5.getText(), "yyyy-MM-dd");
             Event ev = new Event(jtf1.getText(), jtf2.getText(), jtf3.getText(), d1, d2, n1, n2);
-            
+
             if (RetrieveData.insertEvent(ev)) {
                 JOptionPane.showMessageDialog(this, "Create new event success !");
             } else {
@@ -290,7 +291,14 @@ public class AddEvent extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddEvent().setVisible(true);
+                AddEvent dialog = new AddEvent(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }

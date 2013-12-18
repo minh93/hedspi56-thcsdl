@@ -5,6 +5,8 @@ import Entities.Department;
 import Entities.Event;
 import Entities.GEvent;
 import Entities.LogRecord;
+import Entities.Organization;
+import Entities.Participation;
 import Entities.Student;
 import Entities.User;
 import Utilities.Utility;
@@ -135,6 +137,25 @@ public class RetrieveData {
         return list;
     }
 
+    public static ArrayList<Organization> getAllOrganization() {
+        ArrayList<Organization> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Organization\" ");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Organization org = new Organization(rs.getString(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6));
+                list.add(org);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public static ArrayList<String> getAllClassName() {
         ArrayList<String> list = new ArrayList<>();
         try {
@@ -236,13 +257,17 @@ public class RetrieveData {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
-            PreparedStatement cs = conn.prepareStatement("INSERT INTO \"Departmant\" VALUES (?,?,?,?)");
+            PreparedStatement cs = conn.prepareStatement("INSERT INTO \"Department\" VALUES (?,?,?,?)");
             cs.setString(1, d.getID());
             cs.setString(2, d.getName());
             cs.setString(3, d.getTel());
             cs.setString(4, d.getMail());
+            if (cs.executeUpdate() == 1) {
+                return true;
+            } else {
+                return false;
+            }
 
-            return true;
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -534,19 +559,23 @@ public class RetrieveData {
         }
     }
 
-    public static boolean insertPar(String StuID, String OrgID, String Role, Date Start, Date End, String Description) {
+    public static boolean insertPar(String StuID, String OrgID, String Role, Date Start, Date End, String Description, int Status) {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
-            PreparedStatement cs = conn.prepareStatement("INSERT INTO \"Participation\" VALUES (?,?,?,?,?,?)");
+            PreparedStatement cs = conn.prepareStatement("INSERT INTO \"Participation\" VALUES (?,?,?,?,?,?,?)");
             cs.setString(1, StuID);
             cs.setString(2, OrgID);
             cs.setString(3, Role);
             cs.setDate(4, Start);
             cs.setDate(5, End);
             cs.setString(6, Description);
-            cs.executeUpdate();
-            return true;
+            cs.setInt(7, Status);
+            if (cs.executeUpdate() == 1) {
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -679,6 +708,28 @@ public class RetrieveData {
             while (rs.next()) {
                 Event u = new Event(rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getDate(5), rs.getInt(6), rs.getInt(7));
                 list.add(u);
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return list;
+    }
+
+    public static ArrayList<Participation> getAllParticipation(int status) {
+        ArrayList<Participation> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Participation\" WHERE \"Status\" = ?");
+            ps.setInt(1, status);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Participation p = new Participation(rs.getString(1), rs.getString(2), rs.getString(3),
+                        new java.util.Date(rs.getDate(4).getTime()),
+                        new java.util.Date(rs.getDate(5).getTime()), rs.getString(6), rs.getInt(7));
+                list.add(p);
             }
             conn.close();
         } catch (SQLException ex) {
