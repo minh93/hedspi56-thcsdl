@@ -1,6 +1,8 @@
 package UI;
 
 import DButitilies.RetrieveData;
+import Entities.Participation;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -93,7 +95,9 @@ public class RegisterForm extends javax.swing.JDialog {
     }//GEN-LAST:event_cbAcceptMouseClicked
     
     private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
-        if (RetrieveData.insertPar(stuID, orgID, null, null, null, null,0)) {
+        Date d = new Date();
+        Participation p = new Participation(stuID, orgID, null, d, null, stuID, 0);
+        if (RetrieveData.insertPar(p)) {
             JOptionPane.showMessageDialog(this, "Action done !");            
         } else {
             JOptionPane.showMessageDialog(this, "Error has occured !");
