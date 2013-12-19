@@ -111,6 +111,12 @@ public class StudentModel extends AbstractTableModel {
         }
     }
 
+    public Student removeStudent(Student d) {
+        listOrgin.remove(d);
+        fireTableDataChanged();
+        return d;
+    }
+
     @Override
     public int getRowCount() {
         if (listToUse.size() > 20 && currentPage < numOfPage) {

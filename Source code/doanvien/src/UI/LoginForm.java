@@ -2,6 +2,7 @@ package UI;
 
 import DButitilies.ConnectFactory;
 import DButitilies.RetrieveData;
+import Entities.Student;
 import Utilities.Utility;
 import java.awt.Color;
 import java.io.FileOutputStream;
@@ -9,10 +10,6 @@ import java.io.IOException;
 import java.util.Properties;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Minh
- */
 public class LoginForm extends javax.swing.JFrame {
 
     private boolean si = true;
@@ -20,7 +17,7 @@ public class LoginForm extends javax.swing.JFrame {
 
     public LoginForm() {
         initComponents();
-        this.setSize(336, 310);
+        this.setSize(336, 300);
         this.setLocation(500, 100);
         this.setResizable(false);
     }
@@ -205,7 +202,7 @@ public class LoginForm extends javax.swing.JFrame {
                         .addGap(38, 38, 38)
                         .addComponent(jLabel5))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelMainLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(18, 18, 18)
                         .addComponent(btnConfigServer)
                         .addGap(18, 18, Short.MAX_VALUE)
                         .addComponent(txtServerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -238,7 +235,7 @@ public class LoginForm extends javax.swing.JFrame {
             si = true;
         }
         if (si == true) {
-            this.setSize(336, 310);
+            this.setSize(336, 300);
         } else {
             this.setSize(336, 500);
         }
@@ -246,19 +243,25 @@ public class LoginForm extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         int role;
-        if (txtName.getText().compareTo("") == 0
-                || txtPassword.getPassword().length == 0) {
+        if (txtName.getText().compareTo("") == 0) {
             JOptionPane.showMessageDialog(rootPane, "Don't blank username and password !", "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             String username = txtName.getText();
-            String password = Utility.checksumGen(new String(txtPassword.getPassword()), "md5", true);
-            role = RetrieveData.getRole(username, password);
-            if (role == 1 || role == 2 || role == 3) {
-                MainForm mf = new MainForm(role, username);
+            Student s = RetrieveData.getStudentByID(username);
+            if (s != null) {
+                MainForm mf = new MainForm(4, s.getStudentID());
                 mf.setVisible(true);
                 this.dispose();
-            } else if (role == 0) {
-                JOptionPane.showMessageDialog(rootPane, "Invalid username or password !", "Information", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                String password = Utility.checksumGen(new String(txtPassword.getPassword()), "md5", true);
+                role = RetrieveData.getRole(username, password);
+                if (role == 1 || role == 2 || role == 3) {
+                    MainForm mf = new MainForm(role, username);
+                    mf.setVisible(true);
+                    this.dispose();
+                } else if (role == 0) {
+                    JOptionPane.showMessageDialog(rootPane, "Invalid username or password !", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_btnLoginActionPerformed
@@ -325,53 +328,6 @@ public class LoginForm extends javax.swing.JFrame {
     private void txtDBNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDBNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDBNameActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-
-
-
-
-
-
-
-
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LoginForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LoginForm().setVisible(true);
-            }
-        });
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnConfigServer;
     private javax.swing.JButton btnGuest;

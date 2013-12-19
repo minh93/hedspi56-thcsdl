@@ -17,6 +17,7 @@ public class RegisterForm extends javax.swing.JDialog {
     public RegisterForm(java.awt.Frame parent, boolean modal, String stuID, String orgID) {
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
         btnAccept.setEnabled(false);
         this.stuID = stuID;
         this.orgID = orgID;
@@ -96,9 +97,11 @@ public class RegisterForm extends javax.swing.JDialog {
     
     private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
         Date d = new Date();
-        Participation p = new Participation(stuID, orgID, null, d, null, stuID, 0);
+        Participation p = new Participation(stuID, orgID, null, d, d, stuID, 0);
+        System.out.println("Test "+ p.getStuID());
         if (RetrieveData.insertPar(p)) {
-            JOptionPane.showMessageDialog(this, "Action done !");            
+            JOptionPane.showMessageDialog(this, "Action done !");  
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Error has occured !");
         }
