@@ -81,7 +81,7 @@ public class Participation {
         return list.get(status);
     }
 
-    public Participation(String orgID, String stuID, String role, Date dateStart, Date dateEnd, String des, int status) {
+    public Participation(String stuID, String orgID, String role, Date dateStart, Date dateEnd, String des, int status) {
         this.orgID = orgID;
         this.stuID = stuID;
         this.role = role;

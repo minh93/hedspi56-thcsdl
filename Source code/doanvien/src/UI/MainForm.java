@@ -46,7 +46,7 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setTitle("Hi! " + usrName);        
+        this.setTitle("Hi! " + usrName);
         switch (role) {
             case 1:
                 loadDataForAdmin();
@@ -134,6 +134,10 @@ public class MainForm extends javax.swing.JFrame {
 
     public UserModel getUsermodel() {
         return (UserModel) tblAdmin.getModel();
+    }
+
+    public ArrayList<Student> getListStudent() {
+        return this.stuList;
     }
 
     public void addStudentToModel(Student s) {
@@ -258,6 +262,7 @@ public class MainForm extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        miViewRequest = new javax.swing.JMenuItem();
         miEdit = new javax.swing.JMenu();
         miAddClassStudent = new javax.swing.JMenuItem();
         miAddDept = new javax.swing.JMenuItem();
@@ -515,6 +520,11 @@ public class MainForm extends javax.swing.JFrame {
 
         btnRegister.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnRegister.setText("Register");
+        btnRegister.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegisterActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout orgPanelLayout = new javax.swing.GroupLayout(orgPanel);
         orgPanel.setLayout(orgPanelLayout);
@@ -779,6 +789,15 @@ public class MainForm extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu3.setText("View");
+
+        miViewRequest.setText("View request ");
+        miViewRequest.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miViewRequestActionPerformed(evt);
+            }
+        });
+        jMenu3.add(miViewRequest);
+
         jMenuBar1.add(jMenu3);
 
         miEdit.setText("Edit");
@@ -1019,7 +1038,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_miAddClassStudentActionPerformed
 
     private void miAddEventActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAddEventActionPerformed
-        new AddEvent(this,false).setVisible(true);
+        new AddEvent(this, false).setVisible(true);
     }//GEN-LAST:event_miAddEventActionPerformed
 
     private void miAddDeptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAddDeptActionPerformed
@@ -1037,6 +1056,16 @@ public class MainForm extends javax.swing.JFrame {
         txtOrgMail.setText(org.getOrgEmail());
         txtOrgParent.setText("Trực thuộc " + org.getParentID());
     }//GEN-LAST:event_tblOrganizationMouseClicked
+
+    private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
+        Organization org = om.getOrganization(tblOrganization.getSelectedRow());
+        String orgID = org.getOrgID();
+        new RegisterForm(this, true, usrName, orgID).setVisible(true);
+    }//GEN-LAST:event_btnRegisterActionPerformed
+
+    private void miViewRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miViewRequestActionPerformed
+        new RequestForm(this, false, RetrieveData.getAllParticipation()).setVisible(true);
+    }//GEN-LAST:event_miViewRequestActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1060,7 +1089,7 @@ public class MainForm extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainForm(2, "Minh").setVisible(true);
+                new MainForm(1, "Minh").setVisible(true);
             }
         });
     }
@@ -1107,6 +1136,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem miAddEvent;
     private javax.swing.JMenu miEdit;
     private javax.swing.JMenuItem miOpenFile;
+    private javax.swing.JMenuItem miViewRequest;
     private javax.swing.JPanel orgPanel;
     private javax.swing.JPanel settingPanel;
     private javax.swing.JButton stuTblPrevious;
