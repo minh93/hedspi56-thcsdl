@@ -20,10 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.Checksum;
 
-/**
- *
- * @author PhamDucMinh
- */
 public class Utility {
 
     @Anotation.MethodInfo(author = "MinhPD", comments = "This method use to create checksum password")
@@ -78,15 +74,15 @@ public class Utility {
 
     @Anotation.MethodInfo(author = "MinhPD", comments = "This method use to convert time to time string")
     public static String timeToString(Date d, String format) {
+        String time = null;
         DateFormat df = new SimpleDateFormat(format);
-        return new String(df.format(d));
+        time = new String(df.format(d));
+        return time;
     }
 
     public static Date stringToDate(String s, String format) {
         SimpleDateFormat formatter = new SimpleDateFormat(format);
-
         try {
-
             Date date = formatter.parse(s);            
             return date;
         } catch (ParseException e) {

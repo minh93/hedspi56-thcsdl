@@ -1,5 +1,6 @@
 package UI;
 
+import DButitilies.Logging;
 import DButitilies.RetrieveData;
 import Entities.ClassStu;
 import Entities.Department;
@@ -7,6 +8,7 @@ import Entities.Event;
 import Entities.Organization;
 import Entities.Student;
 import Entities.User;
+import File.FileIO;
 import MVCmodel.ClassStudentModel;
 import MVCmodel.DepartmentModel;
 import MVCmodel.EventModel;
@@ -19,8 +21,10 @@ import MVCmodel.UserModel;
 import Network.GetLastestNew;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -47,6 +51,9 @@ public class MainForm extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setTitle("Hi! " + usrName);
+        this.usrName = usrName;
+        txtUserName.setText(usrName);
+        Logging.login(usrName);
         switch (role) {
             case 1:
                 loadDataForAdmin();
@@ -54,10 +61,16 @@ public class MainForm extends javax.swing.JFrame {
             case 2:
                 loadDataForManager();
                 break;
+            case 3:
+                loadDataForGuest();
+                break;
+            case 4:
+                loadDataForStudent();
+                break;
             default:
 
         }
-        createEvent();
+
         new Thread() {
             @Override
             public void run() {
@@ -66,30 +79,53 @@ public class MainForm extends javax.swing.JFrame {
         }.start();
     }
 
-    private void loadData() {
+    private void loadDataForAdmin() {
         loadDataStudentTBL();
         loadDataOrganizationTBL();
         loadDataForGEvent();
         loadDataForGEventToday();
-
-    }
-
-    private void loadDataForAdmin() {
-        loadData();
         um = new UserModel(RetrieveData.getAllUser());
         lm = new LogModel(RetrieveData.getLogRecords());
         tblAdmin.setModel(um);
+        btnRegister.setEnabled(false);
+        createEvent();
         loadAdminDataView(0);
     }
 
     private void loadDataForManager() {
-        loadData();
+        loadDataStudentTBL();
+        loadDataOrganizationTBL();
+        loadDataForGEvent();
+        loadDataForGEventToday();
+        createEvent();
         settingPanel.setVisible(false);
+        btnRegister.setEnabled(false);
         mainTabbed.remove(4);
     }
 
+    private void loadDataForStudent() {
+        loadDataStudentTBL();
+        loadDataOrganizationTBL();
+        loadDataForGEvent();
+        loadDataForGEventToday();
+        btnAddStudent.setVisible(false);
+        btnDeleteStudent.setVisible(false);
+        menuBar.setVisible(false);
+        btnRegister.setVisible(true);
+        mainTabbed.remove(4);
+        btnRegister.setVisible(true);
+    }
+
     private void loadDataForGuest() {
-        loadData();
+        loadDataStudentTBL();
+        loadDataOrganizationTBL();
+        loadDataForGEvent();
+        loadDataForGEventToday();
+        btnAddStudent.setVisible(false);
+        btnDeleteStudent.setVisible(false);
+        menuBar.setVisible(false);
+        btnRegister.setVisible(false);
+        mainTabbed.remove(4);
     }
 
     private void createEvent() {
@@ -217,13 +253,15 @@ public class MainForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         jlsLastestNews = new javax.swing.JList();
+        jPanel4 = new javax.swing.JPanel();
+        txtUserName = new javax.swing.JLabel();
         studentPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblStudent = new javax.swing.JTable();
         btnAddStudent = new javax.swing.JButton();
         btnDeleteStudent = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
-        stuTblPrevious = new javax.swing.JButton();
+        btnStuPrevious = new javax.swing.JButton();
         btnStuNext = new javax.swing.JButton();
         txtStuTblPage = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -255,19 +293,19 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tblAdminDataView = new javax.swing.JTable();
         txtStatus = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menuBar = new javax.swing.JMenuBar();
+        miFile = new javax.swing.JMenu();
         miOpenFile = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        miView = new javax.swing.JMenu();
         miViewRequest = new javax.swing.JMenuItem();
         miEdit = new javax.swing.JMenu();
         miAddClassStudent = new javax.swing.JMenuItem();
         miAddDept = new javax.swing.JMenuItem();
         miAddEvent = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
+        miAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -290,7 +328,7 @@ public class MainForm extends javax.swing.JFrame {
         jHeaderLayout.setHorizontalGroup(
             jHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jHeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(584, Short.MAX_VALUE)
                 .addComponent(txtSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(btnSearch)
@@ -327,6 +365,28 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Infomation"));
+
+        txtUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtUserName.setText("Sample usrname");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtUserName)
+                .addContainerGap(155, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(txtUserName)
+                .addContainerGap(260, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout homePanelLayout = new javax.swing.GroupLayout(homePanel);
         homePanel.setLayout(homePanelLayout);
         homePanelLayout.setHorizontalGroup(
@@ -334,14 +394,18 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(333, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         homePanelLayout.setVerticalGroup(
             homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homePanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(homePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/Home.png")), homePanel); // NOI18N
@@ -381,10 +445,10 @@ public class MainForm extends javax.swing.JFrame {
             }
         });
 
-        stuTblPrevious.setText("Previous");
-        stuTblPrevious.addActionListener(new java.awt.event.ActionListener() {
+        btnStuPrevious.setText("Previous");
+        btnStuPrevious.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stuTblPreviousActionPerformed(evt);
+                btnStuPreviousActionPerformed(evt);
             }
         });
 
@@ -413,7 +477,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(stuTblPrevious)
+                .addComponent(btnStuPrevious)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtStuTblPage, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -439,7 +503,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(stuTblPrevious)
+                    .addComponent(btnStuPrevious)
                     .addComponent(txtStuTblPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(btnStuNext))
@@ -747,7 +811,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(txtStatus)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(mainTabbed, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(mainTabbed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jMainPanelLayout.setVerticalGroup(
             jMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -761,13 +825,18 @@ public class MainForm extends javax.swing.JFrame {
 
         mainTabbed.getAccessibleContext().setAccessibleName("tab1");
 
-        jMenu1.setText("File");
+        miFile.setText("File");
 
         miOpenFile.setText("Open");
-        jMenu1.add(miOpenFile);
+        miFile.add(miOpenFile);
 
         jMenuItem2.setText("Export");
-        jMenu1.add(jMenuItem2);
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        miFile.add(jMenuItem2);
 
         jMenuItem3.setText("Import");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -775,7 +844,7 @@ public class MainForm extends javax.swing.JFrame {
                 jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        miFile.add(jMenuItem3);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_MASK));
         jMenuItem4.setText("Logout");
@@ -784,11 +853,11 @@ public class MainForm extends javax.swing.JFrame {
                 jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem4);
+        miFile.add(jMenuItem4);
 
-        jMenuBar1.add(jMenu1);
+        menuBar.add(miFile);
 
-        jMenu3.setText("View");
+        miView.setText("View");
 
         miViewRequest.setText("View request ");
         miViewRequest.addActionListener(new java.awt.event.ActionListener() {
@@ -796,9 +865,9 @@ public class MainForm extends javax.swing.JFrame {
                 miViewRequestActionPerformed(evt);
             }
         });
-        jMenu3.add(miViewRequest);
+        miView.add(miViewRequest);
 
-        jMenuBar1.add(jMenu3);
+        menuBar.add(miView);
 
         miEdit.setText("Edit");
 
@@ -826,12 +895,17 @@ public class MainForm extends javax.swing.JFrame {
         });
         miEdit.add(miAddEvent);
 
-        jMenuBar1.add(miEdit);
+        menuBar.add(miEdit);
 
-        jMenu4.setText("About");
-        jMenuBar1.add(jMenu4);
+        miAbout.setText("About");
+        miAbout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                miAboutMouseClicked(evt);
+            }
+        });
+        menuBar.add(miAbout);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -849,7 +923,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 460, Short.MAX_VALUE)
+                .addComponent(jMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 452, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -859,6 +933,7 @@ public class MainForm extends javax.swing.JFrame {
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         LoginForm lf = new LoginForm();
         lf.setVisible(true);
+        Logging.logout(usrName);
         this.dispose();
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -958,9 +1033,9 @@ public class MainForm extends javax.swing.JFrame {
         stm.reloadTable();
     }//GEN-LAST:event_btnSearchActionPerformed
 
-    private void stuTblPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stuTblPreviousActionPerformed
+    private void btnStuPreviousActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStuPreviousActionPerformed
         stm.previousPage();
-    }//GEN-LAST:event_stuTblPreviousActionPerformed
+    }//GEN-LAST:event_btnStuPreviousActionPerformed
 
     private void btnStuNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStuNextActionPerformed
         stm.nextPage();
@@ -979,6 +1054,7 @@ public class MainForm extends javax.swing.JFrame {
         Student s = sm.getStudent(index, currentPage);
         PermanentlyDeleteConfirm pdc = new PermanentlyDeleteConfirm(this, true);
         pdc.setVisible(true);
+        Logging.createLog(usrName, "Permantly delete " + s.getStudentID());
         int result = pdc.permanetlyConfirm();
         if (result == 1) {
             if (RetrieveData.deleteStudentByID(s.getStudentID(), false) == -1) {
@@ -1046,6 +1122,17 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_miAddDeptActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        int result;
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File("."));
+        jfc.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        result = jfc.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            ArrayList<Student> list = new ArrayList<>();
+            if (FileIO.loadFromFile(list, jfc.getSelectedFile().getAbsolutePath())) {
+                new LoadStudent(this, false, list).setVisible(true);
+            }
+        }
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void tblOrganizationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblOrganizationMouseClicked
@@ -1058,41 +1145,33 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_tblOrganizationMouseClicked
 
     private void btnRegisterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegisterActionPerformed
-        Organization org = om.getOrganization(tblOrganization.getSelectedRow());
-        String orgID = org.getOrgID();
-        new RegisterForm(this, true, usrName, orgID).setVisible(true);
+        if (tblOrganization.getSelectedRow() != - 1) {
+            Organization org = om.getOrganization(tblOrganization.getSelectedRow());
+            String orgID = org.getOrgID();
+            new RegisterForm(this, true, usrName, orgID).setVisible(true);
+        }else JOptionPane.showMessageDialog(this, "Please choose Organization");
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void miViewRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miViewRequestActionPerformed
         new RequestForm(this, false, RetrieveData.getAllParticipation()).setVisible(true);
+        Logging.createLog(usrName, "View request");
     }//GEN-LAST:event_miViewRequestActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-
-
-                }
-            }
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainForm.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        int result;
+        JFileChooser jfc = new JFileChooser();
+        jfc.setCurrentDirectory(new File("."));
+        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        result = jfc.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            FileIO.saveToFile(stuList, jfc.getSelectedFile().getAbsolutePath());
+            JOptionPane.showMessageDialog(this, "Export success !");
         }
-        //</editor-fold>
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainForm(1, "Minh").setVisible(true);
-            }
-        });
-    }
+    private void miAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miAboutMouseClicked
+        new About(this, false).setVisible(true);
+    }//GEN-LAST:event_miAboutMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel adminPanel;
     private javax.swing.JButton btnAddStudent;
@@ -1101,6 +1180,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnStuNext;
+    private javax.swing.JButton btnStuPrevious;
     private javax.swing.JComboBox cmbDataViewMode;
     private javax.swing.JComboBox cmbViewControl;
     private javax.swing.JPanel eventPanel;
@@ -1111,16 +1191,13 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jHeader;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jMainPanel;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1131,15 +1208,18 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JList jlsLastestNews;
     private javax.swing.JTabbedPane mainTabbed;
+    private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenu miAbout;
     private javax.swing.JMenuItem miAddClassStudent;
     private javax.swing.JMenuItem miAddDept;
     private javax.swing.JMenuItem miAddEvent;
     private javax.swing.JMenu miEdit;
+    private javax.swing.JMenu miFile;
     private javax.swing.JMenuItem miOpenFile;
+    private javax.swing.JMenu miView;
     private javax.swing.JMenuItem miViewRequest;
     private javax.swing.JPanel orgPanel;
     private javax.swing.JPanel settingPanel;
-    private javax.swing.JButton stuTblPrevious;
     private javax.swing.JPanel studentPanel;
     private javax.swing.JTable tblAdmin;
     private javax.swing.JTable tblAdminDataView;
@@ -1154,5 +1234,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtSearchField;
     private javax.swing.JLabel txtStatus;
     private javax.swing.JTextField txtStuTblPage;
+    private javax.swing.JLabel txtUserName;
     // End of variables declaration//GEN-END:variables
 }

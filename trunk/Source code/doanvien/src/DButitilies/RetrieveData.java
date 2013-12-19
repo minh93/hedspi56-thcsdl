@@ -12,7 +12,6 @@ import Entities.User;
 import Utilities.Utility;
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,7 +43,8 @@ public class RetrieveData {
             }
             return role;
         } catch (SQLException ex) {
-            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            Logging .createLog(userName, "Login falled ");
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);            
             return -1;
         }
     }
@@ -234,7 +234,6 @@ public class RetrieveData {
     }
 
     public static int deleteStudentByID(String id, boolean mode) {
-
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
@@ -251,6 +250,35 @@ public class RetrieveData {
             Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
+    }
+
+    public static Student getStudentByID(String stuID) {
+        Student s = null;
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("SELECT * FROM \"Student\" WHERE \"Status\" = 1 AND \"StuID\" = ?");
+            ps.setString(1, stuID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                s = new Student(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getDate(4),
+                        rs.getBoolean(5),
+                        rs.getInt(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getString(10),
+                        rs.getString(11));
+                return s;
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
     }
 
     public static boolean insertDept(Department d) {
