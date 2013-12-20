@@ -3,6 +3,7 @@ package DButitilies;
 import Entities.ClassStu;
 import Entities.Department;
 import Entities.Student;
+import Entities.User;
 import Utilities.Utility;
 import java.util.ArrayList;
 import org.junit.Test;
@@ -66,17 +67,7 @@ public class RetrieveDataTest {
         assertNull(null);
     }
     
-   // @Test
-   // public void testInsertStudent() {
-     //   Student cs = new Student("20112695", "Phan", "Toan", "20/05/1993",
-       //         TRUE, 2011, "01675368205", "phantoan@gmail.com", "Nghe An", "VN-6C", "handsome");
-        //int result = RetrieveData.insertStudent(cs);
-        //int expresult = 0;
-        //assertEquals(expresult, result);
-        //RetrieveData.deleteStudentByID("20112695");
-    //}
-
-    @Test
+      @Test
     public void testInsertStudent() {
         System.out.println("Test insert student");
         int tem = RetrieveData.deleteStudentByID("20112440");
@@ -84,18 +75,20 @@ public class RetrieveDataTest {
         Student s = new Student("20112440", "Tran", "Cong", Utility.stringToDate("1993-02-03", "yyyy-MM-dd"), 
                 Boolean.TRUE, 2011, "0211521", "mail@gmail.com", "Ha Noi", "DT2", "Con hoc");
         int result = RetrieveData.insertStudent(s);
-        int expResult = 0;
+        int expResult = -1;
         
         assertEquals(expResult, result);
     }
 
-//@Test
-//public void testupdateStudent() {
+    @Test
+    public void testupdateStudent() {
+        boolean result = RetrieveData.updateStudent("20112695", "01675368205", "Ha noi", "pt@gmail.com", "VN-6C", "Good boy");
+        boolean expresult = true;
+        assertEquals(expresult, result);
+    }
 
-//}
-
-@Test
-public void testInsertDept() {
+    @Test
+    public void testInsertDept() {
         System.out.println("Test insert Dept");
         Department dp = new Department("KTHH", "Ky thuat Hoa hoc","043863900", "kythuathoahoc@hust.edu.vn");
         boolean result = RetrieveData.insertDept(dp);
@@ -103,11 +96,12 @@ public void testInsertDept() {
         assertEquals(expresult, result);
 }
 
-//@Test
-//public void testupdateDept() {
-
-//}
-
+    @Test
+    public void testupdateDept() {
+        boolean result = RetrieveData.updateDept("CNTT", "04215236", "soict@hust.edu.vn");
+        boolean expresult = true;
+        assertEquals(expresult, result);
+    }
     
     @Test
     public void testInsertClass() {
@@ -118,9 +112,12 @@ public void testInsertDept() {
         assertEquals(expresult, result);
     }
 
-    //@Test
-    //public void testupdateClass() {
-    //}
+    @Test
+    public void testupdateClass() {
+        boolean result = RetrieveData.updateClass("VN-6C", "2011", "20112695", "CNTT");
+        boolean expresult = true;
+        assertEquals(expresult, result);
+    }
     
     @Test
     public void testgetClassNamebyID() {
@@ -130,12 +127,12 @@ public void testInsertDept() {
     }
     
     @Test
-    public void testClassIDbyName() {
+    public void testgetClassIDbyName() {
         String c = RetrieveData.getClassIDByName("Ky thuat Hoa hoc");
         System.out.println("Get Class ID by name result: " + c);
         assertNull(null);
     }
-    
+ /*   
     @Test
     public void testgetAllUser() {
         ArrayList<User> us = RetrieveData.getAllUser();
@@ -144,5 +141,14 @@ public void testInsertDept() {
             System.out.println(s.getUserName);
         }
         assertNull(null);
+    }*/
+
+    @Test
+    public void testcreatUser() {
+        User u = new User("phantoan", "01675368205", "1234", 2);
+        int result = RetrieveData.createUser(u);
+        int expresult = -1;
+        assertEquals(expresult, result);
     }
 }
+
