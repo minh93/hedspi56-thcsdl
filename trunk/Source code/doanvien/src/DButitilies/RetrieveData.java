@@ -590,6 +590,23 @@ public class RetrieveData {
         }
     }
 
+    public static ArrayList<String> getAllOrgName() {
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareCall("SELECT \"OrgName\" FROM \"Organization\" ");
+            ResultSet rs = cs.executeQuery();
+            while (rs.next()) {
+                list.add(rs.getString(1));
+            }
+            conn.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
     public static boolean deleteParticipation(String StuID, String OrgID) {
         try {
             ConnectFactory cf = new ConnectFactory();

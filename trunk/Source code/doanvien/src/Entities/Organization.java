@@ -5,9 +5,10 @@ package Entities;
  * @author PhamDucMinh
  */
 public class Organization {
+
     private String orgID;
     private String orgName;
-    private String parentID;
+    private String parentID ;                           
     private String orgManager;
     private String orgEmail;
     private String orgTel;
@@ -68,5 +69,4 @@ public class Organization {
     public void setOrgTel(String orgTel) {
         this.orgTel = orgTel;
     }
-    
 }
