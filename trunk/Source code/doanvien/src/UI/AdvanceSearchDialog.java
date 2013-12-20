@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import DButitilies.ConnectFactory;
@@ -30,14 +26,18 @@ import jxl.write.WriteException;
 public class AdvanceSearchDialog extends javax.swing.JDialog {
     
     private ArrayList<Student> list = new ArrayList<>();
+    private String usrName;
+    private int role;
 
     /**
      * Creates new form AdvanceSearchDialog
      */
-    public AdvanceSearchDialog(java.awt.Frame parent, boolean modal) {
+    public AdvanceSearchDialog(java.awt.Frame parent, boolean modal, String usrName, int role) {
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
+        this.usrName = usrName;
+        this.role = role;
         ArrayList<String> deptNames = RetrieveData.getAllDeptName();
         ArrayList<String> claNames = RetrieveData.getAllClassName();
         DefaultComboBoxModel cbmDept = new DefaultComboBoxModel();
@@ -52,6 +52,12 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         }
         cbmClass.addElement("All");
         cbxClassName.setModel(cbmClass);
+        this.setResizable(false);
+        if (role == 1 || role == 2) {
+            btnDelete.setVisible(true);
+        } else {
+            btnDelete.setVisible(false);
+        }
     }
 
     /**
@@ -73,7 +79,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         txtF_Name = new javax.swing.JTextField();
         txtAddress = new javax.swing.JTextField();
         cbxDept = new javax.swing.JComboBox();
-        jButton2 = new javax.swing.JButton();
+        btnClear = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -83,6 +89,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         cbxClassName = new javax.swing.JComboBox();
         btnExport = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,10 +111,10 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
 
         cbxDept.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CNTT & TT", "Hóa Học", "Điện", "All..." }));
 
-        jButton2.setText("Clear");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnClearActionPerformed(evt);
             }
         });
 
@@ -136,6 +143,13 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
             }
         });
 
@@ -175,9 +189,11 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnStudentAdv)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnClear, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnExport)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnDelete)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -210,8 +226,9 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                 .addGap(27, 27, 27)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnStudentAdv)
-                    .addComponent(jButton2)
-                    .addComponent(btnExport))
+                    .addComponent(btnClear)
+                    .addComponent(btnExport)
+                    .addComponent(btnDelete))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
@@ -248,10 +265,10 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         JFileChooser jfc = new JFileChooser();
         jfc.setCurrentDirectory(new File("."));
         jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-        result = jfc.showSaveDialog(this);        
+        result = jfc.showSaveDialog(this);
         if (result == JFileChooser.APPROVE_OPTION) {
             String fileName = jfc.getSelectedFile().getAbsolutePath();
-            fileName+=".xls";
+            fileName += ".xls";
             try {
                 writexls.writexlss(tblStudentResultSearch, fileName);
             } catch (WriteException ex) {
@@ -260,17 +277,25 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                 Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(rootPane, "Export success !", "Information", JOptionPane.INFORMATION_MESSAGE);
-           
+            
         }
     }//GEN-LAST:event_btnExportActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        txtF_Name.setText("");
+        txtL_Name.setText("");
+        txtAddress.setText("");
+        txtID.setText("");
+        txtSchoolYear.setText("");
+    }//GEN-LAST:event_btnClearActionPerformed
+    
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         try {
             Delete();
         } catch (SQLException ex) {
             Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
     
     private void search() {
         String strsql = new String();
@@ -340,39 +365,34 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         
     }
     
-    
-       private void Delete() throws SQLException
-  {
-         int[] se = tblStudentResultSearch.getSelectedRows();
-         String st ;
-         ConnectFactory cf = new ConnectFactory();
-         Connection conn = cf.getConn();
-         
-        if(se.length!=0)
-        {
-         for(int y=0;y<se.length;y++)
-         {
-             st= (String) tblStudentResultSearch.getValueAt(se[y], 0).toString();
-            // System.out.println(st);
-             try{
-                 String strsql2="UPDATE \"Class\" SET \"MoniterID\"=NULL WHERE \"MoniterID\"='"+st+"'";
-                 String strsql3="DELETE FROM \"Student\" WHERE \"StuID\"='"+st+"'";
-                 
-                 PreparedStatement ps1 = conn.prepareCall(strsql2);
-                 PreparedStatement ps2 = conn.prepareCall(strsql3);
-                 int rs1 = ps1.executeUpdate();
-                 int rs2 = ps2.executeUpdate();
-                 
-                 search();
-             }
-             catch(SQLException ex) {
-            Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+    private void Delete() throws SQLException {
+        int[] se = tblStudentResultSearch.getSelectedRows();
+        String st;
+        ConnectFactory cf = new ConnectFactory();
+        Connection conn = cf.getConn();
+        
+        if (se.length != 0) {
+            for (int y = 0; y < se.length; y++) {
+                st = (String) tblStudentResultSearch.getValueAt(se[y], 0).toString();
+                // System.out.println(st);
+                try {
+                    String strsql2 = "UPDATE \"Class\" SET \"MoniterID\"=NULL WHERE \"MoniterID\"='" + st + "'";
+                    String strsql3 = "DELETE FROM \"Student\" WHERE \"StuID\"='" + st + "'";
+                    
+                    PreparedStatement ps1 = conn.prepareCall(strsql2);
+                    PreparedStatement ps2 = conn.prepareCall(strsql3);
+                    int rs1 = ps1.executeUpdate();
+                    int rs2 = ps2.executeUpdate();
+                    
+                    search();
+                } catch (SQLException ex) {
+                    Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
         }
-             
-        }
-         
-        }
-  }
+    }
 
     /**
      * @param args the command line arguments
@@ -410,7 +430,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AdvanceSearchDialog dialog = new AdvanceSearchDialog(new javax.swing.JFrame(), true);
+                AdvanceSearchDialog dialog = new AdvanceSearchDialog(new javax.swing.JFrame(), true, "admin", 1);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -422,11 +442,12 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnExport;
     private javax.swing.JButton btnStudentAdv;
     private javax.swing.JComboBox cbxClassName;
     private javax.swing.JComboBox cbxDept;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
