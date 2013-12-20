@@ -25,8 +25,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="380" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="380" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -51,8 +51,11 @@
         <Component class="javax.swing.JTextArea" name="jTextArea1">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Segoe UI" size="14" style="0"/>
+            </Property>
             <Property name="rows" type="int" value="5"/>
-            <Property name="text" type="java.lang.String" value="======Ph&#x1ea7;n m&#x1ec1;m qu&#x1ea3;n l&#xfd; h&#x1ed9;i sinh vi&#xea;n ======&#xa;&#xa;&#xa;  &#x110;&#x1b0;&#x1ee3;c ph&#xe1;t tri&#x1ec1;n v&#xe0; ph&#xe2;n ph&#x1ed1;i b&#x1edf;i&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&#xa;&gt;&gt;Ph&#x1ea1;m &#x110;&#x1ee9;c Minh&gt;&gt;&#xa;&gt;&gt;Phan &#x110;&#x1ee9;c To&#xe0;n&gt;&gt;&#xa;&gt;&gt;Nguy&#x1ec5;n M&#x1ea1;nh Linh&gt;&gt;"/>
+            <Property name="text" type="java.lang.String" value="Program: Hust&apos;s Student Assiociation Management&#xa;Version: 0.1 (Beta)&#xa;Platform: Java Language&#xa;  &#xa;Development team: Hedspi 6C team&#xa;&#x9;&#x9;- Pham Duc Minh&#xa;&#x9;      &#x9;- Nguyen Manh Linh&#xa;&#x9;      &#x9;- Phan Duc Toan&#xa;This  program  is completed  thanks to the helps of lecturer&#xa;Nguyen  Thi  Oanh, MSc  and  lecturer  Vu  Tuyet  Trinh, Dr&#xa;Department  of Information Systems, School of Information&#xa;and Communication Technology,Hanoi University of Science &#xa;and Technology."/>
           </Properties>
         </Component>
       </SubComponents>

@@ -6,10 +6,6 @@ import static Utilities.Utility.stringToDate;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author ManhLinh
- */
 public class AddEvent extends javax.swing.JDialog {
 
     /**
@@ -19,6 +15,7 @@ public class AddEvent extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
+        this.setTitle("Add Event");
     }
 
     /**
@@ -196,7 +193,7 @@ public class AddEvent extends javax.swing.JDialog {
 
     private boolean creatEvent() {
         StringBuilder msg = new StringBuilder();
-
+        
         if (jtf1.getText().compareTo("") == 0) {
             msg.append("\n- Don't blank Event ID");
         }
@@ -212,7 +209,7 @@ public class AddEvent extends javax.swing.JDialog {
             Date d1 = stringToDate(jtf4.getText(), "yyyy-MM-dd");
             Date d2 = stringToDate(jtf5.getText(), "yyyy-MM-dd");
             Event ev = new Event(jtf1.getText(), jtf2.getText(), jtf3.getText(), d1, d2, n1, n2);
-
+            
             if (RetrieveData.insertEvent(ev)) {
                 JOptionPane.showMessageDialog(this, "Create new event success !");
             } else {
@@ -226,37 +223,37 @@ public class AddEvent extends javax.swing.JDialog {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-
+        
     }
-
+    
     private void jtf1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf1ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf1ActionPerformed
-
+    
     private void jtf3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf3ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf3ActionPerformed
-
+    
     private void jtf5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf5ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf5ActionPerformed
-
+    
     private void jtf7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf7ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf7ActionPerformed
-
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     private void jtf2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf2ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf2ActionPerformed
-
+    
     private void jtf4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf4ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf4ActionPerformed
-
+    
     private void jtf6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf6ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf6ActionPerformed

@@ -67,7 +67,7 @@ public class RetrieveDataTest {
         assertNull(null);
     }
     
-      @Test
+    /*  @Test
     public void testInsertStudent() {
         System.out.println("Test insert student");
         int tem = RetrieveData.deleteStudentByID("20112440");
@@ -78,7 +78,7 @@ public class RetrieveDataTest {
         int expResult = -1;
         
         assertEquals(expResult, result);
-    }
+    }*/
 
     @Test
     public void testupdateStudent() {

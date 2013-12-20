@@ -5,10 +5,7 @@ import Entities.Participation;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Minh
- */
+
 public class RegisterForm extends javax.swing.JDialog {
     
     private String stuID;
@@ -21,6 +18,7 @@ public class RegisterForm extends javax.swing.JDialog {
         btnAccept.setEnabled(false);
         this.stuID = stuID;
         this.orgID = orgID;
+        this.setTitle("Register Confimation");
     }
 
     /**

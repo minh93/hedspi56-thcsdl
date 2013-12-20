@@ -8,24 +8,21 @@ import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Minh
- */
 public class AddStudent extends javax.swing.JDialog {
-
-    /**
-     * Creates new form AddStudent
-     */
+    
     public AddStudent(java.awt.Frame parent, boolean modal, String mode, Student s) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+<<<<<<< .mine
+        this.setTitle("Add Student");
+=======
         this.setTitle("Add student");
+>>>>>>> .r132
         initForm(mode, s);
     }
-
+    
     public void initForm(String mode, Student s) {        
         ArrayList<String> className = RetrieveData.getAllClassName();
         DefaultComboBoxModel cbxClassModel = new DefaultComboBoxModel();
@@ -53,15 +50,15 @@ public class AddStudent extends javax.swing.JDialog {
             String stuClaName = RetrieveData.getClassNameByID(s.getClassID());
             int cbxIndex = cbxClassModel.getIndexOf(stuClaName);
             cbxClass.setSelectedIndex(cbxIndex);
-
+            
             txtStudentID.setEnabled(false);
             txtStudentF_Name.setEnabled(false);
             txtStudentL_Name.setEnabled(false);
             btnCreate.setEnabled(false);
-
+            
         }
     }
-
+    
     private boolean checkBlankInputfield() {
         boolean check = false;
         if (txtStudentID.getText().compareTo("") == 0 || txtStudentF_Name.getText().compareTo("") == 0
@@ -80,7 +77,7 @@ public class AddStudent extends javax.swing.JDialog {
         }
         return check;
     }
-
+    
     private Student getDataInput() throws NumberFormatException {
         String ID = txtStudentID.getText();
         String F_name = txtStudentF_Name.getText();
@@ -343,9 +340,9 @@ public class AddStudent extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(rootPane, "Error has occured, please check again!", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
-
+        
     }//GEN-LAST:event_btnCreateActionPerformed
-
+    
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         String ID = txtStudentID.getText();
         String newTel = txtStudentTel.getText();

@@ -9,10 +9,6 @@ import Entities.User;
 import MVCmodel.UserModel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author PhamDucMinh
- */
 public class AddUser extends javax.swing.JDialog {
 
     /**
@@ -23,6 +19,7 @@ public class AddUser extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setTitle("Add User");
     }
 
     /**
@@ -45,10 +42,11 @@ public class AddUser extends javax.swing.JDialog {
         txtRePass = new javax.swing.JPasswordField();
         txtContact = new javax.swing.JTextField();
         btnCreateUser = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/user_close_add.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/add-user.png"))); // NOI18N
 
         jLabel1.setText("Username:");
 
@@ -65,35 +63,46 @@ public class AddUser extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setText("Create new user");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5))
-                        .addGap(28, 28, 28)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnCreateUser)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtUserName)
-                                .addComponent(txtContact, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
-                                .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
-                                .addComponent(txtRePass)))))
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCreateUser)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtUserName)
+                        .addComponent(txtContact, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
+                        .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
+                        .addComponent(txtRePass))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel6)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel6))
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -210,6 +219,7 @@ public class AddUser extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtContact;
     private javax.swing.JPasswordField txtPass;

@@ -4,10 +4,6 @@ import DButitilies.RetrieveData;
 import Entities.Department;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Minh
- */
 public class AddDeptForm extends javax.swing.JDialog {
 
     /**
@@ -18,6 +14,7 @@ public class AddDeptForm extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setTitle("Add Department");
     }
 
     /**
