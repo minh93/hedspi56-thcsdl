@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import DButitilies.RetrieveData;
@@ -26,10 +22,11 @@ public class AddStudent extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setTitle("Add student");
         initForm(mode, s);
     }
 
-    public void initForm(String mode, Student s) {
+    public void initForm(String mode, Student s) {        
         ArrayList<String> className = RetrieveData.getAllClassName();
         DefaultComboBoxModel cbxClassModel = new DefaultComboBoxModel();
         for (String tem : className) {
