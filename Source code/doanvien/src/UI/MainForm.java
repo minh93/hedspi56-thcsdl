@@ -84,6 +84,7 @@ public class MainForm extends javax.swing.JFrame {
         loadDataOrganizationTBL();
         loadDataForGEvent();
         loadDataForGEventToday();
+        setNewMessage();
         um = new UserModel(RetrieveData.getAllUser());
         lm = new LogModel(RetrieveData.getLogRecords());
         tblAdmin.setModel(um);
@@ -98,6 +99,7 @@ public class MainForm extends javax.swing.JFrame {
         loadDataForGEvent();
         loadDataForGEventToday();
         createEvent();
+        setNewMessage();
         settingPanel.setVisible(false);
         btnRegister.setEnabled(false);
         mainTabbed.remove(4);
@@ -217,13 +219,21 @@ public class MainForm extends javax.swing.JFrame {
         GetLastestNew net = new GetLastestNew("http://ctsv.hust.edu.vn/tabid/506/default.aspx",
                 "(<a href=\"http://ctsv.hust.edu.vn/TabId/562/ArticleId/[0-9]++/PreTabId/506/Default.aspx\">(.*?)<span>)");
         net.getHTML();
-        listTitle = net.getNewsContents(2);  
-        StringBuilder sb = new StringBuilder();        
+        listTitle = net.getNewsContents(2);
+        StringBuilder sb = new StringBuilder();
         for (String s : listTitle) {
-            sb.append(s+"\n");
-        }               
+            sb.append(s + "\n");
+        }
         epLastestNews.setText(sb.toString());
         epLastestNews.setEditable(false);
+    }
+
+    public void setNewMessage() {
+        if (getoday.getRowCount() != 0) {
+            lblNewMessage.setText("You has new Message need to solve !");
+        } else {
+            lblNewMessage.setText("No task!");
+        }
     }
 
     public void loadDataForGEvent() {
@@ -256,6 +266,7 @@ public class MainForm extends javax.swing.JFrame {
         epLastestNews = new javax.swing.JEditorPane();
         jPanel4 = new javax.swing.JPanel();
         txtUserName = new javax.swing.JLabel();
+        lblNewMessage = new javax.swing.JLabel();
         studentPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblStudent = new javax.swing.JTable();
@@ -342,10 +353,11 @@ public class MainForm extends javax.swing.JFrame {
                 .addGroup(jHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSearch))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Latest News"));
+        jPanel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         jScrollPane8.setViewportView(epLastestNews);
 
@@ -355,7 +367,7 @@ public class MainForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane8)
+                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -371,13 +383,23 @@ public class MainForm extends javax.swing.JFrame {
         txtUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtUserName.setText("Sample usrname");
 
+        lblNewMessage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNewMessage.setText("Sample message");
+        lblNewMessage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblNewMessageMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtUserName)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtUserName)
+                    .addComponent(lblNewMessage))
                 .addContainerGap(160, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -385,6 +407,8 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(txtUserName)
+                .addGap(18, 18, 18)
+                .addComponent(lblNewMessage)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -812,7 +836,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addComponent(txtStatus)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(mainTabbed, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(mainTabbed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         jMainPanelLayout.setVerticalGroup(
             jMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1149,7 +1173,9 @@ public class MainForm extends javax.swing.JFrame {
             Organization org = om.getOrganization(tblOrganization.getSelectedRow());
             String orgID = org.getOrgID();
             new RegisterForm(this, true, usrName, orgID).setVisible(true);
-        }else JOptionPane.showMessageDialog(this, "Please choose Organization");
+        } else {
+            JOptionPane.showMessageDialog(this, "Please choose Organization");
+        }
     }//GEN-LAST:event_btnRegisterActionPerformed
 
     private void miViewRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miViewRequestActionPerformed
@@ -1172,6 +1198,12 @@ public class MainForm extends javax.swing.JFrame {
     private void miAboutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_miAboutMouseClicked
         new About(this, false).setVisible(true);
     }//GEN-LAST:event_miAboutMouseClicked
+
+    private void lblNewMessageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNewMessageMouseClicked
+        if (getoday.getRowCount() != 0 && (role == 1 || role ==2)) {
+            mainTabbed.setSelectedIndex(3);
+        }
+    }//GEN-LAST:event_lblNewMessageMouseClicked
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel adminPanel;
     private javax.swing.JButton btnAddStudent;
@@ -1207,6 +1239,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblNewMessage;
     private javax.swing.JTabbedPane mainTabbed;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu miAbout;
