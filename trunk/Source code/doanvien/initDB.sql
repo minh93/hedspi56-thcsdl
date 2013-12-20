@@ -230,9 +230,9 @@ INSERT INTO "Class" VALUES ('VM3','Việt Mỹ 3',2010,NULL,'DTQT');
 INSERT INTO "Student" VALUES ('20080001','LÊ ANH','NGỌC','1990-01-16',true,2008,'0123211001','20040001@gmail.com','Bắc Giang','CK1','Nghỉ học',1);
 INSERT INTO "Student" VALUES ('20080002','NGUYỄN HỮU','PHƯỚC','1990-01-19',true,2008,'0123211001','20040002@gmail.com','Hưng Yên','CK1','Còn học',1);
 INSERT INTO "Student" VALUES ('20080003','PHẠM LÊ DUY','QUANG','1990-02-07',true,2008,'0123211003','20040003@gmail.com','Thái Bình','CK2','Còn học',1);
-INSERT INTO "Student" VALUES ('20080004','NGUYỄN HỒNG','QUÂN','1','1990-02-16',true,2008,'0123211004','20040004@gmail.com','Hà Nội','CK2','Còn học',1);
-INSERT INTO "Student" VALUES ('20080005','VŨ VĂN','QUYỀN','1990-04-28',true,2008,true,2008,true,2008,'0123211005','20040005@gmail.com','Thanh Hóa','CK3','Còn học',1);
-INSERT INTO "Student" VALUES ('20080006','BÙI VĂN','THỊNH','1990-05-25',true,2008,true,2008,'0123211006','20040006@gmail.com','Thái Nguyên','VN6A','Còn học',1);
+INSERT INTO "Student" VALUES ('20080004','NGUYỄN HỒNG','QUÂN','1990-02-16',true,2008,'0123211004','20040004@gmail.com','Hà Nội','CK2','Còn học',1);
+INSERT INTO "Student" VALUES ('20080005','VŨ VĂN','QUYỀN','1990-04-28',true,2008,'0123211005','20040005@gmail.com','Thanh Hóa','CK3','Còn học',1);
+INSERT INTO "Student" VALUES ('20080006','BÙI VĂN','THỊNH','1990-05-25',true,2008,'0123211006','20040006@gmail.com','Thái Nguyên','VN6A','Còn học',1);
 INSERT INTO "Student" VALUES ('20080007','DƯƠNG ĐỨC','THỊNH','1990-06-05',true,2008,'0123211007','20040007@gmail.com','Bắc Ninh','VN6A','Còn học',1);
 INSERT INTO "Student" VALUES ('20080008','BÙI ĐỨC','THỌ','1990-06-07',true,2008,'0123211008','20040008@gmail.com','Thanh Hóa','VN6B','Còn học',1);
 INSERT INTO "Student" VALUES ('20080009','LÊ VĂN','THỤC','1990-06-09',true,2008,'0123211009','20040009@gmail.com','Nam Định','VN6B','Còn học',1);
@@ -309,18 +309,19 @@ UPDATE "Class" SET "MoniterID" = '20090046' WHERE "ClaID" = 'TC1';
 UPDATE "Class" SET "MoniterID" = '20090048' WHERE "ClaID" = 'TC2';
 UPDATE "Class" SET "MoniterID" = '20100050' WHERE "ClaID" = 'TC3';
 
-INSERT INTO "Organization" VALUES ('CLBTA','Câu lạc bộ Tiếng Anh',NULL,'Nguyễn Văn B','clbta@gmail.com','23949204032',1);
-INSERT INTO "Organization" VALUES ('CLBTN','Câu lạc bộ Tiếng Nhật',NULL,'Nguyễn Văn A','clbtn@gmail.com','1294023851',1);
-INSERT INTO "Organization" VALUES ('DTN','Đội tình nguyện',NULL,'PHẠM VĂN ĐÔNG','dtn@gmail.com','2349829089',1);
-INSERT INTO "Organization" VALUES ('LCNTT','Liên chi đoàn viện CNTT&TT',NULL,'Lê Xuân Thành','thanhlx@hust.edu.vn','09236521456',1);
+INSERT INTO "Organization" VALUES ('CLBTA','Câu lạc bộ Tiếng Anh',NULL,'Nguyễn Văn B','clbta@gmail.com','23949204032');
+INSERT INTO "Organization" VALUES ('CLBTN','Câu lạc bộ Tiếng Nhật',NULL,'Nguyễn Văn A','clbtn@gmail.com','1294023851');
+INSERT INTO "Organization" VALUES ('DTN','Đội tình nguyện',NULL,'PHẠM VĂN ĐÔNG','dtn@gmail.com','2349829089');
+INSERT INTO "Organization" VALUES ('LCNTT','Liên chi đoàn viện CNTT&TT',NULL,'Lê Xuân Thành','thanhlx@hust.edu.vn','09236521456');
 
-INSERT INTO "Participation" VALUES ('20040003','CLBTN','Thành viên','2011-09-19','2012-09-19','Xuất Sắc');
-INSERT INTO "Participation" VALUES ('20040015','CLBTA','Thành viên','2011-07-24','2012-12-19','Nghiêm Túc');
-INSERT INTO "Participation" VALUES ('20040050','DTN','Đội trưởng','2009-09-19','2012-04-19','Nhiệt tình');
+INSERT INTO "Participation" VALUES ('20092045','CLBTN','Thành viên','2011-09-19','2012-09-19','Xuất Sắc',1);
+INSERT INTO "Participation" VALUES ('20090024','CLBTA','Thành viên','2011-07-24','2012-12-19','Nghiêm Túc',1);
+INSERT INTO "Participation" VALUES ('20080003','DTN','Đội trưởng','2009-09-19','2012-04-19','Nhiệt tình',1);
 
 INSERT INTO "Event" VALUES ('OSHOU11','Tết truyền thống Nhật Bản 2011','Kí túc xá B6','2011-01-19','2011-01-19',1000,3);
 INSERT INTO "Event" VALUES ('OSHOU12','Lễ hội Tết truyền thống Nhật Bản 2012','Kí túc xá B6','2012-01-19','2012-01-19',3000,4);
-INSERT INTO "Event" VALUES ('NTS','November Talent Show', );
+INSERT INTO "Event" VALUES ('NTS','November Talent Show','Kí túc xá B6','2013-12-23','2013-12-24',3000,4);
+INSERT INTO "Event" VALUES ('SHCD','Sinh hoạt công dân','Hội trường C2','2013-12-23','2013-12-24',5000,1);
 
 INSERT INTO "EvtOrg" VALUES ('CLBTN','OSHOU11','Vui vẻ');
 INSERT INTO "EvtOrg" VALUES ('CLBTN','OSHOU12','Náo nhiệt');
