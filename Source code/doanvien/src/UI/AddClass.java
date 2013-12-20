@@ -6,24 +6,18 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author PhamDucMinh
- */
 public class AddClass extends javax.swing.JDialog {
-    
+
     private DefaultComboBoxModel cbxm;
 
-    /**
-     * Creates new form AddClass
-     */
     public AddClass(java.awt.Frame parent, boolean modal, String mode, ClassStu cla) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         initData(mode, cla);
+        this.setTitle("Add Class");
     }
-    
+
     private void initData(String mode, ClassStu cla) {
         ArrayList<String> listDept = RetrieveData.getAllDeptName();
         cbxm = new DefaultComboBoxModel();

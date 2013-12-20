@@ -1,18 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
-/**
- *
- * @author Minh
- */
 public class About extends javax.swing.JDialog {
 
-    /**
-     * Creates new form About
-     */
     public About(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -35,8 +24,9 @@ public class About extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextArea1.setRows(5);
-        jTextArea1.setText("======Phần mềm quản lý hội sinh viên ======\n\n\n  Được phát triền và phân phối bởi\n\n\n\n\n\n\n>>Phạm Đức Minh>>\n>>Phan Đức Toàn>>\n>>Nguyễn Mạnh Linh>>");
+        jTextArea1.setText("Program: Hust's Student Assiociation Management\nVersion: 0.1 (Beta)\nPlatform: Java Language\n  \nDevelopment team: Hedspi 6C team\n\t\t- Pham Duc Minh\n\t      \t- Nguyen Manh Linh\n\t      \t- Phan Duc Toan\nThis  program  is completed  thanks to the helps of lecturer\nNguyen  Thi  Oanh, MSc  and  lecturer  Vu  Tuyet  Trinh, Dr\nDepartment  of Information Systems, School of Information\nand Communication Technology,Hanoi University of Science \nand Technology.");
         jScrollPane1.setViewportView(jTextArea1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -45,8 +35,8 @@ public class About extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
