@@ -24,6 +24,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -210,8 +211,8 @@ public class MainForm extends javax.swing.JFrame {
                 tblAdminDataView.setModel(em);
                 break;
             default:
-
         }
+        tblAdmin.setAutoCreateRowSorter(true);
     }
 
     public void getLastestNews() {
@@ -239,11 +240,13 @@ public class MainForm extends javax.swing.JFrame {
     public void loadDataForGEvent() {
         ge = new GEventModel(RetrieveData.getGEvent());
         tblEvent.setModel(ge);
+        tblEvent.setAutoCreateRowSorter(true);
     }
 
     public void loadDataForGEventToday() {
         getoday = new GEventTodayModel(RetrieveData.getGEventToday());
-        jTable1.setModel(getoday);
+        tblEventToday.setModel(getoday);
+        tblEventToday.setAutoCreateRowSorter(true);
     }
 
     /**
@@ -292,7 +295,8 @@ public class MainForm extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         tblEvent = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEventToday = new javax.swing.JTable();
+        cbShowallOption = new javax.swing.JCheckBox();
         settingPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblAdmin = new javax.swing.JTable();
@@ -340,7 +344,7 @@ public class MainForm extends javax.swing.JFrame {
         jHeaderLayout.setHorizontalGroup(
             jHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jHeaderLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(566, Short.MAX_VALUE)
                 .addComponent(txtSearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
                 .addComponent(btnSearch)
@@ -367,7 +371,7 @@ public class MainForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 440, Short.MAX_VALUE)
+                .addComponent(jScrollPane8)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -498,7 +502,7 @@ public class MainForm extends javax.swing.JFrame {
         studentPanelLayout.setHorizontalGroup(
             studentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 822, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 795, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, studentPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -627,7 +631,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnRegister))
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         orgPanelLayout.setVerticalGroup(
             orgPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -656,7 +660,7 @@ public class MainForm extends javax.swing.JFrame {
         ));
         jScrollPane3.setViewportView(tblEvent);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEventToday.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -667,7 +671,14 @@ public class MainForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane6.setViewportView(jTable1);
+        jScrollPane6.setViewportView(tblEventToday);
+
+        cbShowallOption.setText("Show all event");
+        cbShowallOption.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbShowallOptionItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout eventPanelLayout = new javax.swing.GroupLayout(eventPanel);
         eventPanel.setLayout(eventPanelLayout);
@@ -676,8 +687,11 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(eventPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(eventPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE))
+                    .addGroup(eventPanelLayout.createSequentialGroup()
+                        .addComponent(cbShowallOption)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE)
+                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 785, Short.MAX_VALUE))
                 .addContainerGap())
         );
         eventPanelLayout.setVerticalGroup(
@@ -687,7 +701,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(cbShowallOption)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/event.png")), eventPanel); // NOI18N
@@ -740,7 +756,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addComponent(btnAddUser)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         adminPanelLayout.setVerticalGroup(
             adminPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -769,7 +785,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(cmbDataViewMode, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(190, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1066,7 +1082,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStuNextActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        AdvanceSearchDialog asd = new AdvanceSearchDialog(this, false);
+        AdvanceSearchDialog asd = new AdvanceSearchDialog(this, false,usrName,role);
         asd.setTitle("Advance search");
         asd.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -1204,6 +1220,14 @@ public class MainForm extends javax.swing.JFrame {
             mainTabbed.setSelectedIndex(3);
         }
     }//GEN-LAST:event_lblNewMessageMouseClicked
+
+    private void cbShowallOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbShowallOptionItemStateChanged
+        if(cbShowallOption.isSelected()){
+            EventModel em = new EventModel(RetrieveData.getAllEvent());
+            tblEvent.setModel(em);            
+        }else tblEvent.setModel(ge);
+    }//GEN-LAST:event_cbShowallOptionItemStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel adminPanel;
     private javax.swing.JButton btnAddStudent;
@@ -1213,6 +1237,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnStuNext;
     private javax.swing.JButton btnStuPrevious;
+    private javax.swing.JCheckBox cbShowallOption;
     private javax.swing.JComboBox cmbDataViewMode;
     private javax.swing.JComboBox cmbViewControl;
     private javax.swing.JEditorPane epLastestNews;
@@ -1238,7 +1263,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblNewMessage;
     private javax.swing.JTabbedPane mainTabbed;
     private javax.swing.JMenuBar menuBar;
@@ -1257,6 +1281,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable tblAdmin;
     private javax.swing.JTable tblAdminDataView;
     private javax.swing.JTable tblEvent;
+    private javax.swing.JTable tblEventToday;
     private javax.swing.JTable tblOrganization;
     private javax.swing.JTable tblStudent;
     private javax.swing.JLabel txtOrgMail;
