@@ -1,7 +1,3 @@
-<<<<<<< .mine
-
-=======
->>>>>>> .r132
 package UI;
 
 import DButitilies.ConnectFactory;
@@ -24,7 +20,7 @@ import javax.swing.JOptionPane;
 import jxl.write.WriteException;
 
 public class AdvanceSearchDialog extends javax.swing.JDialog {
-    
+
     private ArrayList<Student> list = new ArrayList<>();
     private String usrName;
     private int role;
@@ -56,7 +52,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
             btnDelete.setVisible(false);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -251,7 +247,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
     private void btnStudentAdvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentAdvActionPerformed
         search();
     }//GEN-LAST:event_btnStudentAdvActionPerformed
-    
+
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         int result;
         JFileChooser jfc = new JFileChooser();
@@ -269,10 +265,10 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                 Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(rootPane, "Export success !", "Information", JOptionPane.INFORMATION_MESSAGE);
-            
+
         }
     }//GEN-LAST:event_btnExportActionPerformed
-    
+
     private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
         txtF_Name.setText("");
         txtL_Name.setText("");
@@ -280,7 +276,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         txtID.setText("");
         txtSchoolYear.setText("");
     }//GEN-LAST:event_btnClearActionPerformed
-    
+
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         try {
             Delete();
@@ -288,7 +284,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
             Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
-    
+
     private void search() {
         String strsql = new String();
         String MSSV = txtID.getText();
@@ -298,14 +294,14 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         String Dept = (String) cbxDept.getSelectedItem();
         String Schoolyear = txtSchoolYear.getText();
         String ClassName = (String) cbxClassName.getSelectedItem();
-        
+
         strsql = "SELECT DISTINCT \"Student\".\"StuID\",\"Student\".\"F_Name\","
                 + "\"Student\".\"L_Name\",\"Birth\",\"Gender\",\"Student\".\"Year\","
                 + "\"Student\".\"Tel\",\"Student\".\"Mail\",\"Address\",\"ClaName\",\"Des\""
                 + "FROM \"Student\",\"Department\",\"Class\""
                 + "WHERE (1=1) and \"Student\".\"ClaID\" =\"Class\".\"ClaID\""
                 + "and \"Class\".\"DeptID\"= \"Department\".\"DeptID\"";
-        
+
         if (!MSSV.equals("")) {
             strsql += " and \"StuID\"like '%" + MSSV + "%'";
         }
@@ -351,18 +347,18 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         StudentModel sm = new StudentModel(list);
         tblStudentResultSearch.setModel(sm);
-        
+
     }
-    
+
     private void Delete() throws SQLException {
         int[] se = tblStudentResultSearch.getSelectedRows();
         String st;
         ConnectFactory cf = new ConnectFactory();
         Connection conn = cf.getConn();
-        
+
         if (se.length != 0) {
             for (int y = 0; y < se.length; y++) {
                 st = (String) tblStudentResultSearch.getValueAt(se[y], 0).toString();
@@ -370,24 +366,24 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                 try {
                     String strsql2 = "UPDATE \"Class\" SET \"MoniterID\"=NULL WHERE \"MoniterID\"='" + st + "'";
                     String strsql3 = "DELETE FROM \"Student\" WHERE \"StuID\"='" + st + "'";
-                    
+
                     PreparedStatement ps1 = conn.prepareCall(strsql2);
                     PreparedStatement ps2 = conn.prepareCall(strsql3);
                     int rs1 = ps1.executeUpdate();
                     int rs2 = ps2.executeUpdate();
-                    
+
                     search();
                 } catch (SQLException ex) {
                     Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
+
             }
-            
+
         }
     }
 
     public static void main(String args[]) {
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -397,8 +393,8 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                    
-                    
+
+
                 }
             }
         } catch (ClassNotFoundException ex) {

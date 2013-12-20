@@ -15,11 +15,7 @@ public class AddStudent extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-<<<<<<< .mine
         this.setTitle("Add Student");
-=======
-        this.setTitle("Add student");
->>>>>>> .r132
         initForm(mode, s);
     }
     
