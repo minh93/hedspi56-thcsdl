@@ -7,6 +7,8 @@ public class About extends javax.swing.JDialog {
         initComponents();
         this.setLocationRelativeTo(null);
         this.setTitle("About");
+        this.setResizable(false);
+        jTextArea1.setEditable(false);
     }
 
     /**
