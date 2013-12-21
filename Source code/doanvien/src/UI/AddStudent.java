@@ -44,7 +44,7 @@ public class AddStudent extends javax.swing.JDialog {
                 jrdMale.setSelected(true);
             } else {
                 jrdFemale.setSelected(true);
-            }
+            }            
             String stuClaName = RetrieveData.getClassNameByID(s.getClassID());
             int cbxIndex = cbxClassModel.getIndexOf(stuClaName);
             cbxClass.setSelectedIndex(cbxIndex);
@@ -92,7 +92,7 @@ public class AddStudent extends javax.swing.JDialog {
             gender = true;
         } else if (jrdFemale.isSelected()) {
             gender = false;
-        }
+        }        
         Student s = new Student(ID, F_name, L_name, birth, gender, year, tel, email, address, classID, des);
         return s;
     }

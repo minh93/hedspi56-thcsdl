@@ -1313,14 +1313,14 @@ public class MainForm extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         StudentModel sm = (StudentModel) tblStudent.getModel();
-        int[] index = tblStudent.getSelectedRows();
+        int index = tblStudent.getSelectedRow();
         int currentPage = Integer.parseInt(txtStuTblPage.getText());
         ConnectFactory cf = new ConnectFactory();
         Connection conn = cf.getConn();
         ResultSet rs = null;
         
-        if(index.length==1){
-            Student s = sm.getStudent(index[0], currentPage);
+        if(index != -1){
+            Student s = sm.getStudent(index, currentPage);
             
             int result;
             JFileChooser jfc = new JFileChooser();
@@ -1332,7 +1332,7 @@ public class MainForm extends javax.swing.JFrame {
             
             try {
             PreparedStatement ps = conn.prepareStatement("SELECT \"Organization\".\"OrgName\",\"Participation\".\"Start\",\"Participation\".\"End\""
-                        + " FROM \"Participation\",\"Organization\" WHERE \"Participation\".\"OrgID\"=\"Organization\".\"OrgID\" AND \"Status\"= '"+s.getStudentID()+"'");
+                        + " FROM \"Participation\",\"Organization\",\"Student\" WHERE \"Participation\".\"OrgID\"=\"Organization\".\"OrgID\" AND \"Student\".\"StuID\"= '"+s.getStudentID()+"'");
             rs = ps.executeQuery();
            
             conn.close();
@@ -1368,7 +1368,7 @@ public class MainForm extends javax.swing.JFrame {
                  output.println("");
                  output.println("");
                  while (rs.next()) {
-                     output.println("  "+rs.getString(0)+"          "+rs.getString(1)+"          "+rs.getString(2));
+                     output.println("  "+rs.getString(1)+"          "+rs.getString(2)+"          "+rs.getString(3));
                  }
                  
                  out.close();
