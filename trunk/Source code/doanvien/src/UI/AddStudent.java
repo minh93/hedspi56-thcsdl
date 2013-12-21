@@ -27,8 +27,10 @@ public class AddStudent extends javax.swing.JDialog {
         }
         cbxClass.setModel(cbxClassModel);
         if (mode.compareTo("Add") == 0) {
+            this.setTitle("Create new student");
             btnUpdate.setEnabled(false);
         } else if (mode.compareTo("Update") == 0) {
+            this.setTitle("Edit info for "+ s.getStudentID());
             txtStudentID.setText(s.getStudentID());
             txtStudentF_Name.setText(s.getF_Name());
             txtStudentL_Name.setText(s.getL_Name());
