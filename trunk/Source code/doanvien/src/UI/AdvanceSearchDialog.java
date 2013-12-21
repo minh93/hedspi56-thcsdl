@@ -81,6 +81,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        btnStudentAdv.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnStudentAdv.setText("Search");
         btnStudentAdv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +100,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
 
         cbxDept.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "CNTT & TT", "Hóa Học", "Điện", "All..." }));
 
+        btnClear.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnClear.setText("Clear");
         btnClear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +114,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel5.setText("School Year:");
 
+        tblStudentResultSearch.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         tblStudentResultSearch.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -127,6 +130,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
 
         jLabel6.setText("Class:");
 
+        btnExport.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnExport.setText("Export");
         btnExport.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,6 +138,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
             }
         });
 
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnDelete.setText("Delete");
         btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -237,7 +242,7 @@ public class AdvanceSearchDialog extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

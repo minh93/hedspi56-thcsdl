@@ -5,12 +5,11 @@ import Entities.Participation;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-
 public class RegisterForm extends javax.swing.JDialog {
-    
+
     private String stuID;
     private String orgID;
-    
+
     public RegisterForm(java.awt.Frame parent, boolean modal, String stuID, String orgID) {
         super(parent, modal);
         initComponents();
@@ -38,10 +37,12 @@ public class RegisterForm extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
         jTextArea1.setRows(5);
         jTextArea1.setText("Điều kiện tham dự tổ chức:\n\n*Lorem ipsum dolosit amet\n*Lorem ipsum dolosit amet\n*Lorem ipsum dolosit amet\n*Lorem ipsum dolosit amet");
         jScrollPane1.setViewportView(jTextArea1);
 
+        cbAccept.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         cbAccept.setText("I've read terms and conditions.");
         cbAccept.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -49,6 +50,7 @@ public class RegisterForm extends javax.swing.JDialog {
             }
         });
 
+        btnAccept.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnAccept.setText("I accept");
         btnAccept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,7 +68,7 @@ public class RegisterForm extends javax.swing.JDialog {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(cbAccept)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 134, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
                         .addComponent(btnAccept)))
                 .addContainerGap())
         );
@@ -92,13 +94,13 @@ public class RegisterForm extends javax.swing.JDialog {
             btnAccept.setEnabled(false);
         }
     }//GEN-LAST:event_cbAcceptMouseClicked
-    
+
     private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
         Date d = new Date();
         Participation p = new Participation(stuID, orgID, null, d, d, stuID, 0);
-        System.out.println("Test "+ p.getStuID());
+        System.out.println("Test " + p.getStuID());
         if (RetrieveData.insertPar(p)) {
-            JOptionPane.showMessageDialog(this, "Action done !");  
+            JOptionPane.showMessageDialog(this, "Action done !");
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Error has occured !");

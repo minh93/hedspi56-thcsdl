@@ -9,7 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 public class AddStudent extends javax.swing.JDialog {
-    
+
     public AddStudent(java.awt.Frame parent, boolean modal, String mode, Student s) {
         super(parent, modal);
         initComponents();
@@ -18,8 +18,8 @@ public class AddStudent extends javax.swing.JDialog {
         this.setTitle("Add Student");
         initForm(mode, s);
     }
-    
-    public void initForm(String mode, Student s) {        
+
+    public void initForm(String mode, Student s) {
         ArrayList<String> className = RetrieveData.getAllClassName();
         DefaultComboBoxModel cbxClassModel = new DefaultComboBoxModel();
         for (String tem : className) {
@@ -46,15 +46,15 @@ public class AddStudent extends javax.swing.JDialog {
             String stuClaName = RetrieveData.getClassNameByID(s.getClassID());
             int cbxIndex = cbxClassModel.getIndexOf(stuClaName);
             cbxClass.setSelectedIndex(cbxIndex);
-            
+
             txtStudentID.setEnabled(false);
             txtStudentF_Name.setEnabled(false);
             txtStudentL_Name.setEnabled(false);
             btnCreate.setEnabled(false);
-            
+
         }
     }
-    
+
     private boolean checkBlankInputfield() {
         boolean check = false;
         if (txtStudentID.getText().compareTo("") == 0 || txtStudentF_Name.getText().compareTo("") == 0
@@ -73,7 +73,7 @@ public class AddStudent extends javax.swing.JDialog {
         }
         return check;
     }
-    
+
     private Student getDataInput() throws NumberFormatException {
         String ID = txtStudentID.getText();
         String F_name = txtStudentF_Name.getText();
@@ -134,20 +134,27 @@ public class AddStudent extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         txtStudentYear = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel3.setText("Name:");
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel4.setText("Address:");
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel6.setText("Tel:");
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel7.setText("eMail:");
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel8.setText("Class:");
 
+        cbxClass.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         cbxClass.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/student.png"))); // NOI18N
@@ -156,8 +163,10 @@ public class AddStudent extends javax.swing.JDialog {
         txtStudentDes.setRows(5);
         jScrollPane1.setViewportView(txtStudentDes);
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel10.setText("Note:");
 
+        btnCreate.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnCreate.setText("Create");
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,6 +174,7 @@ public class AddStudent extends javax.swing.JDialog {
             }
         });
 
+        btnUpdate.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,19 +182,28 @@ public class AddStudent extends javax.swing.JDialog {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel11.setText("Birth:");
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel12.setText("Student ID:");
 
         btnGender.add(jrdMale);
+        jrdMale.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jrdMale.setText("Male");
 
         btnGender.add(jrdFemale);
+        jrdFemale.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jrdFemale.setText("Female");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel2.setText("Gender:");
 
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel13.setText("Year:");
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel14.setText("Add new Student");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -193,28 +212,25 @@ public class AddStudent extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 48, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addGap(275, 275, 275))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(2, 2, 2)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel12)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel3)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(2, 2, 2)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel10))))))
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel10)))))
+                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -232,7 +248,7 @@ public class AddStudent extends javax.swing.JDialog {
                                             .addComponent(txtStudentF_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(18, 18, 18)
                                             .addComponent(txtStudentL_Name, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addContainerGap(49, Short.MAX_VALUE))
+                                .addContainerGap(99, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(txtStudentMail, javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,7 +273,11 @@ public class AddStudent extends javax.swing.JDialog {
                                                 .addComponent(jLabel11)
                                                 .addGap(18, 18, 18)
                                                 .addComponent(txtStudentBirth)))))
-                                .addGap(28, 28, 28))))))
+                                .addGap(28, 28, 28))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(68, 68, 68)
+                        .addComponent(jLabel14)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,7 +289,11 @@ public class AddStudent extends javax.swing.JDialog {
                         .addGap(93, 93, 93))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addComponent(jLabel14)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -336,9 +360,9 @@ public class AddStudent extends javax.swing.JDialog {
         } else {
             JOptionPane.showMessageDialog(rootPane, "Error has occured, please check again!", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_btnCreateActionPerformed
-    
+
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         String ID = txtStudentID.getText();
         String newTel = txtStudentTel.getText();
@@ -396,6 +420,7 @@ public class AddStudent extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

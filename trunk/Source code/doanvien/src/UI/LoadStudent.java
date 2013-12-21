@@ -5,10 +5,6 @@ import Entities.Student;
 import MVCmodel.StudentModel;
 import java.util.ArrayList;
 
-/**
- *
- * @author Minh
- */
 public class LoadStudent extends javax.swing.JDialog {
 
     private StudentModel sm;
@@ -22,7 +18,7 @@ public class LoadStudent extends javax.swing.JDialog {
         this.list = list;
         sm = new StudentModel(list);
         tblStudent.setModel(sm);
-        txtPage.setText(sm.getCurrentPage()+"");
+        txtPage.setText(sm.getCurrentPage() + "");
     }
 
     /**
@@ -44,6 +40,7 @@ public class LoadStudent extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        tblStudent.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         tblStudent.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
