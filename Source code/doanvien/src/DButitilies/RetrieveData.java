@@ -519,6 +519,22 @@ public class RetrieveData {
         }
     }
 
+    public static int updatePassword(String userName, String newPass) {
+        int result = -1;
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement ps = conn.prepareCall("UPDATE \"Account\" SET \"Password\" = ? WHERE \"UserName\" = ?");
+            ps.setString(1, newPass);
+            ps.setString(2, userName);
+            result = ps.executeUpdate();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return result;
+        }
+    }
+
     public static boolean insertEvent(Event c) {
         try {
             ConnectFactory cf = new ConnectFactory();
