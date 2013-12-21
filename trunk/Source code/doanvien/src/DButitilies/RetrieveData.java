@@ -43,8 +43,8 @@ public class RetrieveData {
             }
             return role;
         } catch (SQLException ex) {
-            Logging .createLog(userName, "Login falled ");
-            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);            
+            Logging.createLog(userName, "Login falled ");
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
             return -1;
         }
     }
@@ -590,6 +590,25 @@ public class RetrieveData {
         }
     }
 
+    public static boolean updateOrg(String OrgID, String newManager, String newTel, String newMail) {
+        try {
+            ConnectFactory cf = new ConnectFactory();
+            Connection conn = cf.getConn();
+            PreparedStatement cs = conn.prepareStatement("UPDATE \"Organization\" SET \"Manager\" = ?,\"Mail\" = ?,\"Tel\" =?  WHERE \"OrgID\"=?");
+            cs.setString(1, newManager);
+            cs.setString(2, newMail);
+            cs.setString(3, newTel);
+            cs.setString(4, OrgID);
+            if (cs.executeUpdate() == 1) {
+                return true;
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
     public static ArrayList<String> getAllOrgName() {
         ArrayList<String> list = new ArrayList<>();
         try {
@@ -606,7 +625,7 @@ public class RetrieveData {
         }
         return list;
     }
-    
+
     public static boolean deleteParticipation(String StuID, String OrgID) {
         try {
             ConnectFactory cf = new ConnectFactory();
