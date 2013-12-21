@@ -14,12 +14,18 @@ public class ResetPasswordForm extends javax.swing.JDialog {
     /**
      * Creates new form ResetPasswordForm
      */
-    public ResetPasswordForm(java.awt.Frame parent, boolean modal, String usrName) {
+    public ResetPasswordForm(java.awt.Frame parent, boolean modal, String usrName, int role) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.usrName = usrName;
         this.setTitle("Confirm reset password " + usrName);
+        this.setResizable(false);
+        if (role == 1) {
+            cbReset.setVisible(true);
+        } else {
+            cbReset.setVisible(false);
+        }
     }
 
     private User getUser(String usrName) {
@@ -42,7 +48,8 @@ public class ResetPasswordForm extends javax.swing.JDialog {
         txtOldPass = new javax.swing.JPasswordField();
         txtNewPass = new javax.swing.JPasswordField();
         txtRePass = new javax.swing.JPasswordField();
-        jButton1 = new javax.swing.JButton();
+        btnOK = new javax.swing.JButton();
+        cbReset = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -61,11 +68,18 @@ public class ResetPasswordForm extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
-        jButton1.setText("OK");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnOK.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        btnOK.setText("OK");
+        btnOK.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnOKActionPerformed(evt);
+            }
+        });
+
+        cbReset.setText("Reset password only (default 0000)");
+        cbReset.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbResetItemStateChanged(evt);
             }
         });
 
@@ -77,21 +91,23 @@ public class ResetPasswordForm extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(18, 22, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(54, 54, 54)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(cbReset)
+                        .addGap(0, 44, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(0, 107, Short.MAX_VALUE))
-                    .addComponent(txtNewPass, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
-                    .addComponent(txtOldPass)
-                    .addComponent(txtRePass))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtOldPass)
+                            .addComponent(txtNewPass)
+                            .addComponent(txtRePass))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnOK)
+                .addGap(104, 104, 104))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,18 +121,35 @@ public class ResetPasswordForm extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(txtNewPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtRePass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
-                .addGap(0, 33, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                .addComponent(cbReset)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnOK)
+                .addGap(16, 16, 16))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        if (cbReset.isSelected()) {
+            String newPass = new String(txtNewPass.getPassword());
+            if (RetrieveData.updatePassword(usrName, Utility.checksumGen(newPass, "MD5", true)) == 1) {
+                JOptionPane.showMessageDialog(this, "User " + usrName + "has new password !");
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Some error has occured !");
+            }
+        } else {
+            resetPassword();
+        }
+    }//GEN-LAST:event_btnOKActionPerformed
+
+    private void resetPassword() {
         boolean check = false;
         String oldPass = new String(txtOldPass.getPassword());
         String oldPassMD5 = Utilities.Utility.checksumGen(oldPass, "MD5", true);
@@ -138,22 +171,31 @@ public class ResetPasswordForm extends javax.swing.JDialog {
             txtRePass.setToolTipText("Re-typed password doesn't match !");
         }
         if (check) {
-            User nu = new User(usrName, u.getContact(), Utility.checksumGen(newPass, "MD5", true), u.getRole());
-            RetrieveData.deleteUser(usrName);
-            RetrieveData.createUser(nu);
-            JOptionPane.showMessageDialog(this, "User " + nu.getUserName() + "has new password !");
+            RetrieveData.updatePassword(usrName, Utility.checksumGen(newPass, "MD5", true));
+            JOptionPane.showMessageDialog(this, "User " + usrName + "has new password !");
             this.dispose();
         }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
     private void txtNewPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNewPassActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNewPassActionPerformed
+
+    private void cbResetItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbResetItemStateChanged
+        if (cbReset.isSelected()) {
+            txtOldPass.setEnabled(false);
+            txtRePass.setEnabled(false);
+        } else {
+            txtOldPass.setEnabled(true);
+            txtRePass.setEnabled(true);
+        }
+    }//GEN-LAST:event_cbResetItemStateChanged
     /**
      * @param args the command line arguments
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnOK;
+    private javax.swing.JCheckBox cbReset;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
