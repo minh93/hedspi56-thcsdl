@@ -44,25 +44,32 @@ public class AddEvent extends javax.swing.JDialog {
         jtf5 = new javax.swing.JTextField();
         jtf6 = new javax.swing.JTextField();
         jtf7 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jbl2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/add_event.png"))); // NOI18N
 
-        jbl2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/user_close_add.png"))); // NOI18N
-
+        jbl1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jbl1.setText("Event ID");
 
+        jbl3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jbl3.setText("Event Name");
 
+        jbl4.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jbl4.setText("Location");
 
+        jbl5.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jbl5.setText("Start");
 
+        jbl6.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jbl6.setText("End");
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel1.setText("People");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel2.setText("Ratting");
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jButton1.setText("Create Event");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +119,9 @@ public class AddEvent extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setText("Create new event");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -136,14 +146,20 @@ public class AddEvent extends javax.swing.JDialog {
                     .addComponent(jtf3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jtf1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jLabel3))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(9, 9, 9)
-                .addComponent(jbl2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addComponent(jbl2, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addComponent(jLabel3)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbl1)
@@ -193,7 +209,7 @@ public class AddEvent extends javax.swing.JDialog {
 
     private boolean creatEvent() {
         StringBuilder msg = new StringBuilder();
-        
+
         if (jtf1.getText().compareTo("") == 0) {
             msg.append("\n- Don't blank Event ID");
         }
@@ -209,7 +225,7 @@ public class AddEvent extends javax.swing.JDialog {
             Date d1 = stringToDate(jtf4.getText(), "yyyy-MM-dd");
             Date d2 = stringToDate(jtf5.getText(), "yyyy-MM-dd");
             Event ev = new Event(jtf1.getText(), jtf2.getText(), jtf3.getText(), d1, d2, n1, n2);
-            
+
             if (RetrieveData.insertEvent(ev)) {
                 JOptionPane.showMessageDialog(this, "Create new event success !");
             } else {
@@ -223,37 +239,36 @@ public class AddEvent extends javax.swing.JDialog {
                     JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        
     }
-    
+
     private void jtf1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf1ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf1ActionPerformed
-    
+
     private void jtf3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf3ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf3ActionPerformed
-    
+
     private void jtf5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf5ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf5ActionPerformed
-    
+
     private void jtf7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf7ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf7ActionPerformed
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jButton1ActionPerformed
-    
+
     private void jtf2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf2ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf2ActionPerformed
-    
+
     private void jtf4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf4ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf4ActionPerformed
-    
+
     private void jtf6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtf6ActionPerformed
         creatEvent();
     }//GEN-LAST:event_jtf6ActionPerformed
@@ -303,6 +318,7 @@ public class AddEvent extends javax.swing.JDialog {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel jbl1;
     private javax.swing.JLabel jbl2;

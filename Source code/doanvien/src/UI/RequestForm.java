@@ -10,33 +10,29 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Minh
- */
 public class RequestForm extends javax.swing.JDialog {
-    
+
     private ArrayList<Participation> list;
     private ParticipationModel pm;
-    
+
     public RequestForm(java.awt.Frame parent, boolean modal, ArrayList<Participation> list) {
         super(parent, modal);
         initComponents();
         this.list = list;
         this.setLocationRelativeTo(null);
         this.setTitle("Org Request");
-        
+
         loadData();
     }
-    
+
     private void loadData() {
         pm = new ParticipationModel(list);
         pm.filterByStatus(0);
         tblParticipation.setModel(pm);
         initTable();
-        
+
     }
-    
+
     private void initTable() {
         tblParticipation.addMouseListener(new MouseAdapter() {
             @Override
@@ -47,7 +43,7 @@ public class RequestForm extends javax.swing.JDialog {
             }
         });
     }
-    
+
     private void runOption() {
         int index = tblParticipation.getSelectedRow();
         Participation p = pm.getParticipation(index);
@@ -67,7 +63,7 @@ public class RequestForm extends javax.swing.JDialog {
         cbxUpdateStatus.setSelectedIndex(p.getStatus());
         CardLayout cl = (CardLayout) panelMain.getLayout();
         cl.next(panelMain);
-        
+
     }
 
     /**
@@ -148,6 +144,7 @@ public class RequestForm extends javax.swing.JDialog {
             }
         });
 
+        tblParticipation.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         tblParticipation.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -322,12 +319,12 @@ public class RequestForm extends javax.swing.JDialog {
             pm.filterByStatus(cbxViewChooser.getSelectedIndex());
         }
     }//GEN-LAST:event_cbxViewChooserItemStateChanged
-    
+
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         CardLayout cl = (CardLayout) panelMain.getLayout();
         cl.next(panelMain);
     }//GEN-LAST:event_btnBackActionPerformed
-    
+
     private void txtUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUpdateActionPerformed
         if (cbxUpdateStatus.getSelectedIndex() == 3) {
             if (RetrieveData.deleteParticipation(txtStuID.getText(), txtOrgID.getText())) {
@@ -347,7 +344,7 @@ public class RequestForm extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_txtUpdateActionPerformed
-    
+
     private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshActionPerformed
         if (cbxUpdateStatus.getSelectedIndex() != 4) {
             pm = new ParticipationModel(RetrieveData.getAllParticipation());

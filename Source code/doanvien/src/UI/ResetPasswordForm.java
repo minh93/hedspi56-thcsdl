@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package UI;
 
 import DButitilies.RetrieveData;
@@ -11,10 +7,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Minh
- */
 public class ResetPasswordForm extends javax.swing.JDialog {
 
     private String usrName;
@@ -54,10 +46,13 @@ public class ResetPasswordForm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel1.setText("Old password:");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel2.setText("New password:");
 
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jLabel3.setText("Re-Type :");
 
         txtNewPass.addActionListener(new java.awt.event.ActionListener() {
@@ -66,6 +61,7 @@ public class ResetPasswordForm extends javax.swing.JDialog {
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jButton1.setText("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,20 +80,18 @@ public class ResetPasswordForm extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGap(18, 18, Short.MAX_VALUE))
+                        .addGap(18, 22, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(54, 54, 54)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNewPass, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-                            .addComponent(txtOldPass)
-                            .addComponent(txtRePass))
-                        .addContainerGap())))
+                        .addGap(0, 107, Short.MAX_VALUE))
+                    .addComponent(txtNewPass, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                    .addComponent(txtOldPass)
+                    .addComponent(txtRePass))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,7 +122,7 @@ public class ResetPasswordForm extends javax.swing.JDialog {
         String oldPassMD5 = Utilities.Utility.checksumGen(oldPass, "MD5", true);
         String newPass = new String(txtNewPass.getPassword());
         String newRePass = new String(txtRePass.getPassword());
-        User u = getUser(usrName);        
+        User u = getUser(usrName);
         if (u.getPassword().compareTo(oldPassMD5) == 0) {
             check = true;
         } else {

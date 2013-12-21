@@ -28,10 +28,6 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author PhamDucMinh
- */
 public class MainForm extends javax.swing.JFrame {
 
     private int role;
@@ -383,6 +379,7 @@ public class MainForm extends javax.swing.JFrame {
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Infomation"));
+        jPanel4.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
 
         txtUserName.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtUserName.setText("Sample usrname");
@@ -842,6 +839,7 @@ public class MainForm extends javax.swing.JFrame {
 
         mainTabbed.addTab("", new javax.swing.ImageIcon(getClass().getResource("/Icon/services.png")), settingPanel); // NOI18N
 
+        txtStatus.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         txtStatus.setText("Status:");
 
         javax.swing.GroupLayout jMainPanelLayout = new javax.swing.GroupLayout(jMainPanel);
@@ -1082,7 +1080,7 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStuNextActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        AdvanceSearchDialog asd = new AdvanceSearchDialog(this, false,usrName,role);
+        AdvanceSearchDialog asd = new AdvanceSearchDialog(this, false, usrName, role);
         asd.setTitle("Advance search");
         asd.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed
@@ -1216,18 +1214,19 @@ public class MainForm extends javax.swing.JFrame {
     }//GEN-LAST:event_miAboutMouseClicked
 
     private void lblNewMessageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblNewMessageMouseClicked
-        if (getoday.getRowCount() != 0 && (role == 1 || role ==2)) {
+        if (getoday.getRowCount() != 0 && (role == 1 || role == 2)) {
             mainTabbed.setSelectedIndex(3);
         }
     }//GEN-LAST:event_lblNewMessageMouseClicked
 
     private void cbShowallOptionItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbShowallOptionItemStateChanged
-        if(cbShowallOption.isSelected()){
+        if (cbShowallOption.isSelected()) {
             EventModel em = new EventModel(RetrieveData.getAllEvent());
-            tblEvent.setModel(em);            
-        }else tblEvent.setModel(ge);
+            tblEvent.setModel(em);
+        } else {
+            tblEvent.setModel(ge);
+        }
     }//GEN-LAST:event_cbShowallOptionItemStateChanged
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel adminPanel;
     private javax.swing.JButton btnAddStudent;

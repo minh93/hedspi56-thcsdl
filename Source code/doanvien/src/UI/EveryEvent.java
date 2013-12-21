@@ -1,24 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package UI;
 
 import DButitilies.RetrieveData;
 import MVCmodel.GEventTodayModel;
 
-/**
- *
- * @author ManhLinh
- */
 public class EveryEvent extends javax.swing.JDialog {
 
     /**
      * Creates new form EveryEvent
      */
-    public EveryEvent(java.awt.Frame parent, boolean modal,String s) {
+    public EveryEvent(java.awt.Frame parent, boolean modal, String s) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -40,6 +30,7 @@ public class EveryEvent extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -103,7 +94,6 @@ public class EveryEvent extends javax.swing.JDialog {
         /* Create and display the dialog */
         (new EveryEvent(null, true, null)).setVisible(true);
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

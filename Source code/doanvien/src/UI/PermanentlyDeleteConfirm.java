@@ -31,7 +31,8 @@ public class PermanentlyDeleteConfirm extends javax.swing.JDialog {
 
         cbConfirm.setText("Permanetly delete");
 
-        jButton1.setText("I knew :P");
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 11)); // NOI18N
+        jButton1.setText("Confirm");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
