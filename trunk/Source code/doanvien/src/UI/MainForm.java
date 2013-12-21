@@ -63,6 +63,7 @@ public class MainForm extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setTitle("Hi! " + usrName);
         this.usrName = usrName;
+        this.role = role;
         txtUserName.setText(usrName);
         Logging.login(usrName);
         switch (role) {
@@ -1208,7 +1209,7 @@ public class MainForm extends javax.swing.JFrame {
         if (mode == 0) {
             User u = um.getUser(tblAdmin.getSelectedRow());
             if (u != null) {
-                ResetPasswordForm rpf = new ResetPasswordForm(this, true, u.getUserName());
+                ResetPasswordForm rpf = new ResetPasswordForm(this, true, u.getUserName(),role);
                 rpf.setVisible(true);
             }
         }
@@ -1338,7 +1339,7 @@ public class MainForm extends javax.swing.JFrame {
         Connection conn = cf.getConn();
         ResultSet rs = null;
 
-        if (index.length==1) {
+        if (index.length == 1) {
             Student s = sm.getStudent(index[0], currentPage);
 
             int result;
@@ -1398,25 +1399,24 @@ public class MainForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Export success !", "Information", JOptionPane.INFORMATION_MESSAGE);
 
             }
-        }
-        else{
-            for(int i=0;i<index.length;i++){
+        } else {
+            for (int i = 0; i < index.length; i++) {
                 Student s = sm.getStudent(index[i], currentPage);
 
-            int result;
-           
-            try {
-                PreparedStatement ps = conn.prepareStatement("SELECT \"Organization\".\"OrgName\",\"Participation\".\"Start\",\"Participation\".\"End\""
-                        + " FROM \"Participation\",\"Organization\" WHERE \"Participation\".\"OrgID\"=\"Organization\".\"OrgID\" AND \"Participation\".\"StuID\"= '" + s.getStudentID() + "'");
-                rs = ps.executeQuery();
+                int result;
 
-                conn.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
                 try {
-                    PrintWriter output = new PrintWriter(new File(""+s.getStudentID()+".doc"), "UTF8");
+                    PreparedStatement ps = conn.prepareStatement("SELECT \"Organization\".\"OrgName\",\"Participation\".\"Start\",\"Participation\".\"End\""
+                            + " FROM \"Participation\",\"Organization\" WHERE \"Participation\".\"OrgID\"=\"Organization\".\"OrgID\" AND \"Participation\".\"StuID\"= '" + s.getStudentID() + "'");
+                    rs = ps.executeQuery();
+
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                try {
+                    PrintWriter output = new PrintWriter(new File("" + s.getStudentID() + ".doc"), "UTF8");
 
                     output.println("");
                     output.println("");
