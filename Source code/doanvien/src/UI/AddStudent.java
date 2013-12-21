@@ -205,7 +205,7 @@ public class AddStudent extends javax.swing.JDialog {
         jLabel13.setText("Year:");
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel14.setText("Add new Student");
+        jLabel14.setText("Student manager");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
