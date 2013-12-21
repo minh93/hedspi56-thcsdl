@@ -1332,14 +1332,14 @@ public class MainForm extends javax.swing.JFrame {
 
     private void btnReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportActionPerformed
         StudentModel sm = (StudentModel) tblStudent.getModel();
-        int index = tblStudent.getSelectedRow();
+        int[] index = tblStudent.getSelectedRows();
         int currentPage = Integer.parseInt(txtStuTblPage.getText());
         ConnectFactory cf = new ConnectFactory();
         Connection conn = cf.getConn();
         ResultSet rs = null;
 
-        if (index != -1) {
-            Student s = sm.getStudent(index, currentPage);
+        if (index.length==1) {
+            Student s = sm.getStudent(index[0], currentPage);
 
             int result;
             JFileChooser jfc = new JFileChooser();
@@ -1351,7 +1351,7 @@ public class MainForm extends javax.swing.JFrame {
 
             try {
                 PreparedStatement ps = conn.prepareStatement("SELECT \"Organization\".\"OrgName\",\"Participation\".\"Start\",\"Participation\".\"End\""
-                        + " FROM \"Participation\",\"Organization\",\"Student\" WHERE \"Participation\".\"OrgID\"=\"Organization\".\"OrgID\" AND \"Student\".\"StuID\"= '" + s.getStudentID() + "'");
+                        + " FROM \"Participation\",\"Organization\" WHERE \"Participation\".\"OrgID\"=\"Organization\".\"OrgID\" AND \"Participation\".\"StuID\"= '" + s.getStudentID() + "'");
                 rs = ps.executeQuery();
 
                 conn.close();
@@ -1398,6 +1398,59 @@ public class MainForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Export success !", "Information", JOptionPane.INFORMATION_MESSAGE);
 
             }
+        }
+        else{
+            for(int i=0;i<index.length;i++){
+                Student s = sm.getStudent(index[i], currentPage);
+
+            int result;
+           
+            try {
+                PreparedStatement ps = conn.prepareStatement("SELECT \"Organization\".\"OrgName\",\"Participation\".\"Start\",\"Participation\".\"End\""
+                        + " FROM \"Participation\",\"Organization\" WHERE \"Participation\".\"OrgID\"=\"Organization\".\"OrgID\" AND \"Participation\".\"StuID\"= '" + s.getStudentID() + "'");
+                rs = ps.executeQuery();
+
+                conn.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(RetrieveData.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+                try {
+                    PrintWriter output = new PrintWriter(new File(""+s.getStudentID()+".doc"), "UTF8");
+
+                    output.println("");
+                    output.println("");
+                    output.println("                           THÔNG TIN SINH VIÊN");
+                    output.println("");
+                    output.println("");
+                    output.println("Tên SV :        " + s.getF_Name() + " " + s.getL_Name());
+                    output.println("");
+                    output.println("MSSV :          " + s.getStudentID());
+                    output.println("");
+                    output.println("Ngày sinh :     " + s.getBirth());
+                    output.println("");
+                    output.println("Year :          " + s.getYear());
+                    output.println("");
+                    output.println("Telephone :     " + s.getTel());
+                    output.println("");
+                    output.println("Mail :          " + s.getMail());
+                    output.println("");
+                    output.println("Address :       " + s.getAddress());
+                    output.println("");
+                    output.println("================== Quá trình hoạt động ===================\n");
+                    while (rs.next()) {
+                        output.printf("%-30s%-20s%-20s\n", rs.getString(1), rs.getString(2), rs.getString(3));
+                    }
+
+                    output.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(AdvanceSearchDialog.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(MainForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+            JOptionPane.showMessageDialog(rootPane, "Export success !", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnReportActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
