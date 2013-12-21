@@ -579,7 +579,7 @@ public class RetrieveData {
         try {
             ConnectFactory cf = new ConnectFactory();
             Connection conn = cf.getConn();
-            PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Organization\" WHERE \"OrgtID\"=? OR \"OrgName\"=?");
+            PreparedStatement cs = conn.prepareStatement("DELETE FROM \"Organization\" WHERE \"OrgID\"=? OR \"OrgName\"=?");
             cs.setString(1, OrgID);
             cs.setString(2, OrgName);
             cs.executeUpdate();
