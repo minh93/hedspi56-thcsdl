@@ -327,6 +327,7 @@ INSERT INTO "EvtOrg" VALUES ('CLBTN','OSHOU11','Vui vẻ');
 INSERT INTO "EvtOrg" VALUES ('CLBTN','OSHOU12','Náo nhiệt');
 INSERT INTO "EvtOrg" VALUES ('LCNTT','NTS', 'Thành Công');
 
+--Tài khoản đăng nhập mặc định: admin pass:1234
 INSERT INTO "Account" VALUES ('admin','hanoi','81dc9bdb52d04dc2036dbd8313ed055',1);
 INSERT INTO "Account" VALUES ('minh','hanoi','81dc9bdb52d04dc2036dbd8313ed055',2);
 INSERT INTO "Account" VALUES ('guest','hanoi','84e343a0486ff05530df6c705c8bb4',3);
